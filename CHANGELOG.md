@@ -1,7 +1,11 @@
 <!-- insertion marker -->
-<a name="0.0.1"></a>
+<a name="0.1.0"></a>
 
-## [0.0.1](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/compare/ac1d2409aef149089b2a89c9480844fcefaf52a3...0.0.1) (2026-11-17)
+## [0.1.0](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/compare/ac1d2409aef149089b2a89c9480844fcefaf52a3...0.1.0) (2026-11-17)
+
+### Features
+
+- **utils:** add comprehensive utility toolkit module ([10cab0e](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/10cab0e45a2014df1af5052165f83c357a716930))
 
 ### Chore
 
@@ -13,6 +17,7 @@
 
 ### Docs
 
+- **changelog:** add entries for .gitignore and changelog creation ([8e4c1c3](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/8e4c1c3a063dc8f7b631ca78ae4c036e3abd5264))
 - **project:** add CHANGELOG.md with initial release notes ([7f58cf2](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/7f58cf28c94909e95a58de1594e3e15bd80035a6))
 - **readme:** add Chinese version of README documentation ([c0b56af](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/c0b56af8691695b7d946de0851a5ace20aee030a))
 - **readme:** add project README with privacy and setup guides ([4aab1c3](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/4aab1c33d5c4904f310057773762a124e598c80f))
