@@ -22,11 +22,11 @@ for database operations across different database systems.
 __author__ = "Shawn Yu"
 __version__ = "0.1.0"
 
-from .base import DECLARATION
+from .base import DECLARATION, GENERAL
 from .configs import DBCONFIG
 from .constants import SQLITE
 from .engines import InitEngine
-from .repository import (
+from .repositories import (
     check_table_exists,
     count_data,
     create_db,
@@ -39,6 +39,7 @@ from .session import InitSession
 
 __all__ = [
     "DECLARATION",
+    "GENERAL",
 
     "DBCONFIG",
 
