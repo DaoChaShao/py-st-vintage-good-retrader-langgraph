@@ -3,7 +3,7 @@
 # @Time     :   2026/11/7 16:00
 # @Author   :   Shawn
 # @Version  :   Version 0.1.0
-# @File     :   repository.py
+# @File     :   repositories.py
 # @Desc     :
 
 from os import remove

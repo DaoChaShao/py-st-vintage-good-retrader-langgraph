@@ -9,7 +9,7 @@
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import Session, sessionmaker
 
-from ..helper import Access
+from utils.helper import Access
 
 
 class InitSession(Access):

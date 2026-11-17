@@ -10,7 +10,7 @@ from typing import Self
 
 from sqlalchemy import Engine, create_engine, event
 
-from ..helper import Access
+from utils.helper import Access
 from .configs import DBCONFIG
 
 
