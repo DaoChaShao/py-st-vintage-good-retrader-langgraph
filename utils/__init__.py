@@ -42,15 +42,15 @@ from .types import Languages
 
 __all__ = [
     "WIDTH",
-    
+
     "beautifier",
     "timer", "clock",
     "countdown",
 
     "Access",
     "Beautifier",
-    "Timer",
     "RandomSeed",
+    "Timer",
 
     "black", "red", "green", "yellow", "blue", "purple", "cyan", "white",
     "bold", "underline", "invert", "strikethrough",
