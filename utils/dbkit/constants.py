@@ -4,7 +4,7 @@
 # @Author   :   Shawn
 # @Version  :   Version 0.1.0
 # @File     :   constants.py
-# @Desc     :   
+# @Desc     :
 
 from pathlib import Path
 
