@@ -5,11 +5,15 @@
 
 ### Features
 
+- **dbkit:** add database management toolkit package ([e2467a5](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/e2467a5739d52b7c766dd80ccb78271543c5e2f4))
 - **stats:** add data processing toolkit module ([fe34232](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/fe3423284fc7d48a1228c5732c2f6489f57b0031))
 - **utils:** add comprehensive utility toolkit module ([10cab0e](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/10cab0e45a2014df1af5052165f83c357a716930))
 
 ### Chore
 
+- **deps:** add sqlalchemy as a project dependency ([8b3f9c5](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/8b3f9c59a543159db636c624c33b61056bd5b6d0))
+- **deps:** add sqlalchemy dependency to project ([cc5a21e](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/cc5a21e8eeaf55e7b77efafcf1414f8d65213e41))
+- **changelog:** update entries with new features and deps ([7f9c8af](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/7f9c8afaf1bdeb07edc9eecaaad26df1f591a3dc))
 - **deps:** update lock file with new dependencies and markers ([2c94469](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/2c94469174544229b9f7ddbaa1fdaa4faf5a7f8a))
 - **deps:** add access-modifiers and pandas to dependencies ([36d211a](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/36d211aed7c659b5e574f68b42cab23c9d8f3e81))
 - **changelog:** bump version to 0.1.0 and add new entries ([60a3870](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/60a3870d31887b3eb1ff65b4cace703ba5dd8cf1))
