@@ -6,10 +6,26 @@
 # @File     :   __init__.py.py
 # @Desc     :
 
-def main() -> None:
-    """ Main Function """
-    pass
+"""
+****************************************************************
+Streamlit Application Package
+----------------------------------------------------------------
+This package provides:
 
++ subpages: All Streamlit subpage modules (home, etc.).
++ tools: Page configuration, layout control, and navigation utilities.
 
-if __name__ == "__main__":
-    main()
+It serves as the entry point for loading app modules and exposing
+core subpackages for high-level import and integration.
+****************************************************************
+"""
+
+__author__ = "Shawn Yu"
+__version__ = "0.1.0"
+
+from .tools import configue_page, navigate_pages
+
+__all__ = [
+    "configue_page",
+    "navigate_pages",
+]
