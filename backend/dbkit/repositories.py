@@ -19,24 +19,9 @@ from sqlalchemy.sql import func
 from .base import DECLARATION
 
 
-def check_table_exists(engine: Engine, table: str, *, display: bool = False) -> bool:
+def count_records(session: Session, table: Any) -> int:
     """
-    Check if the table exists in the database
-
-    :param engine: The database engine
-    :param table: The table name
-    :param display: Display the table names in the database
-    :return: True if the table exists, otherwise False
-    """
-    inspector = inspect(engine)
-    if display:
-        print(inspector.get_table_names())
-    return table in inspector.get_table_names()
-
-
-def count_data(session: Session, table: Any) -> int:
-    """
-    Count the number of the table in the database
+     Count the number of records in a database table.
 
     :param session: The database session
     :param table: The table name
@@ -55,7 +40,7 @@ def create_db(engine: Engine) -> None:
     DECLARATION.metadata.create_all(engine.engine)
 
 
-def delete_data(session: Session, table: Any) -> None:
+def delete_table_data(session: Session, table: Any) -> None:
     """
     Delete the data in the table
 
@@ -67,9 +52,9 @@ def delete_data(session: Session, table: Any) -> None:
     session.commit()
 
 
-def drop_db(engine: Engine) -> None:
+def drop_tables(engine: Engine) -> None:
     """
-    Drop a database
+    Drop all database tables
 
     :param engine: The database engine
     :return: None
@@ -94,7 +79,7 @@ def eliminate_db(engine: Engine, db_path: Path, *, display: bool = False) -> Non
             print(f"Database '{db_path.name}' eliminated successfully.")
 
 
-def get_data(session: Session, table: Any) -> DataFrame:
+def read_data(session: Session, table: Any) -> DataFrame:
     """
     Get the data from the table
 
@@ -104,3 +89,18 @@ def get_data(session: Session, table: Any) -> DataFrame:
     """
     statement = session.query(table).statement
     return read_sql(statement, session.bind)
+
+
+def table_ready(engine: Engine, table: str, *, display: bool = False) -> bool:
+    """
+    Check if the table exists in the database
+
+    :param engine: The database engine
+    :param table: The table name
+    :param display: Display the table names in the database
+    :return: True if the table exists, otherwise False
+    """
+    inspector = inspect(engine)
+    if display:
+        print(inspector.get_table_names())
+    return table in inspector.get_table_names()
