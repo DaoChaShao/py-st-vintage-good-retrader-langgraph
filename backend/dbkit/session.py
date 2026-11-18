@@ -20,6 +20,7 @@ class InitSession(Access):
         super().__init__()
         self._session = sessionmaker(
             bind=engine,
+            class_=Session,
             autoflush=False,
             expire_on_commit=False,
         )
