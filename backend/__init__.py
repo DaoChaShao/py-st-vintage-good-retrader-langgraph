@@ -27,6 +27,7 @@ __author__ = "Shawn Yu"
 __version__ = "0.1.0"
 
 from .dbkit import (
+    BASE,
     DBCONFIG,
     DECLARATION,
     GENERAL,
@@ -44,6 +45,7 @@ from .dbkit import (
 )
 
 __all__ = [
+    "BASE",
     "DBCONFIG",
     "DECLARATION",
     "GENERAL",
