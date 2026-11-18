@@ -7,6 +7,7 @@
 # @Desc     :
 
 from datetime import datetime
+from decimal import Decimal
 from typing import Annotated
 
 from sqlalchemy import DateTime, Float, Integer, String, Text
@@ -21,6 +22,8 @@ class GENERAL:
     PK = Annotated[int, mapped_column(Integer, nullable=False, primary_key=True)]
     CT = Annotated[datetime, mapped_column(DateTime, nullable=False, server_default=func.now())]
     UT = Annotated[datetime, mapped_column(DateTime, nullable=False, server_default=func.now(), onupdate=func.now())]
+    FLT = Annotated[float, mapped_column(Float, nullable=True)]
+    INT = Annotated[int, mapped_column(Integer, nullable=True)]
+    DEC = Annotated[Decimal, mapped_column(Float, nullable=True)]
     STR = Annotated[str, mapped_column(String(100), nullable=True)]
-    NUM = Annotated[float, mapped_column(Float, nullable=True)]
     TXT = Annotated[str, mapped_column(Text, nullable=True)]
