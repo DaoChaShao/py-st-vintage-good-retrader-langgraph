@@ -6,16 +6,26 @@
 # @File     :   configs.py
 # @Desc     :
 
-from dataclasses import dataclass
 from pathlib import Path
+from typing import Annotated, Literal
+
+from pydantic import Field
+from pydantic.dataclasses import dataclass
+
+from .types import ExecutionModes
 
 
 @dataclass
 class DBCONFIG:
     path: Path
     echo: bool = False
-    timeout: int = 30
+    mode: str | ExecutionModes | Literal["sync", "async"] = ExecutionModes.SYNC
+    timeout: Annotated[int, Field(gt=0)] = 30
+    pool_size: Annotated[int, Field(ge=0)] = 10
+    max_overflow: Annotated[int, Field(ge=0)] = 20
 
     @property
     def url(self) -> str:
-        return f"sqlite:///{self.path.resolve()}"
+        """ Return the database URL """
+        _driver: str = "sqlite+aiosqlite" if self.mode == ExecutionModes.ASYNC else "sqlite"
+        return f"{_driver}:///{self.path.resolve()}"
