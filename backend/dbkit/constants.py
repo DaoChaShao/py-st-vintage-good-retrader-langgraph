@@ -8,9 +8,9 @@
 
 from pathlib import Path
 
-BASE = Path(__file__).resolve().parents[2]
-SQLITE: Path = BASE / "data/sqlite3.db"
+BASE_DIR: Path = Path(__file__).resolve().parents[2]
+SQLITE: Path = BASE_DIR / "data/sqlite3.db"
 
 if __name__ == "__main__":
     path: Path = Path(SQLITE)
-    print(path.exists())
+    print(path.exists(), path)
