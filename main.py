@@ -6,9 +6,13 @@
 # @File     :   main.py
 # @Desc     :
 
+from frontend import configue_page, navigate_pages
+
+
 def main() -> None:
-    """ Main Function """
-    pass
+    """ streamlit run main.py """
+    configue_page()
+    navigate_pages()
 
 
 if __name__ == "__main__":
