@@ -6,10 +6,56 @@
 # @File     :   __init__.py.py
 # @Desc     :
 
-def main() -> None:
-    """ Main Function """
-    pass
+"""
+***************************************************************
+Backend Package
+---------------------------------------------------------------
+This package provides:
 
++ dbkit: Database configuration, connection management,
+  session handling, and data access utilities.
++ fastapi: RESTful API endpoints, request validation,
+  business logic and backend service management.
 
-if __name__ == "__main__":
-    main()
+It serves as the backend layer for database operations,
+business logic processing, and communication with frontend
+applications through HTTP APIs.
+***************************************************************
+"""
+
+__author__ = "Shawn Yu"
+__version__ = "0.1.0"
+
+from .dbkit import (
+    DBCONFIG,
+    DECLARATION,
+    GENERAL,
+    SQLITE,
+    Goods,
+    InitEngine,
+    InitSession,
+    count_records,
+    create_db,
+    delete_table_data,
+    drop_tables,
+    eliminate_db,
+    read_data,
+    table_ready,
+)
+
+__all__ = [
+    "DBCONFIG",
+    "DECLARATION",
+    "GENERAL",
+    "Goods",
+    "SQLITE",
+    "InitEngine",
+    "InitSession",
+    "count_records",
+    "create_db",
+    "delete_table_data",
+    "drop_tables",
+    "eliminate_db",
+    "read_data",
+    "table_ready",
+]
