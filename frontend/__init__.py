@@ -6,10 +6,26 @@
 # @File     :   __init__.py.py
 # @Desc     :
 
-def main() -> None:
-    """ Main Function """
-    pass
+"""
+***************************************************************
+Frontend Package
+---------------------------------------------------------------
+This package provides:
 
++ app: Streamlit application, pages, and UI utilities.
++ network: HTTP request handling and backend API communication.
 
-if __name__ == "__main__":
-    main()
+It serves as the frontend layer for user interaction,
+application navigation, and communication with backend services.
+***************************************************************
+"""
+
+__author__ = "Shawn Yu"
+__version__ = "0.1.0"
+
+from .app import configue_page, navigate_pages
+
+__all__ = [
+    "configue_page",
+    "navigate_pages",
+]
