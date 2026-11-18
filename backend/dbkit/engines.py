@@ -6,7 +6,6 @@
 # @File     :   engines.py
 # @Desc     :
 
-from typing import Self
 
 from sqlalchemy import Engine, create_engine, event
 
@@ -44,21 +43,6 @@ class InitEngine(Access):
     def dispose(self) -> None:
         """ Dispose the engine """
         self._engine.dispose()
-
-    def __enter__(self) -> Self:
-        """ Enter the context manager """
-        return self
-
-    def __exit__(self, exc_type, exc_value, traceback) -> None:
-        """
-        Exit the context manager
-
-        :param exc_type: The type of exception that occurred.
-        :param exc_value: The exception that occurred.
-        :param traceback: The traceback of the exception.
-        :return: Whether to suppress the exception.
-        """
-        self.dispose()
 
     @property
     def engine(self) -> Engine:
