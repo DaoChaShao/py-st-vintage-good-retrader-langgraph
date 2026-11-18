@@ -47,6 +47,7 @@
 
 ### Chore
 
+- **server:** remove unused imports from server module ([db17f30](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/db17f30541669148a82afe79d1bd0fb182d5a99e))
 - **fapi:** add .gitignore for routers directory ([8570774](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/857077454174f963ee337f7e0f6581aa7b7cceb6))
 - **endpoints:** add .gitignore for backend router directory ([3096472](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/3096472386fbf2b027674232993c4309228e4096))
 - **deps:** add fastapi, greenlet, and pydantic dependencies ([a07c814](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/a07c814786a32288fda5304f05e49ed7190d6031))
@@ -72,6 +73,7 @@
 
 ### Docs
 
+- **changelog:** add entries for features and chores ([78e72f8](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/78e72f86a9ed3ad6bde6831dbb617f2ec030a02f))
 - **changelog:** add entries for features and fixes ([543991b](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/543991bdf269db0e5bc1b9f7ef197b4512c3b10d))
 - **changelog:** add entries for features, refactoring, and tests ([c82b93a](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/c82b93ae25236d0cb9f4aad9d0bcbffadb4003b1))
 - **changelog:** add new entries for recent changes ([2c8afc9](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/2c8afc98a171b146841e5b0c701d81922c98ba20))
@@ -84,6 +86,7 @@
 
 ### Code Refactoring
 
+- **fapi:** remove unused ConfigDict import ([8caffce](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/8caffce7dc6bbdafd59401556801c7e380cc437f))
 - **session:** specify session class explicitly ([0bae9ec](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/0bae9ecdcdaa4e33974f20c6188ed611caea8e05))
 - **dbkit:** update Goods model to use BASE ([c72c78f](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/c72c78febfd27f6ad8197a5d66b9169bd2cc36a0))
 - **dbkit:** rename repository functions for clarity ([982f0b6](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/982f0b67a50bb54d91933fc1b29a42853c43ae82))
