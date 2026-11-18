@@ -6,10 +6,28 @@
 # @File     :   __init__.py.py
 # @Desc     :
 
-def main() -> None:
-    """ Main Function """
-    pass
 
+"""
+***************************************************************
+FastAPI Core - Backend API Management Toolkit
+---------------------------------------------------------------
+This package provides a collection of reusable utilities, classes,
+and components for API routing, request validation, response handling,
+business logic and dependency management.
 
-if __name__ == "__main__":
-    main()
+Designed to provide a modular, extensible, and consistent interface
+for building and managing asynchronous RESTful APIs with FastAPI.
+***************************************************************
+"""
+
+__author__ = "Shawn Yu"
+__version__ = "0.1.0"
+
+from .repositories import async_table_ready
+from .session import InitAsyncSession
+
+__all__ = [
+    "async_table_ready",
+
+    "InitAsyncSession",
+]
