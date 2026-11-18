@@ -10,7 +10,7 @@ from datetime import date
 from decimal import Decimal
 from typing import Annotated
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, Field
 
 
 class GoodsBase(BaseModel):
