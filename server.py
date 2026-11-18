@@ -4,7 +4,7 @@
 # @Author   :   Shawn
 # @Version  :   Version 0.1.0
 # @File     :   server.py
-# @Desc     :   
+# @Desc     :
 
 from contextlib import asynccontextmanager
 
@@ -12,7 +12,6 @@ from fastapi import FastAPI
 from uvicorn import run
 
 from backend.fapi.routers import router
-from backend.dbkit import DECLARATION, InitEngine
 
 
 @asynccontextmanager
