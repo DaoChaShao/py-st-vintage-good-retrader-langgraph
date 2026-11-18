@@ -7,6 +7,7 @@
 # @Desc     :
 
 from datetime import date
+from decimal import Decimal
 from os import remove
 from pathlib import Path
 from typing import Any
@@ -254,7 +255,7 @@ def update_record(engine: Engine, table: Any, db_idx: int) -> None:
         )
         international_price: float = number_input(
             "Product Price ($)", required=True,
-            min_value=0.0, max_value=100.0, step=0.01, value=record.price,
+            min_value=0.0, max_value=100.0, step=0.01, value=float(record.price),
             width="stretch", help="Select the product price."
         )
         # currency: float = slider(
@@ -287,7 +288,7 @@ def update_record(engine: Engine, table: Any, db_idx: int) -> None:
 
                 record.product = product
                 record.category = category
-                record.price = international_price
+                record.price = Decimal(str(international_price))
                 record.quantity = quantity
                 record.description = desc
 
