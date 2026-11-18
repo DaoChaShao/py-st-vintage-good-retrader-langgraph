@@ -1,10 +1,20 @@
 <!-- insertion marker -->
 <a name="0.1.0"></a>
 
-## [0.1.0](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/compare/ac1d2409aef149089b2a89c9480844fcefaf52a3...0.1.0) (2026-11-17)
+## [0.1.0](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/compare/ac1d2409aef149089b2a89c9480844fcefaf52a3...0.1.0) (2026-11-18)
 
 ### Features
 
+- **tools:** add DBReadyStatus enum for database state ([21233af](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/21233af8698d354f4bee999a8a0ecc6d155da625))
+- **tools:** add database readiness check service ([ef42465](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/ef42465a11704ef2cce77cb13a084aadf88d2ca7))
+- **dbkit:** add Goods model for product inventory ([45db325](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/45db3253909d859df6444691f4ae4f03d22cc449))
+- **main:** integrate frontend modules into main entry point ([802f90d](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/802f90dddff71be77d0d9affcbc9c4d7df86ae13))
+- **layout:** add page config and sidebar nav ([a51cbfe](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/a51cbfe677b5b680e74bd6c8ad6d577ab786ed0f))
+- **frontend:** add SQLite database initialisation subpage ([9c44f5e](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/9c44f5ef01aef8e6c92863e804a4945b2cd8c973))
+- **home:** add home subpage with runner pro introduction ([3f94136](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/3f94136272e871f2b5b94a8d4e3a174c19c8d21c))
+- **dialogs:** add CRUD dialog components for data management ([7d42336](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/7d42336b0acd71b20fda28fd7d69ad6f4d0ce42e))
+- **tools:** create tools package with submodule exports ([97ebf47](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/97ebf4720347fb9493a499ad4c54fef683a55e51))
+- **subpages:** add __init__.py for Streamlit subpages package ([b4fcc29](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/b4fcc291fd3e95ec15a411180cbec968b5cccdbd))
 - update the uv.lock file ([62dc8dc](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/62dc8dc462f831291817859e85c184617ad4baff))
 - **frontend:** create initial __init__.py module skeleton ([6637ba2](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/6637ba2055ba6f758ba34f675ec61440538d3ae0))
 - **network:** add module init file ([18687f9](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/18687f98660bdfc4bd78b9604260615121ccb5ea))
@@ -18,6 +28,8 @@
 
 ### Chore
 
+- **tools:** add .gitignore for Python tools directory ([a983482](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/a9834827d553edab9f28a9010f54e37c7eee02f4))
+- **subpages:** add .gitignore for Python project files ([498d0a6](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/498d0a6dbb61f8ed73f7338152961d245dc80090))
 - **deps:** add streamlit and watchdog dependencies ([3d874d1](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/3d874d1eb79dae56b287c260e696c218c6f89126))
 - **frontend:** add .gitignore for Python artifacts and IDE files ([6bb51c1](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/6bb51c1e410292786c8ed68b988d900218e4b133))
 - **network:** add .gitignore for Python project files ([536fc47](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/536fc4787d3050d4596ea940e4669fa90dcd34b8))
@@ -38,7 +50,7 @@
 
 ### Docs
 
-- **changelog:** add new entries for recent changes ([766ccf3](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/766ccf36cc9f3bd22348d0cf0daa958188ae1a69))
+- **changelog:** add new entries for recent changes ([2c8afc9](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/2c8afc98a171b146841e5b0c701d81922c98ba20))
 - **changelog:** update entries with new features and refactoring ([2996de8](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/2996de8b31461e08005556c59d1c191728b1353e))
 - **changelog:** update entries with new features and deps ([55af22c](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/55af22c5b5c0133c6b504da4f994d75fb62a2c31))
 - **changelog:** add entries for .gitignore and changelog creation ([8e4c1c3](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/8e4c1c3a063dc8f7b631ca78ae4c036e3abd5264))
@@ -48,5 +60,17 @@
 
 ### Code Refactoring
 
+- **dbkit:** rename repository functions for clarity ([982f0b6](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/982f0b67a50bb54d91933fc1b29a42853c43ae82))
+- **dbkit:** drop context manager support ([4ca2c07](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/4ca2c070cfbcb5ccd62ca0c29f7531e3b54835b1))
+- **dbkit:** rename BASE constant to BASE_DIR for clarity ([86eb651](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/86eb651a5bb8a94f0e93fa2e40a369601595dbce))
+- **dbkit:** split NUM into specific typed column annotations ([19a8116](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/19a8116bb23e2de410f9058086cb705019624529))
+- **frontend:** restructure __init__ as package interface ([674b73e](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/674b73e0aa6d879a3ad3fa54fb4b87650c60fbb5))
+- **app:** restructure __init__.py as proper package module ([4b4807d](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/4b4807d3b7350f1cd959eb4642e6c0e9400d0392))
+- **backend:** expose dbkit API in package init ([ed53068](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/ed53068add8ac0d4abf47252cc1cad386a537563))
+- **dbkit:** rename repository functions and export Goods model ([71bab4a](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/71bab4a1df9c0a7afc8abab0289df66fa613806c))
 - **dbkit:** move dbkit module from utils to backend ([46ca088](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/46ca088cd73b40bc890c5ad6943ef2071ce7021c))
 - **dbkit:** remove GENERAL column type definitions ([f0ffac3](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/f0ffac3b18ccb907e6d34e71de5c3164e5552c6e))
+
+### Tests
+
+- **backend:** add integration test for database module lifecycle ([99e7621](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/99e7621d2d23cc0356e3f4b6f4e3a60d59f0a2e8))
