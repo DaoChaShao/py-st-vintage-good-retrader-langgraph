@@ -39,6 +39,5 @@ def main() -> None:
     print(table_ready(sqlite.engine, Goods.__tablename__))
 
 
-
 if __name__ == "__main__":
     main()
