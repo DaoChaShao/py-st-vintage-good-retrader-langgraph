@@ -13,7 +13,7 @@ Frontend Package
 This package provides:
 
 + app: Streamlit application, pages, and UI utilities.
-+ network: HTTP request handling and backend API communication.
++ net: HTTP request handling and backend API communication.
 
 It serves as the frontend layer for user interaction,
 application navigation, and communication with backend services.
@@ -23,9 +23,15 @@ application navigation, and communication with backend services.
 __author__ = "Shawn Yu"
 __version__ = "0.1.0"
 
+from .api import async_configue_page, async_navigate_pages
 from .app import configue_page, navigate_pages
 
 __all__ = [
+    # Sync Functions
     "configue_page",
     "navigate_pages",
+
+    # Async Functions
+    "async_configue_page",
+    "async_navigate_pages",
 ]
