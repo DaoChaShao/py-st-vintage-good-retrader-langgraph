@@ -12,11 +12,11 @@ from streamlit import (
     container,
     data_editor,
     empty,
+    expander,
     rerun,
     session_state,
     space,
     stop,
-    expander,
 )
 
 from frontend.api.tools import async_db_ready
