@@ -6,39 +6,45 @@
 # @File     :   server.py
 # @Desc     :
 
-from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from fastapi.responses import FileResponse
 from uvicorn import run
 
 from backend.fapi.routers import router
 
-
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    # Initialise database
-    # await init_db()
-
-    yield
-
-    # Dispose database engine
-    # await engine.async_dispose()
+# @asynccontextmanager
+# async def lifespan(app: FastAPI):
+#     # Initialise database
+#     # await init_db()
+#
+#     yield
+#
+#     # Dispose database engine
+#     # await engine.async_dispose()
 
 
 app = FastAPI(
     title="Vintage Goods API",
-    description="Backend API for Vintage Goods",
+    description="Backend API for Vintage Goods Retrading",
     version="0.1.0",
-    lifespan=lifespan,
+    # lifespan=lifespan,
 )
 
-app.include_router(router, prefix="/goods")
+app.include_router(router.router, prefix="/api")
 
 
 @app.get("/")
 async def root():
+    """ Return a message indicating that the API is up and running """
     return {"message": "Vintage Goods API"}
 
 
+@app.get("/favicon.ico", include_in_schema=False)
+async def favicon():
+    """Return the favicon icon for the API (https://favicon.io/)"""
+    return FileResponse("static/favicon.ico")
+
+
 if __name__ == "__main__":
-    run("backend.api.main:app", host="127.0.0.1", port=8000, reload=True)
+    run("server:app", host="127.0.0.1", port=8000, reload=True, log_level="info")
