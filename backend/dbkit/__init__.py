@@ -27,13 +27,13 @@ from .configs import DBCONFIG
 from .constants import SQLITE
 from .engines import InitEngine
 from .models import Goods
-from .repositories import (
+from .repository import (
     count_records,
     create_db,
-    delete_table_data,
+    delete_table_records,
     drop_tables,
     eliminate_db,
-    read_data,
+    read_records,
     table_ready,
 )
 from .session import InitSession
@@ -54,10 +54,10 @@ __all__ = [
 
     "count_records",
     "create_db",
-    "delete_table_data",
+    "delete_table_records",
     "drop_tables",
     "eliminate_db",
-    "read_data",
+    "read_records",
     "table_ready",
 
     "InitSession",
