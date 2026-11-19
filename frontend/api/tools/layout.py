@@ -8,9 +8,15 @@
 
 from pathlib import Path
 
-from streamlit import Page, navigation, set_page_config
+from streamlit import (
+    Page,
+    logo,
+    navigation,
+    set_page_config,
+)
 
-BASE_DIR: Path = Path(__file__).resolve().parents[1]
+LOGO_DIR: Path = Path(__file__).resolve().parents[3]
+PAGE_DIR: Path = Path(__file__).resolve().parents[1]
 
 
 def async_configue_page() -> None:
@@ -18,10 +24,15 @@ def async_configue_page() -> None:
     :return: None
     """
     set_page_config(
-        page_title="Vintage Goods",
+        page_title="Vintage Goods ReTrader",
         page_icon=":material/globe:",
         layout="wide",
-        initial_sidebar_state="expanded",
+        initial_sidebar_state="auto",
+    )
+
+    logo(
+        Path(LOGO_DIR / "static" / "favicon.ico"),
+        size="medium",
     )
 
 
@@ -31,38 +42,30 @@ def async_navigate_pages() -> None:
     """
     pages: dict = {
         "page": [
-            Path(BASE_DIR / "subpages" / "home.py").resolve(),
-            Path(BASE_DIR / "subpages" / "initialisation.py").resolve(),
-            # "app/subpages/preparation.py",
-            # "app/subpages/ef.py",
-            # "app/subpages/acwr.py",
-            # "app/subpages/hrr.py"
+            Path(PAGE_DIR / "subpages" / "home.py").resolve(),
+            Path(PAGE_DIR / "subpages" / "dashboard.py").resolve(),
+            Path(PAGE_DIR / "subpages" / "management.py").resolve(),
         ],
         "title": [
             "Home",
-            "Data Initialisation",
-            # "Data Preparation",
-            # "Efficiency Factor",
-            # "Acute:Chronic Workload Ratio",
-            # "Heart Rate Recovery",
+            "Dashboard",
+            "Management",
         ],
         "icon": [
             ":material/home:",
+            ":material/dashboard:",
             ":material/database:",
-            # ":material/dashboard:",
-            # ":material/looks_one:",
-            # ":material/looks_two:",
-            # ":material/looks_3:"
         ],
     }
 
     structure: list = [
         Page(page=pages["page"][0], title=pages["title"][0], icon=pages["icon"][0]),
         Page(page=pages["page"][1], title=pages["title"][1], icon=pages["icon"][1]),
+        Page(page=pages["page"][2], title=pages["title"][2], icon=pages["icon"][2]),
     ]
     pg = navigation(structure, position="top", expanded=True)
     pg.run()
 
 
 if __name__ == "__main__":
-    print(BASE_DIR)
+    print(PAGE_DIR)
