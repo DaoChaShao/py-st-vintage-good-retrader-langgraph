@@ -3,14 +3,14 @@
 # @Time     :   2026/11/18 13:13
 # @Author   :   Shawn
 # @Version  :   Version 0.1.0
-# @File     :   initialisation.py
+# @File     :   dashboard.py
 # @Desc     :
 
 from streamlit import (
     button,
     columns,
     container,
-    dataframe,
+    data_editor,
     empty,
     rerun,
     session_state,
@@ -48,11 +48,9 @@ else:
     if right.button("Search", type="primary", width="stretch"):
         pass
 
-    dataframe(
+    data_editor(
         session_state.GOODS,
-        hide_index=True,
-        selection_mode="single-row",
-        on_select="rerun",
+        hide_index=True, disabled=True,
         width="stretch", height="stretch"
     )
     NOTIFICATION.info("Records loaded successfully.")
