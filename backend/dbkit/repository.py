@@ -3,7 +3,7 @@
 # @Time     :   2026/11/7 16:00
 # @Author   :   Shawn
 # @Version  :   Version 0.1.0
-# @File     :   repositories.py
+# @File     :   services.py
 # @Desc     :
 
 from os import remove
@@ -40,7 +40,7 @@ def create_db(engine: Engine) -> None:
     DECLARATION.metadata.create_all(engine.engine)
 
 
-def delete_table_data(session: Session, table: Any) -> None:
+def delete_table_records(session: Session, table: Any) -> None:
     """
     Delete the data in the table
 
@@ -79,7 +79,7 @@ def eliminate_db(engine: Engine, db_path: Path, *, display: bool = False) -> Non
             print(f"Database '{db_path.name}' eliminated successfully.")
 
 
-def read_data(session: Session, table: Any) -> DataFrame:
+def read_records(session: Session, table: Any) -> DataFrame:
     """
     Get the data from the table
 
