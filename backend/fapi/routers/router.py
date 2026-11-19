@@ -6,10 +6,13 @@
 # @File     :   router.py
 # @Desc     :
 
-def main() -> None:
-    """ Main Function """
-    pass
+from fastapi import APIRouter
 
+from .endpoints import (
+    goods,
+)
 
-if __name__ == "__main__":
-    main()
+router = APIRouter()
+
+# Register the routers
+router.include_router(goods.router, prefix="/goods", tags=["goods"])
