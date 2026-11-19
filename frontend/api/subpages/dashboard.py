@@ -16,6 +16,7 @@ from streamlit import (
     session_state,
     space,
     stop,
+    expander,
 )
 
 from frontend.api.tools import async_db_ready
@@ -48,9 +49,10 @@ else:
     if right.button("Search", type="primary", width="stretch"):
         pass
 
-    data_editor(
-        session_state.GOODS,
-        hide_index=True, disabled=True,
-        width="stretch", height="stretch"
-    )
-    NOTIFICATION.info("Records loaded successfully.")
+    with expander("Vintage Goods Information", expanded=False, icon=":material/data_check:", width="stretch"):
+        data_editor(
+            session_state.GOODS,
+            hide_index=True, disabled=True,
+            width="stretch", height="stretch"
+        )
+        NOTIFICATION.info("Records loaded successfully.")
