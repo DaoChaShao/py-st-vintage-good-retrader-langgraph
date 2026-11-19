@@ -37,10 +37,10 @@ from .dbkit import (
     InitSession,
     count_records,
     create_db,
-    delete_table_data,
+    delete_table_records,
     drop_tables,
     eliminate_db,
-    read_data,
+    read_records,
     table_ready,
 )
 
@@ -55,9 +55,9 @@ __all__ = [
     "InitSession",
     "count_records",
     "create_db",
-    "delete_table_data",
+    "delete_table_records",
     "drop_tables",
     "eliminate_db",
-    "read_data",
+    "read_records",
     "table_ready",
 ]
