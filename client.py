@@ -1,0 +1,19 @@
+#!/usr/bin/env python3.12
+# -*- Coding: UTF-8 -*-
+# @Time     :   2026/11/19 17:02
+# @Author   :   Shawn
+# @Version  :   Version 0.1.0
+# @File     :   client.py
+# @Desc     :
+
+from frontend import async_configue_page, async_navigate_pages
+
+
+def main() -> None:
+    """ streamlit run client.py """
+    async_configue_page()
+    async_navigate_pages()
+
+
+if __name__ == "__main__":
+    main()
