@@ -23,7 +23,7 @@ from backend import (
     InitEngine,
     InitSession,
     count_records,
-    read_data,
+    read_records,
 )
 from frontend.app.tools import (
     DBReadyStatus,
@@ -65,7 +65,7 @@ with InitSession(sqlite.engine).initialise() as session:
             icon=":material/search:", width="stretch"
         )
 
-        goods: DataFrame = read_data(session, Goods)
+        goods: DataFrame = read_records(session, Goods)
         selection = dataframe(
             goods,
             hide_index=True, width="stretch", height=600,
