@@ -32,7 +32,7 @@ def navigate_pages() -> None:
     pages: dict = {
         "page": [
             Path(BASE_DIR / "subpages" / "home.py").resolve(),
-            Path(BASE_DIR / "subpages" / "initialisation.py").resolve(),
+            Path(BASE_DIR / "subpages" / "dashboard.py").resolve(),
             # "app/subpages/preparation.py",
             # "app/subpages/ef.py",
             # "app/subpages/acwr.py",
