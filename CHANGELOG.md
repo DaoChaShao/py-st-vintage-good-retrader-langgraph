@@ -5,6 +5,7 @@
 
 ### Features
 
+- **tools:** add material icons to notification messages ([70ce437](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/70ce437b7bce560e41eab7e897c92ef25510b19c))
 - **net:** add user endpoint URL constant ([686d526](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/686d52687ab64138246f15f48cfce8b98afc5bb8))
 - **auth:** add user authentication schemas ([3e71b90](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/3e71b90cb3327905461c55b9c0fcca66d388a255))
 - **models:** add User model with authentication fields ([e87e0cd](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/e87e0cd1e4f61e4543c500284dfa310e46acd9b4))
@@ -72,6 +73,8 @@
 
 ### Bug Fixes
 
+- **layout:** initialize IS_IN session state with default value ([56baa7d](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/56baa7db9272abd01f40eed8363a7354f063afe8))
+- **dashboard:** change notification type to success with icon ([9f5c78d](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/9f5c78d439abcd6f937d29ec2ba87864eb2bd82d))
 - **tools:** convert price between Decimal and float types ([f9872f1](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/f9872f1152103f8103c7910abef1b9c0942641fc))
 
 ### Chore
@@ -107,6 +110,8 @@
 
 ### Docs
 
+- **server:** add uvicorn run hint to server main block ([09d1b3d](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/09d1b3d0fbbc40cef75d6e3502727a01f667f01e))
+- **changelog:** add performance improvements section and update reference ([37da8f8](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/37da8f85e636a307c7cf24433718ddee6bfe3e0e))
 - **changelog:** update changelog with recent feature entries ([afa3bdb](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/afa3bdb190c4ba7afab6c3bd1b0de65a858401bb))
 - **changelog:** update changelog with recent entries ([39a2d97](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/39a2d97828f229e72956eb483ca1aa271c08bb07))
 - **initialisation:** correct file name reference in header comment ([3b1f899](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/3b1f899297ea33577b0c412a7e9ad1fa9fcd1b3c))
