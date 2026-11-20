@@ -19,6 +19,10 @@ from streamlit import (
 LOGO_DIR: Path = Path(__file__).resolve().parents[3]
 PAGE_DIR: Path = Path(__file__).resolve().parents[1]
 
+for key in ["IS_IN"]:
+    if key not in session_state:
+        session_state[key] = None
+
 
 def async_configue_page() -> None:
     """ Set the window
