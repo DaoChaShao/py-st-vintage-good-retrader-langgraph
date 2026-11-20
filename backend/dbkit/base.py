@@ -10,7 +10,17 @@ from datetime import date, datetime, time
 from decimal import Decimal
 from typing import Annotated
 
-from sqlalchemy import Date, DateTime, Float, Integer, Numeric, String, Text, Time, Boolean
+from sqlalchemy import (
+    Boolean,
+    Date,
+    DateTime,
+    Float,
+    Integer,
+    Numeric,
+    String,
+    Text,
+    Time,
+)
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy.sql import func
