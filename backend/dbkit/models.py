@@ -7,13 +7,13 @@
 # @Desc     :
 
 
-from sqlalchemy.orm import Mapped
+from sqlalchemy.orm import Mapped, mapped_column
 
 from .base import BASE, GENERAL
 
 
 class Goods(BASE):
-    """ Model """
+    """ Goods Model """
 
     __tablename__ = "goods"
     __table_args__ = {"comment": "Goods Table"}
@@ -39,4 +39,27 @@ class Goods(BASE):
             f"price={self.price}, "
             f"quantity={self.quantity}, "
             f"description={self.description})>"
+        )
+
+
+class User(BASE):
+    """ User Model """
+
+    __tablename__ = "users"
+    __table_args__ = {"comment": "Users Table"}
+
+    username: Mapped[GENERAL.STR] = mapped_column(unique=True, nullable=False)
+    password: Mapped[GENERAL.STR]
+    hashed_password: Mapped[GENERAL.HAS]
+    is_active: Mapped[GENERAL.BOL] = mapped_column(default=True, nullable=False)
+    role: Mapped[GENERAL.STR] = mapped_column(default="user", nullable=False)
+
+    def __repr__(self) -> str:
+        """ Return the string representation of the User class """
+        return (
+            f"<User("
+            f"{super().__repr__()}"
+            f"username={self.username}, "
+            f"is_active={self.is_active}, "
+            f"role={self.role})>"
         )
