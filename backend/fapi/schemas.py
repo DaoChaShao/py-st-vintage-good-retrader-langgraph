@@ -16,6 +16,7 @@ from .types import ResponseStatus
 
 class GoodResponse(BaseModel):
     """ Response for a single good """
+
     model_config = ConfigDict(from_attributes=True)
 
     # Main Key
@@ -28,13 +29,54 @@ class GoodResponse(BaseModel):
     price: Decimal | None
     quantity: int | None
     description: str | None
-
+    # Timestamps
     created_at: datetime | None
     updated_at: datetime | None
 
 
 class GoodsResponse(BaseModel):
     """ Response for goods endpoint """
+
     code: int | ResponseStatus
     message: str | ResponseStatus
     data: list[GoodResponse]
+
+
+class UserSignIn(BaseModel):
+    """ Request for user login """
+
+    username: str
+    password: str
+
+
+class UserResponse(BaseModel):
+    """ Response for a single user """
+
+    model_config = ConfigDict(from_attributes=True)
+
+    # Main Key
+    id: int
+    # Attributes
+    username: str
+    is_active: bool
+    role: str
+    # Timestamps
+    created_at: datetime | None
+    updated_at: datetime | None
+
+
+class TokenResponse(BaseModel):
+    """ Response for user authentication """
+
+    token: str
+    type: str = "bearer"
+    expires_in: int
+
+
+class SignInResponse(BaseModel):
+    """ Response for successful login """
+
+    user: UserResponse
+    token: str
+    type: str = "bearer"
+    expires_in: int
