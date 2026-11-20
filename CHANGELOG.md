@@ -107,7 +107,7 @@
 
 ### Docs
 
-- **changelog:** update changelog with recent feature entries ([32dc8d4](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/32dc8d4ff465be6b6683e18971059aa4318c97e6))
+- **changelog:** update changelog with recent feature entries ([afa3bdb](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/afa3bdb190c4ba7afab6c3bd1b0de65a858401bb))
 - **changelog:** update changelog with recent entries ([39a2d97](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/39a2d97828f229e72956eb483ca1aa271c08bb07))
 - **initialisation:** correct file name reference in header comment ([3b1f899](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/3b1f899297ea33577b0c412a7e9ad1fa9fcd1b3c))
 - **changelog:** update changelog with new entries ([00be4df](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/00be4dfefb7ff30d65808dfa906e024efe7c3ba4))
@@ -122,6 +122,10 @@
 - **project:** add CHANGELOG.md with initial release notes ([7f58cf2](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/7f58cf28c94909e95a58de1594e3e15bd80035a6))
 - **readme:** add Chinese version of README documentation ([c0b56af](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/c0b56af8691695b7d946de0851a5ace20aee030a))
 - **readme:** add project README with privacy and setup guides ([4aab1c3](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/4aab1c33d5c4904f310057773762a124e598c80f))
+
+### Performance Improvements
+
+- **goods:** add cache_data decorator to get_goods function ([a0a274c](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/a0a274cac4d4146879645c68341d5b2d8c517e51))
 
 ### Code Refactoring
 
