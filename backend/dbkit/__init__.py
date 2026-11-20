@@ -26,7 +26,7 @@ from .base import BASE, DECLARATION, GENERAL
 from .configs import DBCONFIG
 from .constants import SQLITE
 from .engines import InitEngine
-from .models import Goods
+from .models import Goods, User
 from .repository import (
     count_records,
     create_db,
@@ -51,6 +51,7 @@ __all__ = [
     "InitEngine",
 
     "Goods",
+    "User",
 
     "count_records",
     "create_db",
