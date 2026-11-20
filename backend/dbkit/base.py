@@ -10,7 +10,7 @@ from datetime import date, datetime, time
 from decimal import Decimal
 from typing import Annotated
 
-from sqlalchemy import Date, DateTime, Float, Integer, Numeric, String, Text, Time
+from sqlalchemy import Date, DateTime, Float, Integer, Numeric, String, Text, Time, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy.sql import func
@@ -26,7 +26,9 @@ class GENERAL:
     INT = Annotated[int, mapped_column(Integer, nullable=True)]
     FLT = Annotated[float, mapped_column(Float, nullable=True)]
     DEC = Annotated[Decimal, mapped_column(Numeric(12, 2), nullable=True)]
-    STR = Annotated[str, mapped_column(String(100), nullable=True)]
+    STR = Annotated[str, mapped_column(String(60), nullable=True)]
+    BOL = Annotated[bool, mapped_column(Boolean, nullable=True)]
+    HAS = Annotated[str, mapped_column(String(255), nullable=False)]
     TXT = Annotated[str, mapped_column(Text, nullable=True)]
     DT = Annotated[date, mapped_column(Date, nullable=True)]
     TM = Annotated[time, mapped_column(Time, nullable=True)]
