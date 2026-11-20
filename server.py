@@ -47,4 +47,5 @@ async def favicon():
 
 
 if __name__ == "__main__":
+    """ uv run uvicorn server:app --reload """
     run("server:app", host="127.0.0.1", port=8000, reload=True, log_level="info")
