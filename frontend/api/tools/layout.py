@@ -12,6 +12,7 @@ from streamlit import (
     Page,
     logo,
     navigation,
+    session_state,
     set_page_config,
 )
 
@@ -43,16 +44,19 @@ def async_navigate_pages() -> None:
     pages: dict = {
         "page": [
             Path(PAGE_DIR / "subpages" / "home.py").resolve(),
+            Path(PAGE_DIR / "subpages" / "account.py").resolve(),
             Path(PAGE_DIR / "subpages" / "dashboard.py").resolve(),
             Path(PAGE_DIR / "subpages" / "management.py").resolve(),
         ],
         "title": [
             "Home",
+            "Account",
             "Dashboard",
             "Management",
         ],
         "icon": [
             ":material/home:",
+            ":material/account_circle:",
             ":material/dashboard:",
             ":material/database:",
         ],
@@ -61,8 +65,14 @@ def async_navigate_pages() -> None:
     structure: list = [
         Page(page=pages["page"][0], title=pages["title"][0], icon=pages["icon"][0]),
         Page(page=pages["page"][1], title=pages["title"][1], icon=pages["icon"][1]),
-        Page(page=pages["page"][2], title=pages["title"][2], icon=pages["icon"][2]),
     ]
+
+    if session_state.IS_IN:
+        structure.extend([
+            Page(page=pages["page"][2], title=pages["title"][2], icon=pages["icon"][2]),
+            Page(page=pages["page"][3], title=pages["title"][3], icon=pages["icon"][3]),
+        ])
+
     pg = navigation(structure, position="top", expanded=True)
     pg.run()
 
