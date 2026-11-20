@@ -48,13 +48,13 @@ def async_db_ready(
     _status = DBReadyStatus(status)
 
     if state is None:
-        notification.error("Records not loaded. Please load them first.")
+        notification.error("Records not loaded. Please load them first.", icon=":material/error:")
         if _status == DBReadyStatus.INIT:
             _init_button()
         return False
 
     if len(state) == 0:
-        notification.warning("No records found in the database.")
+        notification.warning("No records found in the database.", icon=":material/warning:")
         if _status == DBReadyStatus.INIT:
             _init_button()
         return False
