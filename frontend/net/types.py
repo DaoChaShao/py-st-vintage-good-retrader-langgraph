@@ -33,3 +33,4 @@ class URL(StrEnum):
     """ URL """
     TEST = BASE + "/test"
     GOODS = BASE + "/goods"
+    USER = BASE + "/user"
