@@ -55,4 +55,4 @@ else:
             hide_index=True, disabled=True,
             width="stretch", height="stretch"
         )
-        NOTIFICATION.info("Records loaded successfully.")
+        NOTIFICATION.success("Records loaded successfully.", icon=":material/check_circle:")
