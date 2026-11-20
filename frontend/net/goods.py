@@ -10,6 +10,7 @@ from typing import Any
 
 from fake_useragent import UserAgent
 from requests import get
+from streamlit import cache_data
 
 from .types import URL, HttpHeader
 
@@ -21,6 +22,7 @@ HEADERS: dict[str, Any] = {
 }
 
 
+@cache_data(ttl=60)
 def get_goods(url: str | URL) -> list[dict]:
     _url: URL = URL(url)
     _response = get(
