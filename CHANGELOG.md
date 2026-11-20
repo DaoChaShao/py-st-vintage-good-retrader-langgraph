@@ -107,6 +107,7 @@
 
 ### Docs
 
+- **changelog:** update changelog with recent feature entries ([32dc8d4](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/32dc8d4ff465be6b6683e18971059aa4318c97e6))
 - **changelog:** update changelog with recent entries ([39a2d97](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/39a2d97828f229e72956eb483ca1aa271c08bb07))
 - **initialisation:** correct file name reference in header comment ([3b1f899](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/3b1f899297ea33577b0c412a7e9ad1fa9fcd1b3c))
 - **changelog:** update changelog with new entries ([00be4df](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/00be4dfefb7ff30d65808dfa906e024efe7c3ba4))
