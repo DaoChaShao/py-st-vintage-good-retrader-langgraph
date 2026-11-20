@@ -1,10 +1,17 @@
 <!-- insertion marker -->
 <a name="0.1.0"></a>
 
-## [0.1.0](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/compare/ac1d2409aef149089b2a89c9480844fcefaf52a3...0.1.0) (2026-11-20)
+## [0.1.0](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/compare/ac1d2409aef149089b2a89c9480844fcefaf52a3...0.1.0) (2026-11-21)
 
 ### Features
 
+- **net:** add user endpoint URL constant ([686d526](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/686d52687ab64138246f15f48cfce8b98afc5bb8))
+- **auth:** add user authentication schemas ([3e71b90](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/3e71b90cb3327905461c55b9c0fcca66d388a255))
+- **models:** add User model with authentication fields ([e87e0cd](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/e87e0cd1e4f61e4543c500284dfa310e46acd9b4))
+- **layout:** add account page and conditional navigation ([1345af3](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/1345af30338482e0586d2bf0f50a6802154f5a6e))
+- **dbkit:** add BOL and HAS column type annotations ([2d00810](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/2d00810b3359506f6bdb74726733cc26f656e6af))
+- **account:** add account page with login and logout ([0696def](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/0696defc54cfe14d4743e54f96dd43bf9fd82f27))
+- **dbkit:** export User model from package ([33e16e7](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/33e16e7f184ccbfa2193a6b53a50a835a072a6b4))
 - **tools:** add loading spinner when fetching records ([f078bdf](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/f078bdfc9224d10125b308b313c668a0f8a680b9))
 - **api:** add management command for frontend API subpages ([a33b447](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/a33b44787371a1eccf17940fde6a9175ec0dad8d))
 - **dashboard:** wrap goods data editor in collapsible expander ([d90fcd8](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/d90fcd8b2edb5fdd9336e746592405a73dbecd3d))
@@ -100,6 +107,7 @@
 
 ### Docs
 
+- **changelog:** update changelog with recent entries ([39a2d97](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/39a2d97828f229e72956eb483ca1aa271c08bb07))
 - **initialisation:** correct file name reference in header comment ([3b1f899](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/3b1f899297ea33577b0c412a7e9ad1fa9fcd1b3c))
 - **changelog:** update changelog with new entries ([00be4df](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/00be4dfefb7ff30d65808dfa906e024efe7c3ba4))
 - **changelog:** add new entries for recent commits ([3b21365](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/3b21365f27e811e8f06b1a6649c6f615029598fa))
