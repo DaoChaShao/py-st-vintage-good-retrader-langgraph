@@ -6,17 +6,23 @@
 # @File     :   services.py
 # @Desc     :
 
+from base64 import b64encode
+from hashlib import pbkdf2_hmac, scrypt
 from os import remove
 from pathlib import Path
-from typing import Any
+from secrets import token_bytes
+from typing import Any, Literal
 
+from bcrypt import gensalt, hashpw
 from pandas import DataFrame, read_sql
+from pwdlib import PasswordHash
 from sqlalchemy import inspect
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import Session
 from sqlalchemy.sql import func
 
 from .base import DECLARATION
+from .types import HashAlgorithms
 
 
 def count_records(session: Session, table: Any) -> int:
@@ -77,6 +83,38 @@ def eliminate_db(engine: Engine, db_path: Path, *, display: bool = False) -> Non
         remove(db_path)
         if display:
             print(f"Database '{db_path.name}' eliminated successfully.")
+
+
+def hash_password(
+        password: str,
+        *,
+        algorithm: str | HashAlgorithms | Literal["bcrypt", "pbkdf2", "scrypt", "argon2"] = "argon2",
+        display: bool = False
+) -> str:
+    """Hash a password using the selected algorithm."""
+    _algorithm: HashAlgorithms = HashAlgorithms(algorithm)
+    match _algorithm:
+        case _algorithm.BCRYPT:
+            _hashed = hashpw(password.encode("utf-8"), gensalt()).decode("utf-8")
+        case _algorithm.PBKDF2:
+            _salt = token_bytes(16)
+            _iterations: int = 600_000
+            _digest = pbkdf2_hmac("sha256", password.encode("utf-8"), _salt, _iterations)
+            _hashed = f"pbkdf2_sha256${_iterations}${b64encode(_salt).decode()}${b64encode(_digest).decode()}"
+        case _algorithm.SCRYPT:
+            _salt = token_bytes(16)
+            _n, _r, _p = 2 ** 14, 8, 1
+            _digest = scrypt(password.encode("utf-8"), salt=_salt, n=_n, r=_r, p=_p)
+            _hashed = f"scrypt${_n}${_r}${_p}${b64encode(_salt).decode()}${b64encode(_digest).decode()}"
+        case _algorithm.ARGON2:
+            _hashed = PasswordHash.recommended().hash(password)
+        case _:
+            raise ValueError(f"Unsupported algorithm: {algorithm}")
+
+    if display:
+        print(f"Hashed password: {_hashed}")
+
+    return _hashed
 
 
 def read_records(session: Session, table: Any) -> DataFrame:
