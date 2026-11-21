@@ -33,11 +33,16 @@ from .repository import (
     delete_table_records,
     drop_tables,
     eliminate_db,
+    hash_password,
     read_records,
     table_ready,
 )
 from .session import InitSession
-from .types import ExecutionModes
+from .types import (
+    ExecutionModes,
+    HashAlgorithms,
+    Roles,
+)
 
 __all__ = [
     "BASE",
@@ -58,10 +63,13 @@ __all__ = [
     "delete_table_records",
     "drop_tables",
     "eliminate_db",
+    "hash_password",
     "read_records",
     "table_ready",
 
     "InitSession",
 
     "ExecutionModes",
+    "HashAlgorithms",
+    "Roles",
 ]
