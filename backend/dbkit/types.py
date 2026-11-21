@@ -14,3 +14,19 @@ class ExecutionModes(StrEnum):
     """ Execution Modes """
     SYNC = "sync"
     ASYNC = "async"
+
+
+@unique
+class HashAlgorithms(StrEnum):
+    """ Hash Algorithms For Password Hashing """
+    BCRYPT = "bcrypt"
+    PBKDF2 = "pbkdf2"
+    SCRYPT = "scrypt"
+    ARGON2 = "argon2"
+
+
+@unique
+class Roles(StrEnum):
+    """ Roles """
+    ADMIN = "admin"
+    USER = "user"
