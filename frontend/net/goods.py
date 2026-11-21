@@ -6,26 +6,19 @@
 # @File     :   goods.py
 # @Desc     :
 
-from typing import Any
 
-from fake_useragent import UserAgent
-from requests import get
+from requests import request
 from streamlit import cache_data
 
-from .types import URL, HttpHeader
-
-UA = UserAgent()
-
-HEADERS: dict[str, Any] = {
-    "User-Agent": UA.random,
-    "Accept": HttpHeader.APPLICATION_JSON.value
-}
+from .base import HEADERS
+from .types import URL, RequestMethods
 
 
 @cache_data(ttl=60)
-def get_goods(url: str | URL) -> list[dict]:
+def request_to_get_goods(url: str | URL) -> list[dict]:
     _url: URL = URL(url)
-    _response = get(
+    _response = request(
+        RequestMethods.GET.value,
         _url.value,
         headers=HEADERS,
         timeout=30
