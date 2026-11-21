@@ -24,15 +24,18 @@ async def test_goods():
     return {"message": "Goods endpoint works"}
 
 
-@router.get("/", response_model=GoodsResponse)
-async def get_goods(session: Annotated[AsyncSession, Depends(yield_async_session)]):
-    records = await async_read_records(session)
-    status = ResponseStatus.SUCCESS
+@router.get(
+    "",
+    response_model=GoodsResponse
+)
+async def get_goods(session: Annotated[AsyncSession, Depends(yield_async_session)]) -> GoodsResponse:
+    _records = await async_read_records(session)
+    _status = ResponseStatus.SUCCESS
     return GoodsResponse(
-        code=status.code,
-        message=status.message,
+        code=_status.code,
+        message=_status.message,
         data=[
             GoodResponse.model_validate(record)
-            for record in records
+            for record in _records
         ],
     )
