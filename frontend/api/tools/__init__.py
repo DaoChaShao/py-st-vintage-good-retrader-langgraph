@@ -17,8 +17,13 @@ A collection of utility tools designed for Streamlit page initialisation and cor
 __author__ = "Shawn Yu"
 __version__ = "0.1.0"
 
+from .dialogs import (
+    dialog_for_registration,
+)
 from .layout import async_configue_page, async_navigate_pages
-from .services import async_db_ready
+from .services import (
+    async_db_ready,
+)
 
 __all__ = [
     # Layout from Main utilisation
@@ -26,5 +31,7 @@ __all__ = [
     "async_navigate_pages",
 
     # functions for streamlit subpages
+    "dialog_for_registration",
+
     "async_db_ready",
 ]
