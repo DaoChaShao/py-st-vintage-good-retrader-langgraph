@@ -11,7 +11,13 @@ from decimal import Decimal
 
 from pydantic import BaseModel, ConfigDict
 
-from .types import ResponseStatus
+from .types import AccessTokenTypes, ResponseStatus
+
+
+class CRUDResponse(BaseModel):
+    """ Response for CRUD operations """
+    code: int | ResponseStatus
+    message: str | ResponseStatus
 
 
 class GoodResponse(BaseModel):
@@ -34,15 +40,19 @@ class GoodResponse(BaseModel):
     updated_at: datetime | None
 
 
-class GoodsResponse(BaseModel):
+class GoodsResponse(CRUDResponse):
     """ Response for goods endpoint """
 
-    code: int | ResponseStatus
-    message: str | ResponseStatus
     data: list[GoodResponse]
 
 
-class UserSignIn(BaseModel):
+class TablesResponse(CRUDResponse):
+    """ Response for table endpoint """
+
+    data: list[str]
+
+
+class User(BaseModel):
     """ Request for user login """
 
     username: str
@@ -65,18 +75,18 @@ class UserResponse(BaseModel):
     updated_at: datetime | None
 
 
-class TokenResponse(BaseModel):
+class AccessTokenResponse(BaseModel):
     """ Response for user authentication """
 
     token: str
-    type: str = "bearer"
-    expires_in: int
+    type: str | AccessTokenTypes = AccessTokenTypes.BEARER
+    expires_at: int
 
 
 class SignInResponse(BaseModel):
     """ Response for successful login """
 
+    code: int | ResponseStatus
+    message: str | ResponseStatus
     user: UserResponse
-    token: str
-    type: str = "bearer"
-    expires_in: int
+    token: AccessTokenResponse
