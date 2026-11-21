@@ -9,6 +9,8 @@
 from fastapi import APIRouter
 
 from .endpoints import (
+    account,
+    crud,
     goods,
 )
 
@@ -16,3 +18,5 @@ router = APIRouter()
 
 # Register the routers
 router.include_router(goods.router, prefix="/goods", tags=["goods"])
+router.include_router(crud.router, prefix="/crud", tags=["crud"])
+router.include_router(account.router, prefix="/account", tags=["account"])
