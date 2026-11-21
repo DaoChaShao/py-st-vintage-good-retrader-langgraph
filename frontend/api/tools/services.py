@@ -17,7 +17,7 @@ from streamlit import (
     spinner,
 )
 
-from frontend.net.goods import URL, get_goods
+from frontend.net.goods import URL, request_to_get_goods
 
 from ...app.tools import DBReadyStatus
 
@@ -41,7 +41,7 @@ def async_db_ready(
         with container(horizontal=True, width="stretch", height="stretch"):
             if button("Load Records", type="primary", width="content"):
                 with spinner("Requesting Records...", show_time=True, width="stretch"):
-                    session_state.GOODS = get_goods(URL.GOODS)
+                    session_state.GOODS = request_to_get_goods(URL.GOODS)
                     rerun()
             space("stretch")
 
