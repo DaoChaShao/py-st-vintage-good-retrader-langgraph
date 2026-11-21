@@ -3,7 +3,7 @@
 # @Time     :   2026/11/20 00:36
 # @Author   :   Shawn
 # @Version  :   Version 0.1.0
-# @File     :   management.py
+# @File     :   crud.py
 # @Desc     :
 
 def main() -> None:
