@@ -10,14 +10,14 @@ from enum import StrEnum, unique
 
 
 @unique
-class HttpHeader(StrEnum):
+class AcceptTypes(StrEnum):
     """ HTTP Header """
     CONTENT_TYPE = "Content-Type"
     APPLICATION_JSON = "application/json"
 
 
 @unique
-class HttpMethod(StrEnum):
+class RequestMethods(StrEnum):
     """ HTTP Method """
     GET = "GET"
     POST = "POST"
@@ -34,3 +34,10 @@ class URL(StrEnum):
     TEST = BASE + "/test"
     GOODS = BASE + "/goods"
     USER = BASE + "/user"
+
+    DELETE_TABLES = BASE + "/crud/delete/tables"
+    INITIALISE_TABLES = BASE + "/crud/initialise/tables"
+    LIST_TABLES = BASE + "/crud/list/tables"
+
+    REGISTRATION = BASE + "/account/registration"
+    VERIFICATION = BASE + "/account/verification"
