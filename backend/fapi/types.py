@@ -6,7 +6,7 @@
 # @File     :   types.py
 # @Desc     :
 
-from enum import Enum, unique
+from enum import Enum, StrEnum, unique
 
 
 @unique
@@ -14,7 +14,7 @@ class ResponseStatus(Enum):
     SUCCESS = (200, "Success")
     CREATED = (201, "Created")
     BAD_REQUEST = (400, "Bad Request")
-    UNAUTHORIZED = (401, "Unauthorized")
+    UNAUTHORISED = (401, "Unauthorised")
     FORBIDDEN = (403, "Forbidden")
     NOT_FOUND = (404, "Not Found")
     CONFLICT = (409, "Conflict")
@@ -24,3 +24,8 @@ class ResponseStatus(Enum):
     def __init__(self, code: int, message: str):
         self.code = code
         self.message = message
+
+
+@unique
+class AccessTokenTypes(StrEnum):
+    BEARER = "bearer"
