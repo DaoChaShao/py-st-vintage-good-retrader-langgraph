@@ -24,20 +24,26 @@ __author__ = "Shawn Yu"
 __version__ = "0.1.0"
 
 from .dependencies import yield_async_session
+from .schemas import User
 from .services import (
+    JWTAccessTokenEncoder,
     async_read_records,
     async_table_ready,
 )
 from .session import InitAsyncSession
-from .types import ResponseStatus
+from .types import AccessTokenTypes, ResponseStatus
 
 __all__ = [
     "yield_async_session",
 
+    "User",
+
+    "JWTAccessTokenEncoder",
     "async_table_ready",
     "async_read_records",
 
     "InitAsyncSession",
 
     "ResponseStatus",
+    "AccessTokenTypes",
 ]
