@@ -18,13 +18,26 @@ with the FastAPI backend and retrieval of API response data.
 __author__ = "Shawn Yu"
 __version__ = "0.1.0"
 
-from .goods import get_goods
-from .types import URL, HttpHeader, HttpMethod
+from .account import request_to_post_signin, request_to_post_signup
+from .crud import (
+    request_to_delete_tables,
+    request_to_initialise_tables,
+    request_to_list_tables,
+)
+from .goods import request_to_get_goods
+from .types import URL, AcceptTypes, RequestMethods
 
 __all__ = [
-    "HttpHeader",
-    "HttpMethod",
-    "URL",
+    "request_to_post_signin",
+    "request_to_post_signup",
 
-    "get_goods",
+    "request_to_delete_tables",
+    "request_to_list_tables",
+    "request_to_initialise_tables",
+
+    "request_to_get_goods",
+
+    "URL",
+    "AcceptTypes",
+    "RequestMethods",
 ]
