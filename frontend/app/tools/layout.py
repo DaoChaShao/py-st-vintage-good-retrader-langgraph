@@ -14,9 +14,7 @@ BASE_DIR: Path = Path(__file__).resolve().parents[1]
 
 
 def configue_page() -> None:
-    """ Set the window
-    :return: None
-    """
+    """ Set the window """
     set_page_config(
         page_title="Vintage Goods",
         page_icon=":material/globe:",
@@ -26,9 +24,7 @@ def configue_page() -> None:
 
 
 def navigate_pages() -> None:
-    """ Set the subpages on the sidebar (https://fonts.google.com/icons)
-    :return: None
-    """
+    """ Set the subpages on the sidebar (https://fonts.google.com/icons) """
     pages: dict = {
         "page": [
             Path(BASE_DIR / "subpages" / "home.py").resolve(),
