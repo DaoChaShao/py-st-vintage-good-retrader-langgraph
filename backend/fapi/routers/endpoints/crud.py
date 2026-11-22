@@ -34,23 +34,6 @@ async def delete_tables():
     )
 
 
-@router.post(
-    "/initialise/tables",
-    response_model=CRUDResponse,
-)
-async def initialise_tables():
-    """ Initialise the tables in the database """
-    async with sqlite.engine.begin() as connection:
-        await connection.run_sync(BASE.metadata.create_all)
-
-    _status = ResponseStatus.SUCCESS
-
-    return CRUDResponse(
-        code=_status.code,
-        message=_status.message
-    )
-
-
 @router.get(
     "/list/tables",
     response_model=TablesResponse,
@@ -66,4 +49,21 @@ async def list_tables():
         code=_status.code,
         message=_status.message,
         data=_tables,
+    )
+
+
+@router.post(
+    "/initialise/tables",
+    response_model=CRUDResponse,
+)
+async def initialise_tables():
+    """ Initialise the tables in the database """
+    async with sqlite.engine.begin() as connection:
+        await connection.run_sync(BASE.metadata.create_all)
+
+    _status = ResponseStatus.SUCCESS
+
+    return CRUDResponse(
+        code=_status.code,
+        message=_status.message
     )
