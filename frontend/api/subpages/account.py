@@ -3,30 +3,35 @@
 # @Time     :   2026/11/20 23:21
 # @Author   :   Shawn
 # @Version  :   Version 0.1.0
-# @File     :   account.py
+# @File     :   user.py
 # @Desc     :
 
 from streamlit import (
     columns,
     container,
+    datetime_input,
     divider,
     empty,
+    number_input,
     rerun,
     session_state,
     spinner,
     text_input,
 )
 
-from frontend.api.tools import dialog_for_registration
+from frontend.api.tools import (
+    dialog_sign_up,
+    dialog_update,
+)
 from frontend.net import (
     URL,
     request_to_delete_tables,
     request_to_initialise_tables,
     request_to_list_tables,
-    request_to_post_signin,
+    request_to_sign_in,
 )
 
-for key in ["IS_IN"]:
+for key in ["IS_IN", "USER", "ACCESS_TOKEN", "TOKEN_EXPIRES_AT"]:
     if key not in session_state:
         session_state[key] = None
 
@@ -58,25 +63,72 @@ with center:
                     with spinner("Logging in...", show_time=True, width="stretch"):
                         session_state.IS_IN = True
                         rerun()
-                request_to_post_signin(URL.SIGNIN, username=username, password=password)
+                response = request_to_sign_in(URL.SIGN_IN, username=username, password=password)
+                if response.ok:
+                    data = response.json()
+                    # Store the user data in the session state
+                    session_state.IS_IN = True
+                    session_state.USER = data["user"]
+                    session_state.ACCESS_TOKEN = data["token"]["token"]
+                    session_state.TOKEN_EXPIRES_AT = data["token"]["expires_at"]
+                    rerun()
+                else:
+                    if response.status_code == 401:
+                        NOTIFICATION.warning(response.json()["detail"], icon=":material/warning:")
+                    else:
+                        NOTIFICATION.error(f"Login failed (HTTP {response.status_code}).", icon=":material/error:")
 
         if sup.button("Sign up", type="secondary", width="stretch", icon=":material/person_add:"):
             with spinner("Registering...", show_time=True, width="stretch"):
-                dialog_for_registration()
+                dialog_sign_up()
     else:
-        NOTIFICATION.success("Welcome back, !", icon=":material/check_circle:")
+        # NOTIFICATION.success(f"Welcome back, {session_state.USER['username']}!", icon=":material/check_circle:")
 
         with container(border=True, width="stretch", height="stretch"):
-            #
+            # User information
+            number_input(
+                "User ID", placeholder="Your user ID", required=True,
+                icon=":material/id_card:", width="stretch", disabled=True,
+                help="Your user ID here",
+                value=session_state.USER["id"],
+            )
+            text_input(
+                "Username", placeholder="Your username", required=True,
+                type="default", icon=":material/person:", width="stretch", disabled=True,
+                help="Your username here",
+                value=session_state.USER["username"],
+            )
+            info_left, info_right = columns([3, 2])
+            default_role = session_state.USER["role"]
+            info_left.segmented_control(
+                "Account Role", ["User", "Admin"], required=True,
+                selection_mode="single", width="stretch", disabled=True,
+                help="Your account role",
+                default="User" if default_role == "user" else "Admin",
+            )
+            info_right.space("stretch")
+            info_right.toggle(
+                "Active Status",
+                width="stretch", disabled=True,
+                help="Your active status",
+                value=session_state.USER["is_active"],
+            )
+            datetime_input(
+                "Registration Date", required=True,
+                width="stretch", disabled=True,
+                help="Your registration date here",
+                value=session_state.USER["created_at"],
+            )
 
             # Add buttons for logout and edit
-            mid_left, mid_right = columns(2)
-            if mid_left.button("Logout", type="primary", width="stretch", icon=":material/logout:"):
+            btn_left, btn_right = columns(2)
+            if btn_left.button("Logout", type="primary", width="stretch", icon=":material/logout:"):
                 session_state.IS_IN = False
                 rerun()
 
-            if mid_right.button("Edit", type="secondary", width="stretch", icon=":material/edit:"):
-                pass
+            if btn_right.button("Edit", type="secondary", width="stretch", icon=":material/edit:"):
+                with spinner("Updating User Information...", show_time=True, width="stretch"):
+                    dialog_update(session_state.USER)
 
             divider()
             db_left, db_right = columns(2)
@@ -85,10 +137,7 @@ with center:
                     request_to_delete_tables(URL.DELETE_TABLES)
                     tables: list[str] = request_to_list_tables(URL.LIST_TABLES)
                     if not tables:
-                        NOTIFICATION.warning(
-                            "All tables have been deleted.",
-                            icon=":material/warning:"
-                        )
+                        NOTIFICATION.warning("All tables have been deleted.", icon=":material/warning:")
                     else:
                         NOTIFICATION.error("Failed to delete all tables.", icon=":material/error:")
 
