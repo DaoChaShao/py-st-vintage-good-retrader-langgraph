@@ -6,20 +6,30 @@
 # @File     :   dialogs.py
 # @Desc     :
 
+from datetime import datetime
+from typing import Any
+
 from streamlit import (
+    columns,
+    datetime_input,
     dialog,
     empty,
     form,
     form_submit_button,
+    number_input,
     rerun,
     text_input,
 )
 
-from ...net import URL, request_to_post_signup
+from ...net import (
+    URL,
+    request_to_sign_up,
+    request_to_update,
+)
 
 
 @dialog("Register", position="center", width="small", icon=":material/account_circle:")
-def dialog_for_registration():
+def dialog_sign_up():
     """ Dialog for user registration """
     notification = empty()
 
@@ -44,8 +54,90 @@ def dialog_for_registration():
             if password != confirmation:
                 notification.warning("Passwords do not match", icon=":material/warning:")
             else:
-                response = request_to_post_signup(URL.REGISTRATION, username=username, password=password)
+                response = request_to_sign_up(URL.SIGN_UP, username=username, password=password)
                 if response.ok:
                     rerun()
                 else:
                     notification.error("Registration failed", icon=":material/error:")
+
+
+@dialog("Update User Information", position="center", width="small", icon=":material/person:")
+def dialog_update(user: Any):
+    notification = empty()
+
+    with form("update_user_info_form", border=True, clear_on_submit=True, width="stretch", height="stretch"):
+        _id = number_input(
+            "User ID", placeholder="Your user ID", required=True,
+            icon=":material/id_card:", width="stretch", disabled=True,
+            help="Your user ID here",
+            value=user["id"],
+        )
+        _username = text_input(
+            "Username", placeholder="Your username", required=True,
+            type="default", icon=":material/person:", width="stretch", disabled=True,
+            help="Your username here",
+            value=user["username"],
+        )
+        _old_password = text_input(
+            "Password", placeholder="Your password", required=False,
+            type="password", icon=":material/vpn_key_alert:", width="stretch", disabled=False,
+            help="Your password here", key="old_password"
+        )
+        _new_password = text_input(
+            "Password", placeholder="Your password", required=False,
+            type="password", icon=":material/vpn_key_alert:", width="stretch", disabled=False,
+            help="Your password here", key="new_password"
+        )
+        _confirmation = text_input(
+            "Confirm Password", placeholder="Re-enter your password", required=False,
+            type="password", icon=":material/vpn_key:", width="stretch", disabled=False,
+            help="Re-enter your password here", key="confirmation"
+        )
+
+        info_left, info_right = columns(2)
+        default_role = user["role"]
+        _role = info_left.segmented_control(
+            "Account Role", ["User", "Admin"], required=True,
+            selection_mode="single", width="stretch", disabled=False,
+            help="Your account role",
+            default="User" if default_role == "user" else "Admin",
+        )
+        _status: bool = info_right.toggle(
+            "Active Status",
+            width="stretch", disabled=True,
+            help="Your active status",
+            value=user["is_active"],
+        )
+        _created_at: datetime = datetime_input(
+            "Registration Date", required=True,
+            width="stretch", disabled=True,
+            help="Your registration date here",
+            value=user["created_at"],
+        )
+        _updated_at: datetime = datetime_input(
+            "Last Updated", required=True,
+            width="stretch", disabled=True,
+            help="Your last updated date here",
+            value=datetime.today(),
+        )
+
+        if form_submit_button("Update", type="primary", width="stretch", icon=":material/input:"):
+            if _new_password != _confirmation:
+                notification.warning("Passwords do not match", icon=":material/warning:")
+            elif _new_password and not _old_password:
+                notification.warning("Original password is required", icon=":material/warning:")
+            else:
+                response = request_to_update(
+                    URL.UPDATE,
+                    user_id=_id,
+                    username=_username,
+                    old_password=_old_password,
+                    new_password=_new_password,
+                    role=_role.lower(),
+                    status=_status,
+                    updated_at=_updated_at,
+                )
+                if response.ok:
+                    rerun()
+                else:
+                    notification.error("Update failed", icon=":material/error:")
