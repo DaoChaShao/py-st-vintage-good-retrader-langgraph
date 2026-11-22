@@ -16,6 +16,7 @@ from .types import AccessTokenTypes, ResponseStatus
 
 class CRUDResponse(BaseModel):
     """ Response for CRUD operations """
+
     code: int | ResponseStatus
     message: str | ResponseStatus
 
@@ -52,22 +53,40 @@ class TablesResponse(CRUDResponse):
     data: list[str]
 
 
-class User(BaseModel):
-    """ Request for user login """
+class UserBase(BaseModel):
+    """ User base schema """
+
+    model_config = ConfigDict(from_attributes=True)
 
     username: str
+
+
+class UserSignIn(UserBase):
+    """ User base schema """
+
     password: str
 
 
-class UserResponse(BaseModel):
-    """ Response for a single user """
+class UserUpdate(UserBase):
+    """ User schema """
 
-    model_config = ConfigDict(from_attributes=True)
+    # Main Keys
+    id: int
+    # Attributes
+    old_password: str | None
+    new_password: str | None
+    is_active: bool
+    role: str
+    # Timestamps
+    updated_at: datetime
+
+
+class UserResponse(UserBase):
+    """ Response for a single user """
 
     # Main Key
     id: int
     # Attributes
-    username: str
     is_active: bool
     role: str
     # Timestamps
@@ -78,13 +97,17 @@ class UserResponse(BaseModel):
 class AccessTokenResponse(BaseModel):
     """ Response for user authentication """
 
+    model_config = ConfigDict(from_attributes=True)
+
     token: str
     type: str | AccessTokenTypes = AccessTokenTypes.BEARER
     expires_at: int
 
 
-class SignInResponse(BaseModel):
+class VerificationResponse(BaseModel):
     """ Response for successful login """
+
+    model_config = ConfigDict(from_attributes=True)
 
     code: int | ResponseStatus
     message: str | ResponseStatus
