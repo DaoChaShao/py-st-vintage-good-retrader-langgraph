@@ -25,9 +25,7 @@ for key in ["IS_IN"]:
 
 
 def async_configue_page() -> None:
-    """ Set the window
-    :return: None
-    """
+    """ Set the window (https://favicon.io/) """
     set_page_config(
         page_title="Vintage Goods ReTrader",
         page_icon=":material/globe:",
@@ -42,9 +40,7 @@ def async_configue_page() -> None:
 
 
 def async_navigate_pages() -> None:
-    """ Set the subpages on the sidebar (https://fonts.google.com/icons)
-    :return: None
-    """
+    """ Set the subpages on the sidebar (https://fonts.google.com/icons) """
     pages: dict = {
         "page": [
             Path(PAGE_DIR / "subpages" / "home.py").resolve(),
