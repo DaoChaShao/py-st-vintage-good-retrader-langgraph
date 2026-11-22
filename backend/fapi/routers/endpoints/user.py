@@ -38,7 +38,7 @@ router = APIRouter()
 async def to_sign_in(
         user: UserSignIn,
         session: Annotated[AsyncSession, Depends(yield_async_session)],
-):
+) -> VerificationResponse:
     _username: str = user.username
     _password: str = user.password
 
@@ -79,7 +79,6 @@ async def to_sign_up(
 
     :param user: The user info
     :param session: The database session
-    :param init_flag: Whether it is the initial user
     :return: The user info
     """
     _username: str = user.username
@@ -115,7 +114,7 @@ async def to_sign_up(
 async def to_update(
         user: UserUpdate,
         session: Annotated[AsyncSession, Depends(yield_async_session)],
-):
+) -> UserResponse:
     """
     Update the user info in the database
 
@@ -163,9 +162,7 @@ async def to_update(
     "/get/users",
     response_model=UsersResponse,
 )
-async def get_users(
-        session: Annotated[AsyncSession, Depends(yield_async_session)],
-):
+async def get_users(session: Annotated[AsyncSession, Depends(yield_async_session)]) -> UsersResponse:
     _result = await session.execute(select(User))
     _users = _result.scalars().all()
     _status = ResponseStatus.SUCCESS
@@ -180,9 +177,7 @@ async def get_users(
     "/init/admin",
     response_model=UserResponse,
 )
-async def to_init_admin(
-        session: Annotated[AsyncSession, Depends(yield_async_session)],
-) -> UserResponse:
+async def to_init_admin(session: Annotated[AsyncSession, Depends(yield_async_session)]) -> UserResponse:
     """
     Sign up a new user
 
