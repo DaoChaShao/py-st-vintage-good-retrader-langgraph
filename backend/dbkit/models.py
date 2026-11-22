@@ -48,9 +48,8 @@ class User(BASE):
     __tablename__ = "users"
     __table_args__ = {"comment": "Users Table"}
 
-    username: Mapped[GENERAL.STR] = mapped_column(unique=True, nullable=False)
-    password: Mapped[GENERAL.STR] = mapped_column(default="12345", nullable=False)
-    hashed_password: Mapped[GENERAL.HAS]
+    username: Mapped[GENERAL.STR]
+    password: Mapped[GENERAL.HAS]
     is_active: Mapped[GENERAL.BOL] = mapped_column(default=True, nullable=False)
     role: Mapped[GENERAL.STR] = mapped_column(default="user", nullable=False)
 
