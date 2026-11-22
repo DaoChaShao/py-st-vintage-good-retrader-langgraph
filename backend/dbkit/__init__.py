@@ -41,7 +41,7 @@ from .session import InitSession
 from .types import (
     ExecutionModes,
     HashAlgorithms,
-    Roles,
+    UserRoles,
 )
 
 __all__ = [
@@ -71,5 +71,5 @@ __all__ = [
 
     "ExecutionModes",
     "HashAlgorithms",
-    "Roles",
+    "UserRoles",
 ]
