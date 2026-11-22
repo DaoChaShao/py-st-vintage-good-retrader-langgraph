@@ -39,5 +39,6 @@ class URL(StrEnum):
     INITIALISE_TABLES = BASE + "/crud/initialise/tables"
     LIST_TABLES = BASE + "/crud/list/tables"
 
-    REGISTRATION = BASE + "/account/registration"
-    VERIFICATION = BASE + "/account/verification"
+    SIGN_UP = BASE + "/user/sign/up"
+    SIGN_IN = BASE + "/user/sign/in"
+    UPDATE = BASE + "/user/update"
