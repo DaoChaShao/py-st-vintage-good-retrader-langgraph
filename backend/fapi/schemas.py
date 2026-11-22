@@ -11,6 +11,7 @@ from decimal import Decimal
 
 from pydantic import BaseModel, ConfigDict
 
+from ..dbkit import UserRoles
 from .types import AccessTokenTypes, ResponseStatus
 
 
@@ -61,10 +62,51 @@ class UserBase(BaseModel):
     username: str
 
 
+class UserManagement(UserBase):
+    """ User management schema """
+
+    # Main Key
+    id: int
+    # Attributes
+    is_active: bool
+    role: UserRoles
+
+
+class UsersManagement(BaseModel):
+    """ Users management schema """
+
+    users: list[UserManagement]
+
+
+class UserResponse(UserBase):
+    """ Response for a single user """
+
+    # Main Key
+    id: int
+    # Attributes
+    is_active: bool
+    role: UserRoles
+    # Timestamps
+    created_at: datetime | None
+    updated_at: datetime | None
+
+
+class UsersResponse(CRUDResponse):
+    """ Response for users endpoint """
+
+    users: list[UserResponse]
+
+
 class UserSignIn(UserBase):
     """ User base schema """
 
     password: str
+
+
+class UserInit(UserSignIn):
+    """ User init schema """
+
+    role: UserRoles = UserRoles.ADMIN.value
 
 
 class UserUpdate(UserBase):
@@ -76,22 +118,9 @@ class UserUpdate(UserBase):
     old_password: str | None
     new_password: str | None
     is_active: bool
-    role: str
+    role: UserRoles
     # Timestamps
     updated_at: datetime
-
-
-class UserResponse(UserBase):
-    """ Response for a single user """
-
-    # Main Key
-    id: int
-    # Attributes
-    is_active: bool
-    role: str
-    # Timestamps
-    created_at: datetime | None
-    updated_at: datetime | None
 
 
 class AccessTokenResponse(BaseModel):
