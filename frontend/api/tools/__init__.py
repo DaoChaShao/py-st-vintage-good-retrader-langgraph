@@ -18,6 +18,9 @@ __author__ = "Shawn Yu"
 __version__ = "0.1.0"
 
 from .dialogs import (
+    dialog_delete_tables,
+    dialog_init_tables,
+    dialog_manage_users,
     dialog_sign_up,
     dialog_update,
 )
@@ -32,8 +35,11 @@ __all__ = [
     "async_navigate_pages",
 
     # functions for streamlit subpages
+    "dialog_delete_tables",
+    "dialog_init_tables",
     "dialog_sign_up",
     "dialog_update",
+    "dialog_manage_users",
 
     "async_db_ready",
 ]
