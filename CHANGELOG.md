@@ -108,6 +108,7 @@
 
 ### Chore
 
+- **static:** add favicon font metadata file ([5aeb038](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/5aeb038f0e76fd65a3ef6d478b8068508fa3e0e4))
 - **net:** reorganize and expand module exports ([f30ad35](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/f30ad354bf44c980c86b8ab6f5a352df0f6823e6))
 - **deps:** add authentication-related dependencies ([8c52d97](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/8c52d978bdc3cca32a8940c1065416fdcea9a706))
 - **deps:** add aiosqlite, fake-useragent, and requests ([5d1bc25](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/5d1bc25e1e073742b9470e80724e8ee430446832))
@@ -141,6 +142,9 @@
 
 ### Docs
 
+- **layout:** simplify docstrings by removing return types ([98ef2c2](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/98ef2c215551a21303cc11d60a768e0de1422ba2))
+- **layout:** simplify docstrings by removing redundant return info ([fcb9772](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/fcb9772615847eed871ec2e5033d6867cbd04f1a))
+- **changelog:** record new features and refactors ([fd40893](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/fd40893955a2a3c3449c153ab0a45cfb18bce964))
 - **changelog:** add recent feature, docs, and refactoring entries ([27231d4](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/27231d4c24cbc126148b884c86f73ee871f3db0c))
 - **crud:** add detailed docstrings to crud functions ([b218b63](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/b218b6354995baa77854f4e214215edd657537ed))
 - **changelog:** add recent feature, chore, and refactoring entries ([0a0569a](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/0a0569af5809916d5022182c7fb612d7afc96211))
