@@ -13,7 +13,12 @@ from .types import URL, RequestMethods
 
 
 def request_to_delete_tables(url: str | URL) -> None:
-    """ Delete all tables in the database """
+    """
+    Delete all tables in the database
+
+    :param url: The URL to delete the tables from
+    :return: None
+    """
     _url: URL = URL(url)
     _response = request(
         RequestMethods.DELETE.value,
@@ -24,20 +29,13 @@ def request_to_delete_tables(url: str | URL) -> None:
     _response.raise_for_status()
 
 
-def request_to_initialise_tables(url: str | URL) -> None:
-    """ Initialise all tables in the database """
-    _url: URL = URL(url)
-    _response = request(
-        RequestMethods.POST.value,
-        _url.INITIALISE_TABLES.value,
-        headers=HEADERS,
-        timeout=30,
-    )
-    _response.raise_for_status()
-
-
 def request_to_list_tables(url: str | URL) -> list[str]:
-    """ List all tables in the database """
+    """
+    List all tables in the database
+
+    :param url: The URL to list the tables from
+    :return: A list of table names
+    """
     _url: URL = URL(url)
     _response = request(
         RequestMethods.GET.value,
@@ -46,3 +44,20 @@ def request_to_list_tables(url: str | URL) -> list[str]:
         timeout=30,
     )
     return _response.json()["data"]
+
+
+def request_to_initialise_tables(url: str | URL) -> None:
+    """
+    Initialise all tables in the database
+
+    :param url: The URL to initialise the tables at
+    :return: None
+    """
+    _url: URL = URL(url)
+    _response = request(
+        RequestMethods.POST.value,
+        _url.INITIALISE_TABLES.value,
+        headers=HEADERS,
+        timeout=30,
+    )
+    _response.raise_for_status()
