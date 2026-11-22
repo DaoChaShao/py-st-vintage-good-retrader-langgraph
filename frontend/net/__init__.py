@@ -18,7 +18,6 @@ with the FastAPI backend and retrieval of API response data.
 __author__ = "Shawn Yu"
 __version__ = "0.1.0"
 
-from .account import request_to_post_signin, request_to_post_signup
 from .crud import (
     request_to_delete_tables,
     request_to_initialise_tables,
@@ -26,10 +25,16 @@ from .crud import (
 )
 from .goods import request_to_get_goods
 from .types import URL, AcceptTypes, RequestMethods
+from .user import (
+    request_to_sign_in,
+    request_to_sign_up,
+    request_to_update,
+)
 
 __all__ = [
-    "request_to_post_signin",
-    "request_to_post_signup",
+    "request_to_sign_in",
+    "request_to_sign_up",
+    "request_to_update",
 
     "request_to_delete_tables",
     "request_to_list_tables",
