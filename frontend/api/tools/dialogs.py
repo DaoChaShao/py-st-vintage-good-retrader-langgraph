@@ -7,10 +7,14 @@
 # @Desc     :
 
 from datetime import datetime
+from time import sleep
 from typing import Any
 
 from streamlit import (
+    button,
+    column_config,
     columns,
+    data_editor,
     datetime_input,
     dialog,
     empty,
@@ -18,14 +22,46 @@ from streamlit import (
     form_submit_button,
     number_input,
     rerun,
+    spinner,
     text_input,
 )
 
 from ...net import (
     URL,
+    request_to_delete_tables,
+    request_to_get_users,
+    request_to_init_admin,
+    request_to_initialise_tables,
+    request_to_manage_users,
     request_to_sign_up,
     request_to_update,
 )
+
+
+@dialog("Delete Tables", position="center", width="small", icon=":material/delete:")
+def dialog_delete_tables():
+    """ Delete all tables """
+    left, right = columns(2)
+    if left.button("Yes", type="secondary", width="stretch"):
+        request_to_delete_tables(URL.DELETE_TABLES)
+        rerun()
+
+    if right.button("No", type="primary", width="stretch"):
+        rerun()
+
+
+@dialog("Initialise Tables", position="center", width="small", icon=":material/add:")
+def dialog_init_tables():
+    """ Initialise all tables and an administrator """
+    left, right = columns(2)
+    if left.button("Yes", type="secondary", width="stretch"):
+        request_to_initialise_tables(URL.INITIALISE_TABLES)
+        sleep(1)
+        request_to_init_admin(URL.INIT_ADMIN)
+        rerun()
+
+    if right.button("No", type="primary", width="stretch"):
+        rerun()
 
 
 @dialog("Register", position="center", width="small", icon=":material/account_circle:")
@@ -61,8 +97,51 @@ def dialog_sign_up():
                     notification.error("Registration failed", icon=":material/error:")
 
 
+@dialog("Manage User", position="center", width="medium", icon=":material/person:")
+def dialog_manage_users(curr_id: int):
+    """ Dialog for managing users """
+    notification = empty()
+
+    filtered_users = [
+        user
+        for user in request_to_get_users(URL.GET_USERS)
+        if user["id"] != curr_id
+    ]
+    edited_users = data_editor(
+        filtered_users,
+        hide_index=True, width="stretch", height="stretch",
+        column_config={
+            "is_active": column_config.CheckboxColumn("Active Status"),
+            "role": column_config.SelectboxColumn("Account Role", options=["user", "admin"])
+        },
+        disabled=["id", "username", "created_at", "updated_at"],
+    )
+
+    original_users = {user["id"]: user for user in filtered_users}
+    changed_users = [
+        user
+        for user in edited_users
+        if (
+                user["role"] != original_users[user["id"]]["role"]
+                or user["is_active"] != original_users[user["id"]]["is_active"]
+        )
+    ]
+
+    if button("Manage", type="primary", width="stretch"):
+        with spinner("Updating...", show_time=True, width="stretch"):
+            response = request_to_manage_users(URL.MANAGE_USERS, changed_users=changed_users)
+            if response.ok:
+                rerun()
+            else:
+                notification.error(
+                    f"Update failed ({response.status_code}): {response.text}",
+                    icon=":material/error:"
+                )
+
+
 @dialog("Update User Information", position="center", width="small", icon=":material/person:")
 def dialog_update(user: Any):
+    """ Dialog for updating user information """
     notification = empty()
 
     with form("update_user_info_form", border=True, clear_on_submit=True, width="stretch", height="stretch"):
@@ -98,7 +177,7 @@ def dialog_update(user: Any):
         default_role = user["role"]
         _role = info_left.segmented_control(
             "Account Role", ["User", "Admin"], required=True,
-            selection_mode="single", width="stretch", disabled=False,
+            selection_mode="single", width="stretch", disabled=True,
             help="Your account role",
             default="User" if default_role == "user" else "Admin",
         )
