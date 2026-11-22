@@ -108,6 +108,7 @@
 
 ### Chore
 
+- **changelog:** update changelog with recent entries ([9eceaec](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/9eceaec93037b0e2a66d90edddb3cd693960e2c1))
 - **static:** add favicon font metadata file ([5aeb038](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/5aeb038f0e76fd65a3ef6d478b8068508fa3e0e4))
 - **net:** reorganize and expand module exports ([f30ad35](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/f30ad354bf44c980c86b8ab6f5a352df0f6823e6))
 - **deps:** add authentication-related dependencies ([8c52d97](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/8c52d978bdc3cca32a8940c1065416fdcea9a706))
@@ -174,6 +175,7 @@
 
 ### Code Refactoring
 
+- **user:** add return type annotations to user endpoints ([ec9cb6e](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/ec9cb6ee47b1ad3ee23c3907a9fc1b5286e6156f))
 - **dbkit:** rename Roles class to UserRoles ([003bfa3](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/003bfa34741203e7639dba02651af6ae34464c02))
 - **models:** replace hardcoded role string with UserRoles enum ([1c95f3e](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/1c95f3e857878e632a2f021e2a0104bad0f34e7d))
 - **dbkit:** rename Roles type to UserRoles ([bc08b59](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/bc08b59674cd7d8ab7a66dfe2ee816fddbec0773))
