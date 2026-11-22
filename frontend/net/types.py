@@ -22,6 +22,7 @@ class RequestMethods(StrEnum):
     GET = "GET"
     POST = "POST"
     PUT = "PUT"
+    PATCH = "PATCH"
     DELETE = "DELETE"
 
 
@@ -42,3 +43,8 @@ class URL(StrEnum):
     SIGN_UP = BASE + "/user/sign/up"
     SIGN_IN = BASE + "/user/sign/in"
     UPDATE = BASE + "/user/update"
+
+    GET_USERS = BASE + "/user/get/users"
+    MANAGE_USERS = BASE + "/user/manage/users"
+
+    INIT_ADMIN = BASE + "/user/init/admin"
