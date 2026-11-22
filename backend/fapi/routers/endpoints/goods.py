@@ -34,8 +34,5 @@ async def get_goods(session: Annotated[AsyncSession, Depends(yield_async_session
     return GoodsResponse(
         code=_status.code,
         message=_status.message,
-        data=[
-            GoodResponse.model_validate(record)
-            for record in _records
-        ],
+        data=[GoodResponse.model_validate(record) for record in _records],
     )
