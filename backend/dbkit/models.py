@@ -10,6 +10,7 @@
 from sqlalchemy.orm import Mapped, mapped_column
 
 from .base import BASE, GENERAL
+from .types import UserRoles
 
 
 class Goods(BASE):
@@ -51,7 +52,7 @@ class User(BASE):
     username: Mapped[GENERAL.STR]
     password: Mapped[GENERAL.HAS]
     is_active: Mapped[GENERAL.BOL] = mapped_column(default=True, nullable=False)
-    role: Mapped[GENERAL.STR] = mapped_column(default="user", nullable=False)
+    role: Mapped[GENERAL.STR] = mapped_column(default=UserRoles.USER.value, nullable=False)
 
     def __repr__(self) -> str:
         """ Return the string representation of the User class """
