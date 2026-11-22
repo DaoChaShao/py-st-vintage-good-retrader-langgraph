@@ -20,13 +20,14 @@ from streamlit import (
 )
 
 from frontend.api.tools import (
+    dialog_delete_tables,
+    dialog_init_tables,
+    dialog_manage_users,
     dialog_sign_up,
     dialog_update,
 )
 from frontend.net import (
     URL,
-    request_to_delete_tables,
-    request_to_initialise_tables,
     request_to_list_tables,
     request_to_sign_in,
 )
@@ -59,7 +60,7 @@ with center:
             elif not password:
                 NOTIFICATION.warning("Password cannot be empty.", icon=":material/warning:")
             else:
-                if username == "admin" and password == "12345":
+                if username == "test" and password == "1234":
                     with spinner("Logging in...", show_time=True, width="stretch"):
                         session_state.IS_IN = True
                         rerun()
@@ -121,34 +122,38 @@ with center:
             )
 
             # Add buttons for logout and edit
-            btn_left, btn_right = columns(2)
-            if btn_left.button("Logout", type="primary", width="stretch", icon=":material/logout:"):
+            is_admin = session_state.USER["role"] == "admin"
+            cols = columns(3 if is_admin else 2)
+            if cols[0].button("Logout", type="primary", width="stretch", icon=":material/logout:"):
                 session_state.IS_IN = False
                 rerun()
-
-            if btn_right.button("Edit", type="secondary", width="stretch", icon=":material/edit:"):
+            if is_admin and cols[1].button("Manage", type="secondary", width="stretch"):
+                with spinner("Managing Users...", show_time=True, width="stretch"):
+                    dialog_manage_users(session_state.USER["id"])
+            if cols[-1].button("Edit", type="secondary", width="stretch", icon=":material/edit:"):
                 with spinner("Updating User Information...", show_time=True, width="stretch"):
                     dialog_update(session_state.USER)
 
-            divider()
-            db_left, db_right = columns(2)
-            if db_left.button("Delete Tables", type="tertiary", width="stretch"):
-                with spinner("Deleting Tables...", show_time=True, width="stretch"):
-                    request_to_delete_tables(URL.DELETE_TABLES)
-                    tables: list[str] = request_to_list_tables(URL.LIST_TABLES)
-                    if not tables:
-                        NOTIFICATION.warning("All tables have been deleted.", icon=":material/warning:")
-                    else:
-                        NOTIFICATION.error("Failed to delete all tables.", icon=":material/error:")
+            if is_admin:
+                divider()
+                db_left, db_right = columns(2)
+                if db_left.button("Delete Tables", type="tertiary", width="stretch"):
+                    with spinner("Deleting Tables...", show_time=True, width="stretch"):
+                        dialog_delete_tables()
+                        tables = request_to_list_tables(URL.LIST_TABLES)
+                        if not tables:
+                            NOTIFICATION.warning("All tables have been deleted.", icon=":material/warning:")
+                        else:
+                            NOTIFICATION.error("Failed to delete all tables.", icon=":material/error:")
 
-            if db_right.button("Initialise Tables", type="tertiary", width="stretch"):
-                with spinner("Initialising Tables...", show_time=True, width="stretch"):
-                    request_to_initialise_tables(URL.INITIALISE_TABLES)
-                    tables: list[str] = request_to_list_tables(URL.LIST_TABLES)
-                    if tables:
-                        NOTIFICATION.success(
-                            f" {len(tables)} tables have been initialised.",
-                            icon=":material/check_circle:"
-                        )
-                    else:
-                        NOTIFICATION.error("Failed to initialise tables.", icon=":material/error:")
+                if db_right.button("Initialise Tables", type="tertiary", width="stretch"):
+                    with spinner("Initialising Tables...", show_time=True, width="stretch"):
+                        dialog_init_tables()
+                        tables: list[str] = request_to_list_tables(URL.LIST_TABLES)
+                        if tables:
+                            NOTIFICATION.success(
+                                f" {len(tables)} tables have been initialised.",
+                                icon=":material/check_circle:"
+                            )
+                        else:
+                            NOTIFICATION.error("Failed to initialise tables.", icon=":material/error:")
