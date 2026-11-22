@@ -26,7 +26,7 @@ class HashAlgorithms(StrEnum):
 
 
 @unique
-class Roles(StrEnum):
+class UserRoles(StrEnum):
     """ Roles """
     ADMIN = "admin"
     USER = "user"
