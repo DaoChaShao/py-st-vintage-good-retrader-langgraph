@@ -18,7 +18,8 @@ __author__ = "Shawn Yu"
 __version__ = "0.1.0"
 
 from .dialogs import (
-    dialog_for_registration,
+    dialog_sign_up,
+    dialog_update,
 )
 from .layout import async_configue_page, async_navigate_pages
 from .services import (
@@ -31,7 +32,8 @@ __all__ = [
     "async_navigate_pages",
 
     # functions for streamlit subpages
-    "dialog_for_registration",
+    "dialog_sign_up",
+    "dialog_update",
 
     "async_db_ready",
 ]
