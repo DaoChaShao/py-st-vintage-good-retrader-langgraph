@@ -14,12 +14,14 @@ from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from ....dbkit import HashAlgorithms, User, hash_password
+from ....dbkit import HashAlgorithms, User, UserRoles, hash_password
 from ...dependencies import yield_async_session
 from ...schemas import (
     AccessTokenResponse,
     UserResponse,
     UserSignIn,
+    UsersManagement,
+    UsersResponse,
     UserUpdate,
     VerificationResponse,
 )
@@ -66,21 +68,30 @@ async def to_sign_in(
 
 @router.post(
     "/sign/up",
-    # response_model=SignInResponse
+    response_model=UserResponse,
 )
 async def to_sign_up(
         user: UserSignIn,
         session: Annotated[AsyncSession, Depends(yield_async_session)],
-):
+) -> UserResponse:
+    """
+    Sign up a new user
+
+    :param user: The user info
+    :param session: The database session
+    :param init_flag: Whether it is the initial user
+    :return: The user info
+    """
     _username: str = user.username
     _password: str = user.password
+    _status = ResponseStatus
 
     # Check whether the username already exists
     _result = await session.execute(select(User).where(User.username == _username))
     _user = _result.scalar_one_or_none()
 
     if _user is not None:
-        raise HTTPException(status_code=409, detail="The username already exists.")
+        raise HTTPException(status_code=_status.CONFLICT.code, detail="The username already exists.")
 
     # Hash the password
     _hashed_password = hash_password(_password, algorithm=HashAlgorithms.ARGON2)
@@ -146,3 +157,93 @@ async def to_update(
     await session.refresh(_user)
 
     return UserResponse.model_validate(_user)
+
+
+@router.get(
+    "/get/users",
+    response_model=UsersResponse,
+)
+async def get_users(
+        session: Annotated[AsyncSession, Depends(yield_async_session)],
+):
+    _result = await session.execute(select(User))
+    _users = _result.scalars().all()
+    _status = ResponseStatus.SUCCESS
+    return UsersResponse(
+        code=_status.SUCCESS.code,
+        message=_status.SUCCESS.message,
+        users=[UserResponse.model_validate(_user) for _user in _users]
+    )
+
+
+@router.post(
+    "/init/admin",
+    response_model=UserResponse,
+)
+async def to_init_admin(
+        session: Annotated[AsyncSession, Depends(yield_async_session)],
+) -> UserResponse:
+    """
+    Sign up a new user
+
+    :param session: The database session
+    :return: The user info
+    """
+    _username: str = "admin"
+    _password: str = "12345"
+    _status = ResponseStatus
+
+    # Check whether the username already exists
+    _result = await session.execute(select(User).where(User.username == _username))
+    _user = _result.scalar_one_or_none()
+
+    if _user is not None:
+        raise HTTPException(status_code=_status.CONFLICT.code, detail="The username already exists.")
+
+    # Hash the password
+    _hashed_password = hash_password(_password, algorithm=HashAlgorithms.ARGON2)
+
+    # Create the user
+    _user = User(username=_username, password=_hashed_password, role=UserRoles.ADMIN.value)
+
+    # Save to the database
+    session.add(_user)
+    await session.commit()
+    await session.refresh(_user)
+
+    # Return the registered user
+    return UserResponse.model_validate(_user)
+
+
+@router.patch(
+    "/manage/users",
+    response_model=UsersResponse,
+)
+async def manage_users(
+        users: UsersManagement,
+        session: Annotated[AsyncSession, Depends(yield_async_session)],
+):
+    _updated_users: list[User] = []
+    _status = ResponseStatus
+
+    for user in users.users:
+        _result = await session.execute(select(User).where(User.id == user.id))
+        _user = _result.scalar_one_or_none()
+
+        if _user is None:
+            raise HTTPException(status_code=_status.NOT_FOUND.code, detail=f"User {user.id} not found.") from None
+
+        _user.role = user.role.value
+        _user.is_active = user.is_active
+        _updated_users.append(_user)
+
+    await session.commit()
+
+    for _user in _updated_users:
+        await session.refresh(_user)
+
+    return UsersResponse(
+        code=_status.SUCCESS.code,
+        message=_status.SUCCESS.message,
+        users=[UserResponse.model_validate(_user) for _user in _updated_users],
+    )
