@@ -26,16 +26,15 @@ from .crud import (
 from .goods import request_to_get_goods
 from .types import URL, AcceptTypes, RequestMethods
 from .user import (
+    request_to_get_users,
+    request_to_init_admin,
+    request_to_manage_users,
     request_to_sign_in,
     request_to_sign_up,
     request_to_update,
 )
 
 __all__ = [
-    "request_to_sign_in",
-    "request_to_sign_up",
-    "request_to_update",
-
     "request_to_delete_tables",
     "request_to_list_tables",
     "request_to_initialise_tables",
@@ -45,4 +44,11 @@ __all__ = [
     "URL",
     "AcceptTypes",
     "RequestMethods",
+
+    "request_to_init_admin",
+    "request_to_sign_in",
+    "request_to_sign_up",
+    "request_to_update",
+    "request_to_get_users",
+    "request_to_manage_users",
 ]
