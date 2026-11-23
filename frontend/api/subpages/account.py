@@ -21,6 +21,7 @@ from streamlit import (
 
 from frontend.api.tools import (
     dialog_delete_tables,
+    dialog_delete_users,
     dialog_init_tables,
     dialog_manage_users,
     dialog_sign_up,
@@ -36,7 +37,7 @@ for key in ["IS_IN", "USER", "ACCESS_TOKEN", "TOKEN_EXPIRES_AT"]:
     if key not in session_state:
         session_state[key] = None
 
-_, center, _ = columns(3)
+_, center, _ = columns([2, 4, 2])
 with center:
     NOTIFICATION = empty()
 
@@ -123,13 +124,16 @@ with center:
 
             # Add buttons for logout and edit
             is_admin = session_state.USER["role"] == "admin"
-            cols = columns(3 if is_admin else 2)
+            cols = columns(4 if is_admin else 2)
             if cols[0].button("Logout", type="primary", width="stretch", icon=":material/logout:"):
                 session_state.IS_IN = False
                 rerun()
             if is_admin and cols[1].button("Manage", type="secondary", width="stretch"):
                 with spinner("Managing Users...", show_time=True, width="stretch"):
                     dialog_manage_users(session_state.USER["id"])
+            if is_admin and cols[2].button("Delete", type="secondary", width="stretch"):
+                with spinner("Deleting User...", show_time=True, width="stretch"):
+                    dialog_delete_users(session_state.USER["id"])
             if cols[-1].button("Edit", type="secondary", width="stretch", icon=":material/edit:"):
                 with spinner("Updating User Information...", show_time=True, width="stretch"):
                     dialog_update(session_state.USER)
