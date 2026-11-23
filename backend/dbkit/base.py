@@ -33,15 +33,15 @@ class GENERAL:
     PK = Annotated[int, mapped_column(Integer, nullable=False, primary_key=True)]
     CT = Annotated[datetime, mapped_column(DateTime, nullable=False, server_default=func.now())]
     UT = Annotated[datetime, mapped_column(DateTime, nullable=False, server_default=func.now(), onupdate=func.now())]
-    INT = Annotated[int, mapped_column(Integer, nullable=True)]
-    FLT = Annotated[float, mapped_column(Float, nullable=True)]
-    DEC = Annotated[Decimal, mapped_column(Numeric(12, 2), nullable=True)]
-    STR = Annotated[str, mapped_column(String(60), nullable=True)]
-    BOL = Annotated[bool, mapped_column(Boolean, nullable=True)]
+    INT = Annotated[int | None, mapped_column(Integer, nullable=True)]
+    FLT = Annotated[float | None, mapped_column(Float, nullable=True)]
+    DEC = Annotated[Decimal | None, mapped_column(Numeric(12, 2), nullable=True)]
+    STR = Annotated[str | None, mapped_column(String(60), nullable=True)]
+    BOL = Annotated[bool | None, mapped_column(Boolean, nullable=True)]
     HAS = Annotated[str, mapped_column(String(255), nullable=False)]
-    TXT = Annotated[str, mapped_column(Text, nullable=True)]
-    DT = Annotated[date, mapped_column(Date, nullable=True)]
-    TM = Annotated[time, mapped_column(Time, nullable=True)]
+    TXT = Annotated[str | None, mapped_column(Text, nullable=True)]
+    DT = Annotated[date | None, mapped_column(Date, nullable=True)]
+    TM = Annotated[time | None, mapped_column(Time, nullable=True)]
 
 
 class BASE(DECLARATION):
@@ -55,6 +55,7 @@ class BASE(DECLARATION):
     updated_at: Mapped[GENERAL.UT]
 
     def __repr__(self):
+        """ String representation of the class """
         return (
             f"id={self.id}, "
             f"created_at={self.created_at}, "
