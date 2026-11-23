@@ -26,6 +26,7 @@ from .crud import (
 from .goods import request_to_get_goods
 from .types import URL, AcceptTypes, RequestMethods
 from .user import (
+    request_to_delete_users,
     request_to_get_users,
     request_to_init_admin,
     request_to_manage_users,
@@ -45,6 +46,7 @@ __all__ = [
     "AcceptTypes",
     "RequestMethods",
 
+    "request_to_delete_users",
     "request_to_init_admin",
     "request_to_sign_in",
     "request_to_sign_up",
