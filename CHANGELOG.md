@@ -5,6 +5,11 @@
 
 ### Features
 
+- **fapi:** add ProductTypes enum and reorganize type defs ([0f91bcb](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/0f91bcb087dcbf86a9d7b124ee2712db387aa4f2))
+- **schemas:** expand product schema with detailed attributes ([b6fe9c6](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/b6fe9c6d74e3caacff1f39ec6c080c7d00c39a30))
+- **models:** extend Goods model with new fields ([095289c](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/095289c0d48a537963b04f936e426734854f26b3))
+- **dashboard:** add access token and expiration to session state ([7aabf2b](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/7aabf2b36eac7d54347cc031df22a34ef6b8f847))
+- **fapi:** export ProductTypes from public API ([48f5f3b](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/48f5f3bcd15019a477040324748e2f8e5f2e49a9))
 - **user:** add user deletion request and improve type safety ([8e02aa5](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/8e02aa522e3c563f4408aa2ed57e2d2b580e4871))
 - **user:** add delete user endpoint ([0556396](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/0556396e3c453ef1fbf7464d5d974ba1ea59a5eb))
 - **net:** add DELETE_USERS API endpoint constant ([03a629b](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/03a629b9ed503e5181f1fd146307d4e3caba12ea))
@@ -110,6 +115,8 @@
 
 ### Bug Fixes
 
+- **api:** correct URL constant reference for goods request ([3e8b9a6](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/3e8b9a64ec589fee1c7fdf1859960c9107f92cf0))
+- **dbkit:** correct nullable type annotations for column definitions ([c312f58](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/c312f58a53171f0c4a90279cdc032c40aca9aa16))
 - **user:** use mode="json" in model_dump for proper serialization ([3585106](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/358510629d36faf9cfbd2e649721d75403a205df))
 - **layout:** initialize IS_IN session state with default value ([56baa7d](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/56baa7db9272abd01f40eed8363a7354f063afe8))
 - **dashboard:** change notification type to success with icon ([9f5c78d](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/9f5c78d439abcd6f937d29ec2ba87864eb2bd82d))
@@ -153,6 +160,7 @@
 
 ### Docs
 
+- **changelog:** add recent bug fix and docs entries ([d499403](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/d4994036f5b7117de5c9fbac80e211137c7b022f))
 - **changelog:** add recent refactoring and chore entries ([1a35905](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/1a35905dc337f725894261833c33c964a93f4440))
 - **subpages:** correct file name in comment header ([26ad96b](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/26ad96b7c7037e3da6d097b43c4dbadc7fcd5e05))
 - **layout:** simplify docstrings by removing return types ([98ef2c2](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/98ef2c215551a21303cc11d60a768e0de1422ba2))
@@ -187,6 +195,10 @@
 
 ### Code Refactoring
 
+- **net:** rename URL enum GOODS to GET_GOODS and reposition ([f05a2f1](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/f05a2f19c173111f92861132e7fbe6c7491d5c77))
+- **layout:** rename management page to inventory ([34024af](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/34024af46136365ecf5ec0c584615d65aec4fab7))
+- **inventory:** restructure subpage with DB readiness check ([38fc6dc](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/38fc6dce9df43e3b87fb53e8d654c9e815a1c83c))
+- **goods:** change ResponseStatus access pattern to enum class ([1ffb2af](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/1ffb2af808b52bdd482160b4ce9be7a605bcaa93))
 - **user:** rename endpoint functions with to_ prefix ([d6e3ba1](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/d6e3ba1c2a09feb9d7c48908ed58b4df986bafb4))
 - **router:** rename crud endpoint module to database ([9edef61](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/9edef615e22f0b52589032df30cf9178fcdd47c7))
 - **net:** rename crud module to database ([ffab0b4](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/ffab0b4ef098bb3958a6cca7ba7339abb9d928ff))
