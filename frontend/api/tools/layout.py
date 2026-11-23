@@ -46,19 +46,19 @@ def async_navigate_pages() -> None:
             Path(PAGE_DIR / "subpages" / "home.py").resolve(),
             Path(PAGE_DIR / "subpages" / "account.py").resolve(),
             Path(PAGE_DIR / "subpages" / "dashboard.py").resolve(),
-            Path(PAGE_DIR / "subpages" / "management.py").resolve(),
+            Path(PAGE_DIR / "subpages" / "inventory.py").resolve(),
         ],
         "title": [
             "Home",
             "Account",
             "Dashboard",
-            "Management",
+            "Inventory",
         ],
         "icon": [
             ":material/home:",
             ":material/account_circle:",
-            ":material/dashboard:",
-            ":material/database:",
+            ":material/bar_chart_4_bars:",
+            ":material/shopping_bag:",
         ],
     }
 
