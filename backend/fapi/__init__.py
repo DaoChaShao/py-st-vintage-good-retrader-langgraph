@@ -38,7 +38,11 @@ from .services import (
     async_table_ready,
 )
 from .session import InitAsyncSession
-from .types import AccessTokenTypes, ResponseStatus
+from .types import (
+    AccessTokenTypes,
+    ProductTypes,
+    ResponseStatus,
+)
 
 __all__ = [
     "yield_async_session",
@@ -57,5 +61,6 @@ __all__ = [
     "InitAsyncSession",
 
     "ResponseStatus",
+    "ProductTypes",
     "AccessTokenTypes",
 ]
