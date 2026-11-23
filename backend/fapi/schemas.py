@@ -12,7 +12,11 @@ from decimal import Decimal
 from pydantic import BaseModel, ConfigDict
 
 from ..dbkit import UserRoles
-from .types import AccessTokenTypes, ResponseStatus
+from .types import (
+    AccessTokenTypes,
+    ProductTypes,
+    ResponseStatus,
+)
 
 
 class CRUDResponse(BaseModel):
@@ -125,14 +129,37 @@ class GoodResponse(BaseModel):
 
     # Main Key
     id: int
+
     # Attributes
     purchase_date: date | None
     sale_date: date | None
+
+    # Product Information
+    city: str | None
+    store: str | None
+    brand: str | None
+    series: str | None
+    generation: int | None
     product: str | None
-    category: str | None
-    price: Decimal | None
+    production_year_start: int | None
+    production_year_end: int | None
+    category: ProductTypes | None
+
+    # Quantity
+    set: int | None
+    piece: int | None
     quantity: int | None
+
+    # Financial Information
+    price: Decimal | None
+    exchange_rate: Decimal | None
+    shipping_fee: Decimal | None
+    expected_profit: Decimal | None
+    total: Decimal | None
+
+    # Description
     description: str | None
+
     # Timestamps
     created_at: datetime | None
     updated_at: datetime | None
