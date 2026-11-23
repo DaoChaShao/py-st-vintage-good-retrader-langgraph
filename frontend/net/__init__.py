@@ -18,12 +18,14 @@ with the FastAPI backend and retrieval of API response data.
 __author__ = "Shawn Yu"
 __version__ = "0.1.0"
 
-from .crud import (
+from .database import (
     request_to_delete_tables,
     request_to_initialise_tables,
     request_to_list_tables,
 )
-from .goods import request_to_get_goods
+from .goods import (
+    request_to_get_goods,
+)
 from .types import URL, AcceptTypes, RequestMethods
 from .user import (
     request_to_delete_users,
