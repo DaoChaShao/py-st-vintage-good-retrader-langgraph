@@ -19,6 +19,7 @@ __version__ = "0.1.0"
 
 from .dialogs import (
     dialog_delete_tables,
+    dialog_delete_users,
     dialog_init_tables,
     dialog_manage_users,
     dialog_sign_up,
@@ -36,6 +37,7 @@ __all__ = [
 
     # functions for streamlit subpages
     "dialog_delete_tables",
+    "dialog_delete_users",
     "dialog_init_tables",
     "dialog_sign_up",
     "dialog_update",
