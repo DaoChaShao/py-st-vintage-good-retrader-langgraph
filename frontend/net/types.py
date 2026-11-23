@@ -48,3 +48,4 @@ class URL(StrEnum):
     MANAGE_USERS = BASE + "/user/manage/users"
 
     INIT_ADMIN = BASE + "/user/init/admin"
+    DELETE_USERS = BASE + "/user/delete"
