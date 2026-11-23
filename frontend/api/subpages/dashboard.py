@@ -24,7 +24,7 @@ from frontend.app.tools import DBReadyStatus
 
 NOTIFICATION = empty()
 
-for key in ["GOODS"]:
+for key in ["GOODS", "ACCESS_TOKEN", "TOKEN_EXPIRES_AT"]:
     if key not in session_state:
         session_state[key] = None
 
