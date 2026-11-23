@@ -11,8 +11,10 @@ from typing import Any
 
 from requests import Response, request
 
+from backend.dbkit import UserRoles
 from backend.fapi import (
     UserManagement,
+    UsersDeletion,
     UserSignIn,
     UsersManagement,
     UserUpdate,
@@ -69,7 +71,7 @@ def request_to_update(
         username: str,
         old_password: str | None,
         new_password: str | None,
-        role: str,
+        role: UserRoles,
         status: bool,
         updated_at: datetime,
 ) -> Response:
@@ -106,6 +108,12 @@ def request_to_update(
 
 
 def request_to_get_users(url: str | URL) -> Any:
+    """
+    Get all user information
+
+    :param url: The URL to get the users from
+    :return: The response from the server¬
+    """
     _url: URL = URL(url)
     _response = request(
         RequestMethods.GET.value,
@@ -118,7 +126,13 @@ def request_to_get_users(url: str | URL) -> Any:
 
 
 def request_to_manage_users(url: str, *, changed_users: list[dict]) -> Any:
-    """ Update multiple users """
+    """
+    Update multiple users
+
+    :param url: The URL to post the users to
+    :param changed_users: The list of users to update
+    :return: The response from the server
+    """
     _url = URL(url)
     _users = [
         UserManagement.model_validate(user)
@@ -147,4 +161,22 @@ def request_to_init_admin(url: str) -> Any:
         _url.value,
         headers=HEADERS,
         timeout=30,
+    )
+
+
+def request_to_delete_users(url: str, *, ids: list[int]) -> Any:
+    """
+    Delete a user
+
+    :param url: The URL to delete the user from
+    :param ids: The list of ids of the users to delete
+    :return: The response from the server
+    """
+    _url: URL = URL(url)
+    return request(
+        RequestMethods.DELETE.value,
+        _url.value,
+        headers=HEADERS,
+        timeout=30,
+        json=UsersDeletion(ids=ids).model_dump(mode="json")
     )
