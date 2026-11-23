@@ -10,7 +10,7 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException
 from pwdlib import PasswordHash
-from sqlalchemy import select
+from sqlalchemy import delete, select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -18,7 +18,9 @@ from ....dbkit import HashAlgorithms, User, UserRoles, hash_password
 from ...dependencies import yield_async_session
 from ...schemas import (
     AccessTokenResponse,
+    CRUDResponse,
     UserResponse,
+    UsersDeletion,
     UserSignIn,
     UsersManagement,
     UsersResponse,
@@ -39,6 +41,13 @@ async def to_sign_in(
         user: UserSignIn,
         session: Annotated[AsyncSession, Depends(yield_async_session)],
 ) -> VerificationResponse:
+    """
+    Sign in to the system
+
+    :param user: The user info
+    :param session: The database session
+    :return: The user info and access token
+    """
     _username: str = user.username
     _password: str = user.password
 
@@ -163,7 +172,13 @@ async def to_update(
     response_model=UsersResponse,
 )
 async def get_users(session: Annotated[AsyncSession, Depends(yield_async_session)]) -> UsersResponse:
-    _result = await session.execute(select(User))
+    """
+    Get all users
+
+    :param session: The database session
+    :return: The user info¬
+    """
+    _result = await session.execute(select(User).where(User.id != 1))
     _users = _result.scalars().all()
     _status = ResponseStatus.SUCCESS
     return UsersResponse(
@@ -217,7 +232,14 @@ async def to_init_admin(session: Annotated[AsyncSession, Depends(yield_async_ses
 async def manage_users(
         users: UsersManagement,
         session: Annotated[AsyncSession, Depends(yield_async_session)],
-):
+) -> UsersResponse:
+    """
+    Manage users
+
+    :param users: The users to manage
+    :param session: The database session
+    :return: The updated users
+    """
     _updated_users: list[User] = []
     _status = ResponseStatus
 
@@ -241,4 +263,30 @@ async def manage_users(
         code=_status.SUCCESS.code,
         message=_status.SUCCESS.message,
         users=[UserResponse.model_validate(_user) for _user in _updated_users],
+    )
+
+
+@router.delete(
+    "/delete",
+    response_model=CRUDResponse,
+)
+async def delete_user(
+        users: UsersDeletion,
+        session: Annotated[AsyncSession, Depends(yield_async_session)]
+) -> CRUDResponse:
+    """
+    Delete users
+
+    :param users: The users to delete
+    :param session: The database session
+    :return: The result of the operation
+    """
+    _status = ResponseStatus
+
+    await session.execute(delete(User).where(User.id.in_(users.ids)))
+    await session.commit()
+
+    return CRUDResponse(
+        code=_status.SUCCESS.code,
+        message=_status.SUCCESS.message,
     )
