@@ -30,9 +30,9 @@ async def test_goods():
 )
 async def get_goods(session: Annotated[AsyncSession, Depends(yield_async_session)]) -> GoodsResponse:
     _records = await async_read_records(session)
-    _status = ResponseStatus.SUCCESS
+    _status = ResponseStatus
     return GoodsResponse(
-        code=_status.code,
-        message=_status.message,
+        code=_status.SUCCESS.code,
+        message=_status.SUCCESS.message,
         data=[GoodResponse.model_validate(record) for record in _records],
     )
