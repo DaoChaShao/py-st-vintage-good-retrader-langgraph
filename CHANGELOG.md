@@ -1,10 +1,18 @@
 <!-- insertion marker -->
 <a name="0.1.0"></a>
 
-## [0.1.0](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/compare/ac1d2409aef149089b2a89c9480844fcefaf52a3...0.1.0) (2026-11-22)
+## [0.1.0](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/compare/ac1d2409aef149089b2a89c9480844fcefaf52a3...0.1.0) (2026-11-23)
 
 ### Features
 
+- **user:** add user deletion request and improve type safety ([8e02aa5](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/8e02aa522e3c563f4408aa2ed57e2d2b580e4871))
+- **user:** add delete user endpoint ([0556396](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/0556396e3c453ef1fbf7464d5d974ba1ea59a5eb))
+- **net:** add DELETE_USERS API endpoint constant ([03a629b](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/03a629b9ed503e5181f1fd146307d4e3caba12ea))
+- **dialogs:** add user deletion dialog with checkbox selection ([7802764](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/78027643531d289c182d4f5ce0f9e942806d56fd))
+- **account:** add user delete button for admin panel ([5c1c1fb](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/5c1c1fb601c4416a2427c4694efdf9b897af5841))
+- **net:** add delete users API to public interface ([819c242](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/819c2421f10cda25451e46b32ad1385751f8b735))
+- **tools:** export dialog_delete_users function ([ca3bb7b](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/ca3bb7b71a35db691ab7a57af49bb9ecc6f3666d))
+- **fapi:** export UsersDeletion schema from module ([76a3892](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/76a3892e4d48cfc28addd8f536bedcbe12dfb0f7))
 - **user:** add user management API request functions ([c85b8b3](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/c85b8b3776de0713f92dd53ce5514b7ddc6681c1))
 - **user:** add user management endpoints ([ce0cdff](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/ce0cdff4ac270417ae612eb0c1163f5170835910))
 - **net:** add PATCH method and user management endpoints ([cf1662a](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/cf1662a5985379a270b864304de2aa3f7936fe23))
@@ -108,7 +116,7 @@
 
 ### Chore
 
-- **changelog:** update changelog with recent entries ([9eceaec](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/9eceaec93037b0e2a66d90edddb3cd693960e2c1))
+- **changelog:** update changelog with recent entries ([0f277dd](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/0f277dd5533c588eb6bd6497f788d4d0e3c42d39))
 - **static:** add favicon font metadata file ([5aeb038](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/5aeb038f0e76fd65a3ef6d478b8068508fa3e0e4))
 - **net:** reorganize and expand module exports ([f30ad35](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/f30ad354bf44c980c86b8ab6f5a352df0f6823e6))
 - **deps:** add authentication-related dependencies ([8c52d97](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/8c52d978bdc3cca32a8940c1065416fdcea9a706))
@@ -175,6 +183,7 @@
 
 ### Code Refactoring
 
+- **schemas:** reorder schema classes and add UsersDeletion model ([5409679](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/5409679e90371c944633438313be18ce2e7faf23))
 - **user:** add return type annotations to user endpoints ([ec9cb6e](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/ec9cb6ee47b1ad3ee23c3907a9fc1b5286e6156f))
 - **dbkit:** rename Roles class to UserRoles ([003bfa3](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/003bfa34741203e7639dba02651af6ae34464c02))
 - **models:** replace hardcoded role string with UserRoles enum ([1c95f3e](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/1c95f3e857878e632a2f021e2a0104bad0f34e7d))
