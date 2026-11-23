@@ -40,7 +40,7 @@ def request_to_sign_in(url: str, *, username: str, password: str) -> Any:
         _url.value,
         headers=HEADERS,
         timeout=30,
-        json=_user.model_dump(),
+        json=_user.model_dump(mode="json"),
     )
 
 
@@ -60,7 +60,7 @@ def request_to_sign_up(url: str, *, username: str, password: str) -> Any:
         _url.value,
         headers=HEADERS,
         timeout=30,
-        json=_user.model_dump(),
+        json=_user.model_dump(mode="json"),
     )
 
 
@@ -173,10 +173,11 @@ def request_to_delete_users(url: str, *, ids: list[int]) -> Any:
     :return: The response from the server
     """
     _url: URL = URL(url)
+    _user_ids: UsersDeletion = UsersDeletion(ids=ids)
     return request(
         RequestMethods.DELETE.value,
         _url.value,
         headers=HEADERS,
         timeout=30,
-        json=UsersDeletion(ids=ids).model_dump(mode="json")
+        json=_user_ids.model_dump(mode="json")
     )
