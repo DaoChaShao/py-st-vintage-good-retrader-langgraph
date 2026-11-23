@@ -9,7 +9,7 @@
 from fastapi import APIRouter
 
 from .endpoints import (
-    crud,
+    database,
     goods,
     user,
 )
@@ -18,6 +18,6 @@ router = APIRouter()
 
 # Register the routers
 
-router.include_router(crud.router, prefix="/crud", tags=["crud"])
+router.include_router(database.router, prefix="/crud", tags=["crud"])
 router.include_router(goods.router, prefix="/goods", tags=["goods"])
 router.include_router(user.router, prefix="/user", tags=["user"])
