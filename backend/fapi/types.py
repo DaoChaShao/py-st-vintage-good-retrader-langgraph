@@ -10,6 +10,18 @@ from enum import Enum, StrEnum, unique
 
 
 @unique
+class AccessTokenTypes(StrEnum):
+    BEARER = "bearer"
+
+
+@unique
+class ProductTypes(StrEnum):
+    CHINAWARE = "chinaware"
+    CRYSTAL = "crystal"
+    POTTERY = "pottery"
+
+
+@unique
 class ResponseStatus(Enum):
     SUCCESS = (200, "Success")
     CREATED = (201, "Created")
@@ -24,8 +36,3 @@ class ResponseStatus(Enum):
     def __init__(self, code: int, message: str):
         self.code = code
         self.message = message
-
-
-@unique
-class AccessTokenTypes(StrEnum):
-    BEARER = "bearer"
