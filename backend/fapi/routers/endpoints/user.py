@@ -55,6 +55,7 @@ async def to_sign_in(
     _user = _result.scalar_one_or_none()
 
     _status = ResponseStatus
+
     if _user is None:
         raise HTTPException(status_code=_status.UNAUTHORISED.code, detail="The user cannot be found.")
     elif not PasswordHash.recommended().verify(_password, _user.password):
@@ -62,7 +63,6 @@ async def to_sign_in(
     else:
         with JWTAccessTokenEncoder() as encoder:
             _token, _expiration = encoder.create(_user.id)
-        _status = ResponseStatus.SUCCESS
     return VerificationResponse(
         code=_status.SUCCESS.code,
         message=_status.SUCCESS.message,
@@ -171,7 +171,7 @@ async def to_update(
     "/get/users",
     response_model=UsersResponse,
 )
-async def get_users(session: Annotated[AsyncSession, Depends(yield_async_session)]) -> UsersResponse:
+async def to_get_users(session: Annotated[AsyncSession, Depends(yield_async_session)]) -> UsersResponse:
     """
     Get all users
 
@@ -180,7 +180,7 @@ async def get_users(session: Annotated[AsyncSession, Depends(yield_async_session
     """
     _result = await session.execute(select(User).where(User.id != 1))
     _users = _result.scalars().all()
-    _status = ResponseStatus.SUCCESS
+    _status = ResponseStatus
     return UsersResponse(
         code=_status.SUCCESS.code,
         message=_status.SUCCESS.message,
@@ -229,7 +229,7 @@ async def to_init_admin(session: Annotated[AsyncSession, Depends(yield_async_ses
     "/manage/users",
     response_model=UsersResponse,
 )
-async def manage_users(
+async def to_manage_users(
         users: UsersManagement,
         session: Annotated[AsyncSession, Depends(yield_async_session)],
 ) -> UsersResponse:
@@ -270,7 +270,7 @@ async def manage_users(
     "/delete",
     response_model=CRUDResponse,
 )
-async def delete_user(
+async def to_delete_user(
         users: UsersDeletion,
         session: Annotated[AsyncSession, Depends(yield_async_session)]
 ) -> CRUDResponse:
