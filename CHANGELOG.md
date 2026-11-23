@@ -110,6 +110,7 @@
 
 ### Bug Fixes
 
+- **user:** use mode="json" in model_dump for proper serialization ([3585106](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/358510629d36faf9cfbd2e649721d75403a205df))
 - **layout:** initialize IS_IN session state with default value ([56baa7d](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/56baa7db9272abd01f40eed8363a7354f063afe8))
 - **dashboard:** change notification type to success with icon ([9f5c78d](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/9f5c78d439abcd6f937d29ec2ba87864eb2bd82d))
 - **tools:** convert price between Decimal and float types ([f9872f1](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/f9872f1152103f8103c7910abef1b9c0942641fc))
@@ -152,6 +153,7 @@
 
 ### Docs
 
+- **changelog:** add recent refactoring and chore entries ([1a35905](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/1a35905dc337f725894261833c33c964a93f4440))
 - **subpages:** correct file name in comment header ([26ad96b](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/26ad96b7c7037e3da6d097b43c4dbadc7fcd5e05))
 - **layout:** simplify docstrings by removing return types ([98ef2c2](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/98ef2c215551a21303cc11d60a768e0de1422ba2))
 - **layout:** simplify docstrings by removing redundant return info ([fcb9772](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/fcb9772615847eed871ec2e5033d6867cbd04f1a))
