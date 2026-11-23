@@ -27,6 +27,7 @@ from .dependencies import yield_async_session
 from .schemas import (
     UserInit,
     UserManagement,
+    UsersDeletion,
     UserSignIn,
     UsersManagement,
     UserUpdate,
@@ -42,6 +43,7 @@ from .types import AccessTokenTypes, ResponseStatus
 __all__ = [
     "yield_async_session",
 
+    "UsersDeletion",
     "UserInit",
     "UserUpdate",
     "UsersManagement",
