@@ -22,6 +22,102 @@ class CRUDResponse(BaseModel):
     message: str | ResponseStatus
 
 
+class UserBase(BaseModel):
+    """ User base schema """
+
+    model_config = ConfigDict(from_attributes=True)
+
+    username: str
+
+
+class UserSignIn(UserBase):
+    """ User base schema """
+
+    password: str
+
+
+class UserManagement(UserBase):
+    """ User management schema """
+
+    # Main Key
+    id: int
+    # Attributes
+    is_active: bool
+    role: UserRoles
+
+
+class UsersManagement(BaseModel):
+    """ Users management schema """
+
+    users: list[UserManagement]
+
+
+class UserUpdate(UserBase):
+    """ User schema """
+
+    # Main Keys
+    id: int
+    # Attributes
+    old_password: str | None
+    new_password: str | None
+    is_active: bool
+    role: UserRoles
+    # Timestamps
+    updated_at: datetime
+
+
+class UserInit(UserSignIn):
+    """ User init schema """
+
+    role: UserRoles = UserRoles.ADMIN.value
+
+
+class UsersDeletion(BaseModel):
+    """ User deletion schema """
+
+    ids: list[int]
+
+
+class UserResponse(UserBase):
+    """ Response for a single user """
+
+    # Main Key
+    id: int
+    # Attributes
+    is_active: bool
+    role: UserRoles
+    # Timestamps
+    created_at: datetime | None
+    updated_at: datetime | None
+
+
+class UsersResponse(CRUDResponse):
+    """ Response for users endpoint """
+
+    users: list[UserResponse]
+
+
+class AccessTokenResponse(BaseModel):
+    """ Response for user authentication """
+
+    model_config = ConfigDict(from_attributes=True)
+
+    token: str
+    type: str | AccessTokenTypes = AccessTokenTypes.BEARER
+    expires_at: int
+
+
+class VerificationResponse(BaseModel):
+    """ Response for successful login """
+
+    model_config = ConfigDict(from_attributes=True)
+
+    code: int | ResponseStatus
+    message: str | ResponseStatus
+    user: UserResponse
+    token: AccessTokenResponse
+
+
 class GoodResponse(BaseModel):
     """ Response for a single good """
 
@@ -52,93 +148,3 @@ class TablesResponse(CRUDResponse):
     """ Response for table endpoint """
 
     data: list[str]
-
-
-class UserBase(BaseModel):
-    """ User base schema """
-
-    model_config = ConfigDict(from_attributes=True)
-
-    username: str
-
-
-class UserManagement(UserBase):
-    """ User management schema """
-
-    # Main Key
-    id: int
-    # Attributes
-    is_active: bool
-    role: UserRoles
-
-
-class UsersManagement(BaseModel):
-    """ Users management schema """
-
-    users: list[UserManagement]
-
-
-class UserResponse(UserBase):
-    """ Response for a single user """
-
-    # Main Key
-    id: int
-    # Attributes
-    is_active: bool
-    role: UserRoles
-    # Timestamps
-    created_at: datetime | None
-    updated_at: datetime | None
-
-
-class UsersResponse(CRUDResponse):
-    """ Response for users endpoint """
-
-    users: list[UserResponse]
-
-
-class UserSignIn(UserBase):
-    """ User base schema """
-
-    password: str
-
-
-class UserInit(UserSignIn):
-    """ User init schema """
-
-    role: UserRoles = UserRoles.ADMIN.value
-
-
-class UserUpdate(UserBase):
-    """ User schema """
-
-    # Main Keys
-    id: int
-    # Attributes
-    old_password: str | None
-    new_password: str | None
-    is_active: bool
-    role: UserRoles
-    # Timestamps
-    updated_at: datetime
-
-
-class AccessTokenResponse(BaseModel):
-    """ Response for user authentication """
-
-    model_config = ConfigDict(from_attributes=True)
-
-    token: str
-    type: str | AccessTokenTypes = AccessTokenTypes.BEARER
-    expires_at: int
-
-
-class VerificationResponse(BaseModel):
-    """ Response for successful login """
-
-    model_config = ConfigDict(from_attributes=True)
-
-    code: int | ResponseStatus
-    message: str | ResponseStatus
-    user: UserResponse
-    token: AccessTokenResponse
