@@ -33,7 +33,6 @@ BASE: str = "http://127.0.0.1:8000/api"
 class URL(StrEnum):
     """ URL """
     TEST = BASE + "/test"
-    GOODS = BASE + "/goods"
     USER = BASE + "/user"
 
     DELETE_TABLES = BASE + "/crud/delete/tables"
@@ -49,3 +48,5 @@ class URL(StrEnum):
 
     INIT_ADMIN = BASE + "/user/init/admin"
     DELETE_USERS = BASE + "/user/delete"
+    # -----
+    GET_GOODS = BASE + "/goods"
