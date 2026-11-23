@@ -29,6 +29,7 @@ from streamlit import (
 from ...net import (
     URL,
     request_to_delete_tables,
+    request_to_delete_users,
     request_to_get_users,
     request_to_init_admin,
     request_to_initialise_tables,
@@ -48,6 +49,39 @@ def dialog_delete_tables():
 
     if right.button("No", type="primary", width="stretch"):
         rerun()
+
+
+@dialog("Delete Users", position="center", width="medium", icon=":material/delete:")
+def dialog_delete_users(curr_id: int):
+    """ Delete all users """
+    notification = empty()
+
+    filtered_users = [
+        {**user, "selected": False}
+        for user in request_to_get_users(URL.GET_USERS)
+        if user["id"] != curr_id
+    ]
+    edited_users = data_editor(
+        filtered_users,
+        hide_index=True, width="stretch", height="stretch",
+        column_config={
+            "selected": column_config.CheckboxColumn("Delete"),
+        },
+        disabled=["id", "username", "role", "is_active", "created_at", "updated_at"],
+    )
+
+    deleted_ids = [int(user["id"]) for user in edited_users if user["selected"]]
+
+    if button("Delete", type="primary", width="stretch"):
+        with spinner("Updating...", show_time=True, width="stretch"):
+            response = request_to_delete_users(URL.DELETE_USERS, ids=deleted_ids)
+            if response.ok:
+                rerun()
+            else:
+                notification.error(
+                    f"Delete failed ({response.status_code}): {response.text}",
+                    icon=":material/error:"
+                )
 
 
 @dialog("Initialise Tables", position="center", width="small", icon=":material/add:")
@@ -112,7 +146,7 @@ def dialog_manage_users(curr_id: int):
         hide_index=True, width="stretch", height="stretch",
         column_config={
             "is_active": column_config.CheckboxColumn("Active Status"),
-            "role": column_config.SelectboxColumn("Account Role", options=["user", "admin"])
+            "role": column_config.SelectboxColumn("Account Role", options=["user", "admin"]),
         },
         disabled=["id", "username", "created_at", "updated_at"],
     )
