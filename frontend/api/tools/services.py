@@ -41,7 +41,7 @@ def async_db_ready(
         with container(horizontal=True, width="stretch", height="stretch"):
             if button("Load Records", type="primary", width="content"):
                 with spinner("Requesting Records...", show_time=True, width="stretch"):
-                    session_state.GOODS = request_to_get_goods(URL.GOODS)
+                    session_state.GOODS = request_to_get_goods(URL.GET_GOODS)
                     rerun()
             space("stretch")
 
