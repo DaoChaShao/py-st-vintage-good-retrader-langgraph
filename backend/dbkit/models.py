@@ -45,27 +45,26 @@ class Goods(BASE):
     sale_date: Mapped[GENERAL.DT]
 
     # Product Information
+    sku: Mapped[GENERAL.STR]  # Stock Keeping Unit (Item Code)
     city: Mapped[GENERAL.STR]
     store: Mapped[GENERAL.STR]
-    brand: Mapped[GENERAL.STR]
-    series: Mapped[GENERAL.STR]
-    generation: Mapped[GENERAL.INT]
     product: Mapped[GENERAL.STR]
     production_year_start: Mapped[GENERAL.INT]
     production_year_end: Mapped[GENERAL.INT]
+    brand: Mapped[GENERAL.STR]
+    series: Mapped[GENERAL.STR]
+    generation: Mapped[GENERAL.INT]
     category: Mapped[GENERAL.STR]
 
     # Quantity
     set: Mapped[GENERAL.INT]
     piece: Mapped[GENERAL.INT]
-    quantity: Mapped[GENERAL.INT]
 
     # Financial Information
     price: Mapped[GENERAL.DEC]
     exchange_rate: Mapped[GENERAL.DEC]
     shipping_fee: Mapped[GENERAL.DEC]
     expected_profit: Mapped[GENERAL.DEC]
-    total: Mapped[GENERAL.DEC]
 
     # Description
     description: Mapped[GENERAL.TXT]
