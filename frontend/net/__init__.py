@@ -24,9 +24,16 @@ from .database import (
     request_to_list_tables,
 )
 from .goods import (
+    request_to_delete_good,
     request_to_get_goods,
+    request_to_post_good,
+    request_to_update_good,
 )
-from .types import URL, AcceptTypes, RequestMethods
+from .types import (
+    URL,
+    AcceptTypes,
+    RequestMethods,
+)
 from .user import (
     request_to_delete_users,
     request_to_get_users,
@@ -38,16 +45,23 @@ from .user import (
 )
 
 __all__ = [
+    # Database
     "request_to_delete_tables",
     "request_to_list_tables",
     "request_to_initialise_tables",
 
+    # Goods
     "request_to_get_goods",
+    "request_to_delete_good",
+    "request_to_post_good",
+    "request_to_update_good",
 
+    # Types
     "URL",
     "AcceptTypes",
     "RequestMethods",
 
+    # User
     "request_to_delete_users",
     "request_to_init_admin",
     "request_to_sign_in",
