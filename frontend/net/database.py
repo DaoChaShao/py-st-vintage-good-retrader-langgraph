@@ -43,7 +43,7 @@ def request_to_list_tables(url: str | URL) -> list[str]:
         headers=HEADERS,
         timeout=30,
     )
-    return _response.json()["data"]
+    return _response.json()["tables"]
 
 
 def request_to_initialise_tables(url: str | URL) -> None:
