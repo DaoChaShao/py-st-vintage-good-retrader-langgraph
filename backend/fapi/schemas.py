@@ -145,10 +145,11 @@ class GoodCreation(BaseModel):
     set: int | None = None
     piece: int | None = None
     # Financial Information
-    price: Decimal | None = None
+    purchase_price: Decimal | None = None
     exchange_rate: Decimal | None = None
     shipping_fee: Decimal | None = None
     expected_profit: Decimal | None = None
+    sale_price: Decimal | None = None
     # Description
     description: str | None = None
 
