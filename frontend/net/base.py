@@ -10,11 +10,11 @@ from typing import Any
 
 from fake_useragent import UserAgent
 
-from .types import AcceptTypes
+from .types import AcceptType
 
 UA = UserAgent()
 
 HEADERS: dict[str, Any] = {
     "User-Agent": UA.random,
-    "Accept": AcceptTypes.APPLICATION_JSON.value
+    "Accept": AcceptType.APPLICATION_JSON.value
 }
