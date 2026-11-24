@@ -19,6 +19,7 @@ from streamlit import (
 from frontend.api.tools import (
     dialog_create_good,
     dialog_delete_good,
+    dialog_restock_good,
     dialog_sell_good,
     dialog_update_good,
 )
@@ -108,9 +109,13 @@ else:
                 with spinner("Updating Vintage Good...", show_time=True, width="stretch"):
                     dialog_update_good(db_id=db_idx, good=good)
 
-            if button("Sell", type="secondary", width=120):
-                with spinner("Selling Vintage Good...", show_time=True, width="stretch"):
-                    dialog_sell_good(db_idx)
+            if good["sale_date"] is None:
+                if button("Sell", type="secondary", width=120):
+                    with spinner("Selling Vintage Good...", show_time=True, width="stretch"):
+                        dialog_sell_good(db_idx)
+            else:
+                if button("Restock", type="secondary", width=120):
+                    dialog_restock_good(db_idx)
 
         space("stretch")
 
