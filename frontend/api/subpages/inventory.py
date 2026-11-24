@@ -61,7 +61,6 @@ else:
             QUERY_GOODS=None,
         )
     )
-
     if right.button("Search", type="primary", width="stretch"):
         with spinner("Searching Vintage Goods...", show_time=True, width="stretch"):
             if query:
