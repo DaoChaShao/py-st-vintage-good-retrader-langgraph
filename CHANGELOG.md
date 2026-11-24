@@ -187,6 +187,7 @@
 
 ### Docs
 
+- **changelog:** update changelog with restock feature entries ([51e4961](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/51e496159465f5a5940acbf4f9e88efbf90ed5df))
 - **changelog:** update changelog with recent entries ([ac24694](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/ac2469443d47c3755855c9668a46e49a4a317426))
 - **changelog:** add recent changes to changelog ([22c88e9](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/22c88e99876efdc8e323ce78a9b372c4e8137828))
 - **changelog:** add new entries to changelog sections ([8a5087e](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/8a5087e75826819b0326abad79fe3fa8771372a4))
@@ -224,6 +225,7 @@
 
 ### Code Refactoring
 
+- **dashboard:** rework loading and UI layout ([1988eea](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/1988eea90cc2f2c75e2b59a92695ae97839fbeb4))
 - **net:** rename RequestMethods to RequestMethod ([5b6bb1c](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/5b6bb1cc38ebf7768ac3ff122e81e8e59b9684f2))
 - **net:** rename enum classes to singular form ([bd852ca](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/bd852cae143205557bd90de46918731dd9a31525))
 - **fapi:** split price field into purchase and sale price ([9f90d28](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/9f90d28236c34514a51ad12f08382e343d4c488a))
