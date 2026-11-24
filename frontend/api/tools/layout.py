@@ -16,12 +16,10 @@ from streamlit import (
     set_page_config,
 )
 
+from backend.dbkit import UserRoles
+
 LOGO_DIR: Path = Path(__file__).resolve().parents[3]
 PAGE_DIR: Path = Path(__file__).resolve().parents[1]
-
-for key in ["IS_IN", "USER"]:
-    if key not in session_state:
-        session_state[key] = None
 
 
 def async_configue_page() -> None:
@@ -41,6 +39,14 @@ def async_configue_page() -> None:
 
 def async_navigate_pages() -> None:
     """ Set the subpages on the sidebar (https://fonts.google.com/icons) """
+    for key in ["IS_IN"]:
+        if key not in session_state:
+            session_state[key] = False
+
+    for key in ["IS_IN", "USER"]:
+        if key not in session_state:
+            session_state[key] = None
+
     pages: dict = {
         "page": [
             Path(PAGE_DIR / "subpages" / "home.py").resolve(),
@@ -72,7 +78,7 @@ def async_navigate_pages() -> None:
             Page(page=pages["page"][2], title=pages["title"][2], icon=pages["icon"][2])
         )
 
-        if session_state.USER["role"] == "admin":
+        if session_state.USER["role"] == UserRoles.ADMIN:
             structure.append(
                 Page(page=pages["page"][3], title=pages["title"][3], icon=pages["icon"][3])
             )
