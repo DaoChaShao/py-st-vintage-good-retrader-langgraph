@@ -9,7 +9,7 @@
 from requests import request
 
 from .base import HEADERS
-from .types import URL, RequestMethods
+from .types import URL, RequestMethod
 
 
 def request_to_delete_tables(url: str | URL) -> None:
@@ -21,7 +21,7 @@ def request_to_delete_tables(url: str | URL) -> None:
     """
     _url: URL = URL(url)
     _response = request(
-        RequestMethods.DELETE.value,
+        RequestMethod.DELETE.value,
         _url.DELETE_TABLES.value,
         headers=HEADERS,
         timeout=30,
@@ -38,7 +38,7 @@ def request_to_list_tables(url: str | URL) -> list[str]:
     """
     _url: URL = URL(url)
     _response = request(
-        RequestMethods.GET.value,
+        RequestMethod.GET.value,
         _url.LIST_TABLES.value,
         headers=HEADERS,
         timeout=30,
@@ -55,7 +55,7 @@ def request_to_initialise_tables(url: str | URL) -> None:
     """
     _url: URL = URL(url)
     _response = request(
-        RequestMethods.POST.value,
+        RequestMethod.POST.value,
         _url.INITIALISE_TABLES.value,
         headers=HEADERS,
         timeout=30,
