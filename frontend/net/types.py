@@ -50,3 +50,6 @@ class URL(StrEnum):
     DELETE_USERS = BASE + "/user/delete"
     # -----
     GET_GOODS = BASE + "/goods"
+    CREATE_GOOD = BASE + "/goods/create"
+    DELETE_GOOD = BASE + "/goods/delete"
+    UPDATE_GOOD = BASE + "/goods/update"
