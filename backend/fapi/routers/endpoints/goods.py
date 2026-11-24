@@ -6,6 +6,8 @@
 # @File     :   goods.py
 # @Desc     :
 
+from datetime import date
+from decimal import Decimal
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -25,10 +27,7 @@ from ...types import ResponseStatus
 router = APIRouter()
 
 
-@router.get(
-    "",
-    response_model=GoodsResponse,
-)
+@router.get("", response_model=GoodsResponse)
 async def to_get_goods(session: Annotated[AsyncSession, Depends(yield_async_session)]) -> GoodsResponse:
     """
     Get all goods
@@ -46,10 +45,7 @@ async def to_get_goods(session: Annotated[AsyncSession, Depends(yield_async_sess
     )
 
 
-@router.post(
-    "/create",
-    response_model=GoodResponse,
-)
+@router.post("/create", response_model=GoodResponse)
 async def to_create_good(
         good: GoodCreation,
         session: Annotated[AsyncSession, Depends(yield_async_session)],
@@ -69,10 +65,7 @@ async def to_create_good(
     return GoodResponse.model_validate(_good)
 
 
-@router.delete(
-    "/delete",
-    response_model=CRUDResponse,
-)
+@router.delete("/delete", response_model=CRUDResponse)
 async def to_delete_good(
         db_id: int,
         session: Annotated[AsyncSession, Depends(yield_async_session)],
@@ -98,10 +91,7 @@ async def to_delete_good(
     )
 
 
-@router.patch(
-    "/update",
-    response_model=GoodResponse,
-)
+@router.patch("/update", response_model=GoodResponse)
 async def to_update_good(
         db_id: int,
         good: GoodCreation,
@@ -123,6 +113,39 @@ async def to_update_good(
 
     for key, value in good.model_dump().items():
         setattr(_good, key, value)
+
+    await session.commit()
+    await session.refresh(_good)
+
+    return GoodResponse.model_validate(_good)
+
+
+@router.patch("/sell", response_model=GoodResponse)
+async def to_sell_good(
+        db_id: int,
+        sale_price: Decimal,
+        session: Annotated[AsyncSession, Depends(yield_async_session)],
+) -> GoodResponse:
+    _status = ResponseStatus
+    _good = await session.get(Goods, db_id)
+
+    if _good is None:
+        raise HTTPException(status_code=_status.NOT_FOUND.code, detail=_status.NOT_FOUND.message)
+
+    if _good.sale_date is not None:
+        raise HTTPException(status_code=_status.CONFLICT.code, detail="The good has already been sold.")
+
+    if _good.expected_profit is None:
+        raise HTTPException(
+            status_code=_status.VALIDATION_ERROR.code,
+            detail="Expected profit must be specified before selling."
+        )
+
+    if sale_price <= 0:
+        raise HTTPException(status_code=_status.VALIDATION_ERROR.code, detail="Sale price must be greater than zero.")
+
+    _good.sale_date = date.today()
+    _good.sale_price = sale_price
 
     await session.commit()
     await session.refresh(_good)
