@@ -27,6 +27,7 @@ from .goods import (
     request_to_delete_good,
     request_to_get_goods,
     request_to_post_good,
+    request_to_restock_good,
     request_to_sell_good,
     request_to_update_good,
 )
@@ -55,6 +56,7 @@ __all__ = [
     "request_to_get_goods",
     "request_to_delete_good",
     "request_to_post_good",
+    "request_to_restock_good",
     "request_to_sell_good",
     "request_to_update_good",
 
