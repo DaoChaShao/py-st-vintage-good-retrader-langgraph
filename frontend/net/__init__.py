@@ -27,12 +27,13 @@ from .goods import (
     request_to_delete_good,
     request_to_get_goods,
     request_to_post_good,
+    request_to_sell_good,
     request_to_update_good,
 )
 from .types import (
     URL,
-    AcceptTypes,
-    RequestMethods,
+    AcceptType,
+    RequestMethod,
 )
 from .user import (
     request_to_delete_users,
@@ -54,12 +55,13 @@ __all__ = [
     "request_to_get_goods",
     "request_to_delete_good",
     "request_to_post_good",
+    "request_to_sell_good",
     "request_to_update_good",
 
     # Types
     "URL",
-    "AcceptTypes",
-    "RequestMethods",
+    "AcceptType",
+    "RequestMethod",
 
     # User
     "request_to_delete_users",
