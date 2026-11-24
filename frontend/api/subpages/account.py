@@ -25,7 +25,7 @@ from frontend.api.tools import (
     dialog_init_tables,
     dialog_manage_users,
     dialog_sign_up,
-    dialog_update,
+    dialog_update_user,
 )
 from frontend.net import (
     URL,
@@ -61,10 +61,6 @@ with center:
             elif not password:
                 NOTIFICATION.warning("Password cannot be empty.", icon=":material/warning:")
             else:
-                if username == "test" and password == "1234":
-                    with spinner("Logging in...", show_time=True, width="stretch"):
-                        session_state.IS_IN = True
-                        rerun()
                 response = request_to_sign_in(URL.SIGN_IN, username=username, password=password)
                 if response.ok:
                     data = response.json()
@@ -84,7 +80,7 @@ with center:
             with spinner("Registering...", show_time=True, width="stretch"):
                 dialog_sign_up()
     else:
-        # NOTIFICATION.success(f"Welcome back, {session_state.USER['username']}!", icon=":material/check_circle:")
+        NOTIFICATION.success(f"Welcome back, {session_state.USER['username']}!", icon=":material/check_circle:")
 
         with container(border=True, width="stretch", height="stretch"):
             # User information
@@ -136,7 +132,7 @@ with center:
                     dialog_delete_users(session_state.USER["id"])
             if cols[-1].button("Edit", type="secondary", width="stretch", icon=":material/edit:"):
                 with spinner("Updating User Information...", show_time=True, width="stretch"):
-                    dialog_update(session_state.USER)
+                    dialog_update_user(session_state.USER)
 
             if is_admin:
                 divider()
