@@ -24,6 +24,7 @@ from .dialogs import (
     dialog_delete_users,
     dialog_init_tables,
     dialog_manage_users,
+    dialog_restock_good,
     dialog_sell_good,
     dialog_sign_up,
     dialog_update_good,
@@ -51,6 +52,7 @@ __all__ = [
     # - good operations
     "dialog_create_good",
     "dialog_delete_good",
+    "dialog_restock_good",
     "dialog_sell_good",
     "dialog_update_good",
     # - authentication operations
