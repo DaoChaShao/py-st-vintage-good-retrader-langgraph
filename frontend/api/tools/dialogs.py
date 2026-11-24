@@ -51,6 +51,7 @@ from ...net import (
     request_to_sign_up,
     request_to_update,
     request_to_update_good,
+    request_to_restock_good,
 )
 from ..types import CityCode
 
@@ -764,3 +765,28 @@ def dialog_sell_good(db_id: int):
             rerun()
     else:
         notification.warning("Sale price cannot be zero", icon=":material/warning:")
+
+
+@dialog("Restock Good", position="center", width="small", icon=":material/sell:")
+def dialog_restock_good(db_id: int):
+    notification = empty()
+    caption("**Are you sure you want to restock this good?**")
+
+    left, right = columns(2)
+    if left.button("Yes", type="secondary", width="stretch", icon=":material/check:"):
+        _response = request_to_restock_good(URL.RESTOCK_GOOD, db_id=db_id)
+        if _response.ok:
+            request_to_get_goods.clear()
+            session_state.GOODS = None
+            notification.success("Sell successfully", icon=":material/check_circle:")
+            sleep(1)
+            rerun()
+        else:
+            notification.error(
+                f"Sale failed ({_response.status_code}): {_response.text}",
+                icon=":material/error:",
+            )
+    if right.button("No", type="primary", width="stretch", icon=":material/close:"):
+        notification.info("Sale cancelled", icon=":material/info:")
+        sleep(1)
+        rerun()
