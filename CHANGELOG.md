@@ -1,10 +1,20 @@
 <!-- insertion marker -->
 <a name="0.1.0"></a>
 
-## [0.1.0](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/compare/ac1d2409aef149089b2a89c9480844fcefaf52a3...0.1.0) (2026-11-23)
+## [0.1.0](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/compare/ac1d2409aef149089b2a89c9480844fcefaf52a3...0.1.0) (2026-11-24)
 
 ### Features
 
+- **goods:** add CRUD API endpoint definitions for goods ([8e0592f](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/8e0592f2c5aa1cf54bb10bf93caf45f653b3ca4d))
+- **fapi:** add wood category to product types enum ([0d642ad](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/0d642ad867630ad0aa7514fb40e81d34f160f7c5))
+- **endpoints:** add test endpoint for goods API ([ce62d22](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/ce62d2284d624ee79106cd14bf66658a48d3d69d))
+- **router:** add test endpoint to backend router ([f30dd90](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/f30dd909e027eedcfb3a7f573bea2fdcd443373e))
+- **layout:** add role-based visibility for admin page in navigation ([eca65e6](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/eca65e60d28de66f2bb47c4559a285beba73a722))
+- **inventory:** add inventory page with CRUD and search features ([5c788da](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/5c788dae4d28985bf61fea9f14cf37b9538f09d0))
+- **goods:** add CRUD request functions for goods operations ([88ab872](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/88ab87268d8ec257d0c971334254bad196e5abc6))
+- **goods:** implement CRUD endpoints for goods management ([c7427ba](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/c7427ba1576800039a025f7b227048ea22761934))
+- **goods:** add CRUD dialogs for vintage goods management ([f555d08](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/f555d08fae61e4f6dfb7ac5d12e82fdd26f07c8b))
+- **goods:** add delete, post, and update goods request functions ([eff0347](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/eff03475ca914f7346087f6b48d843f25c99c44e))
 - **fapi:** add ProductTypes enum and reorganize type defs ([0f91bcb](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/0f91bcb087dcbf86a9d7b124ee2712db387aa4f2))
 - **schemas:** expand product schema with detailed attributes ([b6fe9c6](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/b6fe9c6d74e3caacff1f39ec6c080c7d00c39a30))
 - **models:** extend Goods model with new fields ([095289c](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/095289c0d48a537963b04f936e426734854f26b3))
@@ -115,6 +125,8 @@
 
 ### Bug Fixes
 
+- **database:** correct wrong JSON key in response ([ce8b023](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/ce8b02314ad36d6e62e1bc5a6f9dead261da5351))
+- **account:** remove hardcoded credentials and restore welcome notification ([69f42f7](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/69f42f77d32fc4c688c519ccd9df654a8fb5d803))
 - **api:** correct URL constant reference for goods request ([3e8b9a6](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/3e8b9a64ec589fee1c7fdf1859960c9107f92cf0))
 - **dbkit:** correct nullable type annotations for column definitions ([c312f58](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/c312f58a53171f0c4a90279cdc032c40aca9aa16))
 - **user:** use mode="json" in model_dump for proper serialization ([3585106](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/358510629d36faf9cfbd2e649721d75403a205df))
@@ -160,6 +172,7 @@
 
 ### Docs
 
+- **changelog:** add new entries to changelog sections ([8a5087e](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/8a5087e75826819b0326abad79fe3fa8771372a4))
 - **changelog:** add recent bug fix and docs entries ([d499403](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/d4994036f5b7117de5c9fbac80e211137c7b022f))
 - **changelog:** add recent refactoring and chore entries ([1a35905](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/1a35905dc337f725894261833c33c964a93f4440))
 - **subpages:** correct file name in comment header ([26ad96b](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/26ad96b7c7037e3da6d097b43c4dbadc7fcd5e05))
@@ -195,6 +208,12 @@
 
 ### Code Refactoring
 
+- **fapi:** remove unused async service functions ([5e41157](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/5e4115779af98d3bb870809ada2dfc02855b7ae9))
+- **schemas:** separate creation from response ([7f90c00](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/7f90c0000ec8968f7e114d0653a298b037d6245f))
+- **models:** restructure product model fields ([23fdee9](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/23fdee94309485b76123227ca93c4af60e811b50))
+- **database:** rename data field to tables in response ([2bd0fed](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/2bd0fedcff5279cdd876cf214c864a3c8efa8b20))
+- **tools:** split dialog_update into domain-specific functions ([6aa4d37](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/6aa4d3786182349bb4c226a063e623a6f3991c1a))
+- **fapi:** clean up public API exports in __init__ ([b1a45e3](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/b1a45e35e9831abe73ff22daefc48b3a6ae5143c))
 - **net:** rename URL enum GOODS to GET_GOODS and reposition ([f05a2f1](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/f05a2f19c173111f92861132e7fbe6c7491d5c77))
 - **layout:** rename management page to inventory ([34024af](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/34024af46136365ecf5ec0c584615d65aec4fab7))
 - **inventory:** restructure subpage with DB readiness check ([38fc6dc](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/38fc6dce9df43e3b87fb53e8d654c9e815a1c83c))
