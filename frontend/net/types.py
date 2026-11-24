@@ -54,3 +54,4 @@ class URL(StrEnum):
     DELETE_GOOD = BASE + "/goods/delete"
     UPDATE_GOOD = BASE + "/goods/update"
     SELL_GOOD = BASE + "/goods/sell"
+    RESTOCK_GOOD = BASE + "/goods/restock"
