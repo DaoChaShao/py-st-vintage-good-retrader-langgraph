@@ -8,6 +8,7 @@
 
 from datetime import date, datetime
 from decimal import Decimal
+from re import fullmatch
 from time import sleep
 from typing import Any
 
@@ -26,6 +27,7 @@ from streamlit import (
     number_input,
     rerun,
     segmented_control,
+    selectbox,
     session_state,
     spinner,
     text_area,
@@ -45,10 +47,12 @@ from ...net import (
     request_to_initialise_tables,
     request_to_manage_users,
     request_to_post_good,
+    request_to_sell_good,
     request_to_sign_up,
     request_to_update,
     request_to_update_good,
 )
+from ..types import CityCode
 
 
 @dialog("Delete Tables", position="center", width="small", icon=":material/delete:")
@@ -273,31 +277,49 @@ def dialog_create_good():
     """ Dialog for creating a new good """
     notification = empty()
 
-    with form("create_good_form", border=True, clear_on_submit=True, width="stretch", height="stretch"):
-        date_left, date_right = columns(2)
-        good_left, good_mid, good_right = columns(3)
-        with date_left:
-            _purchase_date: date = date_input(
-                "Purchase Date", required=True,
-                width="stretch",
-                help="The purchase date of the good",
-                disabled=False, value=date.today(),
-            )
-        with date_right:
-            _sale_date: date = date_input(
-                "Sale Date", required=False,
-                width="stretch",
-                help="The sale date of the good",
-                disabled=True, value=None,
-            )
+    date_left, date_right = columns(2)
+    with date_left:
+        _purchase_date: date = date_input(
+            "Purchase Date", required=True,
+            width="stretch",
+            help="The purchase date of the good",
+            disabled=False, value=date.today(),
+        )
+    with date_right:
+        _sale_date: date = date_input(
+            "Sale Date", required=False,
+            width="stretch",
+            help="The sale date of the good",
+            disabled=True, value=None,
+        )
 
+    code_left, code_mid, code_right = columns(3)
+    with code_left:
+        _city: str = selectbox(
+            "City", placeholder="The city where the good is from", required=True,
+            options=list(CityCode), format_func=lambda city: city.name.replace("_", " ").title(),
+            icon=":material/source_environment:", width="stretch",
+            help="The city where the good is from",
+            disabled=False, index=0,
+        )
+    with code_mid:
+        _store: str = text_input(
+            "Store", placeholder="The store where the good is from", required=False,
+            type="default", icon=":material/store:", width="stretch",
+            help="The store where the good is from",
+            disabled=False, value=None,
+        )
+    with code_right:
+        _sku: str = text_input(
+            "Stock Keeping Unit", placeholder="The SKU of the good", required=True,
+            type="default", icon=":material/barcode:", max_chars=15, width="stretch",
+            help="The stock keeping unit of the good",
+            disabled=False, value=f"{_city}{_purchase_date.strftime('%Y%m%d')}",
+        )
+
+    with form("create_good_form", border=True, clear_on_submit=True, width="stretch", height="stretch"):
+        good_left, good_mid, good_right = columns(3)
         with good_left:
-            _sku: str = text_input(
-                "Stock Keeping Unit", placeholder="The SKU of the good", required=True,
-                type="default", icon=":material/barcode:", width="stretch",
-                help="The stock keeping unit of the good",
-                disabled=False, value=None,
-            )
             _product: str = text_input(
                 "Product", placeholder="The product name", required=True,
                 type="default", icon=":material/emoji_food_beverage:", width="stretch",
@@ -310,14 +332,7 @@ def dialog_create_good():
                 help="The brand of the good",
                 disabled=False, value=None,
             )
-
         with good_mid:
-            _city: str = text_input(
-                "City", placeholder="The city where the good is from", required=False,
-                type="default", icon=":material/source_environment:", width="stretch",
-                help="The city where the good is from",
-                disabled=False, value=None,
-            )
             _production_year_start: int = number_input(
                 "Production Year Start", placeholder="The year start", required=False,
                 min_value=1, max_value=9_999, step=1,
@@ -331,14 +346,7 @@ def dialog_create_good():
                 help="The series of the good",
                 disabled=False, value=None,
             )
-
         with good_right:
-            _store: str = text_input(
-                "Store", placeholder="The store where the good is from", required=False,
-                type="default", icon=":material/store:", width="stretch",
-                help="The store where the good is from",
-                disabled=False, value=None,
-            )
             _production_year_end: int = number_input(
                 "Production Year End", placeholder="The year end", required=False,
                 min_value=1, max_value=9_999, step=1,
@@ -373,7 +381,7 @@ def dialog_create_good():
                 disabled=False, value=None,
             )
             _piece: int = number_input(
-                "Piece", placeholder="The piece number", required=True,
+                "Piece/Set", placeholder="The piece number", required=True,
                 min_value=1, max_value=9_999, step=1,
                 icon=":material/toys_and_games:", width="stretch",
                 help="The piece number",
@@ -382,7 +390,7 @@ def dialog_create_good():
         # Financial Information
         with fin_left:
             _price: float = number_input(
-                "Price (NZD)", placeholder="The price of the good", required=True,
+                "Purchase Price (NZD)", placeholder="The price of the good", required=True,
                 min_value=0.0, max_value=9_999.99, step=0.01, format="%.2f",
                 icon=":material/paid:", width="stretch",
                 help="The price of the good",
@@ -419,29 +427,43 @@ def dialog_create_good():
         )
 
         if form_submit_button("Create", type="primary", width="stretch", icon=":material/add:"):
+            # SKU format validation
+            _prefix: str = f"{_city}{_purchase_date:%Y%m%d}"
+            if not fullmatch(rf"{_prefix}[0-9]{{4}}", _sku):
+                notification.warning(
+                    "Invalid SKU. Please enter a valid 4-digit product code.",
+                    icon=":material/warning:"
+                )
+                return
+
+            # SKU uniqueness validation
+            if any(_sku == good["sku"] for good in session_state.GOODS):
+                notification.warning(f"SKU '{_sku}' already exists.", icon=":material/warning:")
+                return
+
             _good: dict[str, Any] = {
                 # Dates
                 "purchase_date": _purchase_date,
                 "sale_date": _sale_date,
                 # Good Infor
-                "sku": _sku,
+                "sku": _sku.strip(),
                 "city": _city,
-                "store": _store,
-                "product": _product,
+                "store": _store.strip().title() if _store else None,
+                "product": _product.strip().title() if _product else None,
                 "production_year_start": _production_year_start,
                 "production_year_end": _production_year_end,
-                "brand": _brand,
-                "series": _series,
+                "brand": _brand.strip().upper() if _brand else None,
+                "series": _series.strip().lower() if _series else None,
                 "generation": _generation,
                 "category": _category,
                 # Quantity
                 "set": _set,
                 "piece": _piece,
                 # Financial Info
-                "price": Decimal(_price),
+                "purchase_price": Decimal(_price),
                 "exchange_rate": Decimal(_exchange_rate),
-                "shipping_fee": Decimal(_shipping_fee),
-                "expected_profit": Decimal(_expected_profit),
+                "shipping_fee": Decimal(_shipping_fee) if _shipping_fee is not None else None,
+                "expected_profit": Decimal(_expected_profit) if _expected_profit is not None else None,
                 # Description
                 "description": _description,
 
@@ -449,8 +471,9 @@ def dialog_create_good():
             _response = request_to_post_good(URL.CREATE_GOOD, _good)
 
             if _response.ok:
-                session_state.GOODS = request_to_get_goods(URL.GET_GOODS)
-                notification.success("Creation successful", icon=":material/check-circle:")
+                request_to_get_goods.clear()
+                session_state.GOODS = None
+                notification.success("Creation successful", icon=":material/check_circle:")
                 sleep(1)
                 rerun()
             else:
@@ -475,7 +498,8 @@ def dialog_delete_good(db_id: int) -> None:
     if left.button("Yes", type="secondary", width="stretch", icon=":material/check:"):
         _response = request_to_delete_good(URL.DELETE_GOOD, db_id)
         if _response.ok:
-            session_state.GOODS = request_to_get_goods(URL.GET_GOODS)
+            request_to_get_goods.clear()
+            session_state.GOODS = None
             notification.success("Deletion successful", icon=":material/check_circle:")
             sleep(1)
             rerun()
@@ -501,31 +525,48 @@ def dialog_update_good(*, db_id: int, good: dict[str, Any]):
     """
     notification = empty()
 
-    with form("update_good_form", border=True, clear_on_submit=True, width="stretch", height="stretch"):
-        date_left, date_right = columns(2)
-        good_left, good_mid, good_right = columns(3)
-        with date_left:
-            _purchase_date: date = date_input(
-                "Purchase Date", required=True,
-                width="stretch",
-                help="The purchase date of the good",
-                disabled=True, value=good["purchase_date"],
-            )
-        with date_right:
-            _sale_date: date = date_input(
-                "Sale Date", required=False,
-                width="stretch",
-                help="The sale date of the good",
-                disabled=False, value=good["sale_date"],
-            )
+    date_left, date_right = columns(2)
+    with date_left:
+        _purchase_date: date = date_input(
+            "Purchase Date", required=True,
+            width="stretch",
+            help="The purchase date of the good",
+            disabled=True, value=good["purchase_date"],
+        )
+    with date_right:
+        _sale_date: date = date_input(
+            "Sale Date", required=False,
+            width="stretch",
+            help="The sale date of the good",
+            disabled=True, value=good["sale_date"],
+        )
 
+    code_left, code_mid, code_right = columns(3)
+    with code_left:
+        _city: str = text_input(
+            "City", placeholder="The city where the good is from", required=False,
+            type="default", icon=":material/source_environment:", width="stretch",
+            help="The city where the good is from",
+            disabled=False, value=good["city"],
+        )
+    with code_mid:
+        _store: str = text_input(
+            "Store", placeholder="The store where the good is from", required=False,
+            type="default", icon=":material/store:", width="stretch",
+            help="The store where the good is from",
+            disabled=False, value=good["store"],
+        )
+    with code_right:
+        _sku: str = text_input(
+            "Stock Keeping Unit", placeholder="The SKU of the good", required=True,
+            type="default", icon=":material/barcode:", max_chars=15, width="stretch",
+            help="The stock keeping unit of the good",
+            disabled=True, value=good["sku"],
+        )
+
+    with form("update_good_form", border=True, clear_on_submit=True, width="stretch", height="stretch"):
+        good_left, good_mid, good_right = columns(3)
         with good_left:
-            _sku: str = text_input(
-                "Stock Keeping Unit", placeholder="The SKU of the good", required=True,
-                type="default", icon=":material/barcode:", width="stretch",
-                help="The stock keeping unit of the good",
-                disabled=True, value=good["sku"],
-            )
             _product: str = text_input(
                 "Product", placeholder="The product name", required=True,
                 type="default", icon=":material/emoji_food_beverage:", width="stretch",
@@ -538,14 +579,7 @@ def dialog_update_good(*, db_id: int, good: dict[str, Any]):
                 help="The brand of the good",
                 disabled=False, value=good["brand"],
             )
-
         with good_mid:
-            _city: str = text_input(
-                "City", placeholder="The city where the good is from", required=False,
-                type="default", icon=":material/source_environment:", width="stretch",
-                help="The city where the good is from",
-                disabled=False, value=good["city"],
-            )
             _production_year_start: int = number_input(
                 "Production Year Start", placeholder="The year start", required=False,
                 min_value=1, max_value=9_999, step=1,
@@ -559,14 +593,7 @@ def dialog_update_good(*, db_id: int, good: dict[str, Any]):
                 help="The series of the good",
                 disabled=False, value=good["series"],
             )
-
         with good_right:
-            _store: str = text_input(
-                "Store", placeholder="The store where the good is from", required=False,
-                type="default", icon=":material/store:", width="stretch",
-                help="The store where the good is from",
-                disabled=False, value=good["store"],
-            )
             _production_year_end: int = number_input(
                 "Production Year End", placeholder="The year end", required=False,
                 min_value=1, max_value=9_999, step=1,
@@ -601,7 +628,7 @@ def dialog_update_good(*, db_id: int, good: dict[str, Any]):
                 disabled=False, value=good["set"],
             )
             _piece: int = number_input(
-                "Piece", placeholder="The piece number", required=True,
+                "piece/Set", placeholder="The piece number", required=True,
                 min_value=1, max_value=9_999, step=1,
                 icon=":material/toys_and_games:", width="stretch",
                 help="The piece number",
@@ -610,11 +637,11 @@ def dialog_update_good(*, db_id: int, good: dict[str, Any]):
         # Financial Information
         with fin_left:
             _price: float = number_input(
-                "Price (NZD)", placeholder="The price of the good", required=True,
+                "Purchase Price (NZD)", placeholder="The price of the good", required=True,
                 min_value=0.0, max_value=9_999.99, step=0.01, format="%.2f",
                 icon=":material/paid:", width="stretch",
                 help="The price of the good",
-                disabled=False, value=float(good["price"]) if good["price"] is not None else None,
+                disabled=False, value=float(good["purchase_price"]) if good["purchase_price"] is not None else None,
             )
             _exchange_rate: float = number_input(
                 "Exchange Rate (CNY)", placeholder="The exchange rate", required=True,
@@ -647,37 +674,46 @@ def dialog_update_good(*, db_id: int, good: dict[str, Any]):
         )
 
         if form_submit_button("Update", type="primary", width="stretch", icon=":material/refresh:"):
+            _prefix: str = f"{_city}{_purchase_date:%Y%m%d}"
+            if not fullmatch(rf"{_prefix}[0-9]{{4}}", _sku):
+                notification.warning(
+                    "Invalid SKU. Please enter a valid 4-digit product code.",
+                    icon=":material/warning:"
+                )
+                return
+
             _good: dict[str, Any] = {
                 # Dates
-                # "purchase_date": _purchase_date,
+                "purchase_date": _purchase_date,
                 "sale_date": _sale_date,
                 # Good Infor
-                "sku": _sku,
+                "sku": _sku.strip(),
                 "city": _city,
-                "store": _store,
-                "product": _product,
+                "store": _store.strip().title() if _store else None,
+                "product": _product.strip().title() if _product else None,
                 "production_year_start": _production_year_start,
                 "production_year_end": _production_year_end,
-                "brand": _brand,
-                "series": _series,
+                "brand": _brand.strip().upper() if _brand else None,
+                "series": _series.strip().lower() if _series else None,
                 "generation": _generation,
                 "category": _category,
                 # Quantity
                 "set": _set,
                 "piece": _piece,
                 # Financial Info
-                "price": Decimal(_price),
+                "purchase_price": Decimal(_price),
                 "exchange_rate": Decimal(_exchange_rate),
-                "shipping_fee": Decimal(_shipping_fee),
-                "expected_profit": Decimal(_expected_profit),
+                "shipping_fee": Decimal(str(_shipping_fee)) if _shipping_fee is not None else None,
+                "expected_profit": Decimal(_expected_profit) if _expected_profit is not None else None,
                 # Description
-                "description": _description,
+                "description": _description.strip(),
             }
             _response = request_to_update_good(URL.UPDATE_GOOD, db_id=db_id, good=_good)
 
             if _response.ok:
-                session_state.GOODS = request_to_get_goods(URL.GET_GOODS)
-                notification.success("Update successfully", icon=":material/check-circle:")
+                request_to_get_goods.clear()
+                session_state.GOODS = None
+                notification.success("Update successfully", icon=":material/check_circle:")
                 sleep(1)
                 rerun()
             else:
@@ -685,3 +721,46 @@ def dialog_update_good(*, db_id: int, good: dict[str, Any]):
                     f"Creation failed ({_response.status_code}): {_response.text}",
                     icon=":material/error:",
                 )
+
+
+@dialog("Sell Good", position="center", width="small", icon=":material/sell:")
+def dialog_sell_good(db_id: int):
+    """
+    Sell a good
+
+    :param db_id: The database ID of the good to sell
+    :return: None
+    """
+    notification = empty()
+    caption("**Are you sure you want to sell this good right now?**")
+
+    _price: float = number_input(
+        "Sale Price (NZD)", placeholder="The price of the good", required=True,
+        min_value=0.0, max_value=9_999.99, step=0.01, format="%.2f",
+        icon=":material/paid:", width="stretch",
+        help="The price of the good",
+        disabled=False, value=0.0,
+    )
+    _sale_price: Decimal = Decimal(_price)
+    if _price != 0.0:
+        notification.info("You can sell this good right now!", icon=":material/info:")
+        left, right = columns(2)
+        if left.button("Yes", type="secondary", width="stretch", icon=":material/check:"):
+            _response = request_to_sell_good(URL.SELL_GOOD, db_id=db_id, sale_price=_sale_price)
+            if _response.ok:
+                request_to_get_goods.clear()
+                session_state.GOODS = None
+                notification.success("Sell successfully", icon=":material/check_circle:")
+                sleep(1)
+                rerun()
+            else:
+                notification.error(
+                    f"Sale failed ({_response.status_code}): {_response.text}",
+                    icon=":material/error:",
+                )
+        if right.button("No", type="primary", width="stretch", icon=":material/close:"):
+            notification.info("Sale cancelled", icon=":material/info:")
+            sleep(1)
+            rerun()
+    else:
+        notification.warning("Sale price cannot be zero", icon=":material/warning:")
