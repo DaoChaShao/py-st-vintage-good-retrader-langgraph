@@ -6,6 +6,7 @@
 # @File     :   goods.py
 # @Desc     :
 
+from decimal import Decimal
 from typing import Any
 
 from requests import Response, request
@@ -16,7 +17,7 @@ from backend.fapi import (
 )
 
 from .base import HEADERS
-from .types import URL, RequestMethods
+from .types import URL, RequestMethod
 
 
 @cache_data(ttl=60)
@@ -29,7 +30,7 @@ def request_to_get_goods(url: str | URL) -> list[dict]:
     """
     _url: URL = URL(url)
     _response = request(
-        RequestMethods.GET.value,
+        RequestMethod.GET.value,
         _url.value,
         headers=HEADERS,
         timeout=30
@@ -49,7 +50,7 @@ def request_to_post_good(url: str | URL, good: dict[str, Any]) -> Response:
     _url: URL = URL(url)
     _good: GoodCreation = GoodCreation(**good)
     return request(
-        RequestMethods.POST.value,
+        RequestMethod.POST.value,
         _url.value,
         headers=HEADERS,
         timeout=30,
@@ -67,7 +68,7 @@ def request_to_delete_good(url: str | URL, db_id: int) -> Response:
     """
     _url: URL = URL(url)
     return request(
-        RequestMethods.DELETE.value,
+        RequestMethod.DELETE.value,
         _url.value,
         headers=HEADERS,
         timeout=30,
@@ -87,10 +88,32 @@ def request_to_update_good(url: str | URL, *, db_id: int, good: dict[str, Any]) 
     _url: URL = URL(url)
     _good: GoodCreation = GoodCreation(**good)
     return request(
-        RequestMethods.PATCH.value,
+        RequestMethod.PATCH.value,
         _url.value,
         headers=HEADERS,
         timeout=30,
         params={"db_id": db_id},
         json=_good.model_dump(mode="json"),
+    )
+
+
+def request_to_sell_good(url: str | URL, *, db_id: int, sale_price: Decimal) -> Response:
+    """
+    Sell a good from the given URL
+
+    :param url: The URL to sell the good from
+    :param db_id: The db_id of the good to sell
+    :param sale_price: The sale price of the good to sell
+    :return: The response
+    """
+    _url: URL = URL(url)
+    return request(
+        RequestMethod.PATCH.value,
+        _url.value,
+        headers=HEADERS,
+        timeout=30,
+        params={
+            "db_id": db_id,
+            "sale_price": sale_price,
+        },
     )
