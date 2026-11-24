@@ -47,11 +47,11 @@ from ...net import (
     request_to_initialise_tables,
     request_to_manage_users,
     request_to_post_good,
+    request_to_restock_good,
     request_to_sell_good,
     request_to_sign_up,
     request_to_update,
     request_to_update_good,
-    request_to_restock_good,
 )
 from ..types import CityCode
 
