@@ -8,31 +8,123 @@
 
 from typing import Annotated
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from ....dbkit import Goods
 from ...dependencies import yield_async_session
-from ...schemas import GoodResponse, GoodsResponse
-from ...services import async_read_records
+from ...schemas import (
+    CRUDResponse,
+    GoodCreation,
+    GoodResponse,
+    GoodsResponse,
+)
 from ...types import ResponseStatus
 
 router = APIRouter()
 
 
-@router.get("/test")
-async def test_goods():
-    return {"message": "Goods endpoint works"}
-
-
 @router.get(
     "",
-    response_model=GoodsResponse
+    response_model=GoodsResponse,
 )
-async def get_goods(session: Annotated[AsyncSession, Depends(yield_async_session)]) -> GoodsResponse:
-    _records = await async_read_records(session)
+async def to_get_goods(session: Annotated[AsyncSession, Depends(yield_async_session)]) -> GoodsResponse:
+    """
+    Get all goods
+
+    :param session: The database session
+    :type session: AsyncSession
+    """
+    _result = await session.execute(select(Goods))
+    _goods = _result.scalars().all()
     _status = ResponseStatus
     return GoodsResponse(
         code=_status.SUCCESS.code,
         message=_status.SUCCESS.message,
-        data=[GoodResponse.model_validate(record) for record in _records],
+        goods=[GoodResponse.model_validate(good) for good in _goods],
     )
+
+
+@router.post(
+    "/create",
+    response_model=GoodResponse,
+)
+async def to_create_good(
+        good: GoodCreation,
+        session: Annotated[AsyncSession, Depends(yield_async_session)],
+) -> GoodResponse:
+    """
+    Create a new good
+
+    :param good: The good to create
+    :param session: The database session
+    :return: The created good
+    """
+    _good = Goods(**good.model_dump())
+
+    session.add(_good)
+    await session.commit()
+    await session.refresh(_good)
+    return GoodResponse.model_validate(_good)
+
+
+@router.delete(
+    "/delete",
+    response_model=CRUDResponse,
+)
+async def to_delete_good(
+        db_id: int,
+        session: Annotated[AsyncSession, Depends(yield_async_session)],
+) -> CRUDResponse:
+    """
+    Delete a good
+    :param db_id: The ID of the good to delete
+    :param session: The database session
+    :return: The deletion response
+    """
+    _status = ResponseStatus
+    _good = await session.get(Goods, db_id)
+
+    if _good is None:
+        raise HTTPException(status_code=_status.NOT_FOUND.code, detail=_status.NOT_FOUND.message)
+
+    await session.delete(_good)
+    await session.commit()
+
+    return CRUDResponse(
+        code=_status.SUCCESS.code,
+        message=_status.SUCCESS.message,
+    )
+
+
+@router.patch(
+    "/update",
+    response_model=GoodResponse,
+)
+async def to_update_good(
+        db_id: int,
+        good: GoodCreation,
+        session: Annotated[AsyncSession, Depends(yield_async_session)],
+) -> GoodResponse:
+    """
+   Update a good
+
+   :param db_id: The ID of the good to update
+   :param good: The good to update
+   :param session: The database session
+   :return: The updated good
+   """
+    _status = ResponseStatus
+    _good = await session.get(Goods, db_id)
+
+    if _good is None:
+        raise HTTPException(status_code=_status.NOT_FOUND.code, detail=_status.NOT_FOUND.message)
+
+    for key, value in good.model_dump().items():
+        setattr(_good, key, value)
+
+    await session.commit()
+    await session.refresh(_good)
+
+    return GoodResponse.model_validate(_good)
