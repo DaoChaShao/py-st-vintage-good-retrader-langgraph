@@ -33,7 +33,11 @@ from frontend.net import (
     request_to_sign_in,
 )
 
-for key in ["IS_IN", "USER", "ACCESS_TOKEN", "TOKEN_EXPIRES_AT"]:
+for key in ["IS_IN"]:
+    if key not in session_state:
+        session_state[key] = False
+
+for key in ["USER", "ACCESS_TOKEN", "TOKEN_EXPIRES_AT"]:
     if key not in session_state:
         session_state[key] = None
 
