@@ -5,6 +5,13 @@
 
 ### Features
 
+- **net:** add RESTOCK_GOOD endpoint constant ([e362612](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/e362612e3cf5111dfb3d6750b38e56d28078cd78))
+- **inventory:** add restock option for sold vintage items ([d27d7b8](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/d27d7b86391462184d39eec1b93c3a1222a0d1ce))
+- **goods:** add restock good request function ([d3a9fce](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/d3a9fceed11ba6063ececbc8994f34f0d67b805d))
+- **goods:** add restock endpoint for goods items ([4205c99](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/4205c99b2db9775bbb9025e42d0a42da0a7358bd))
+- **dialogs:** add restock good confirmation dialog ([dadc67d](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/dadc67dc5581fa127e1df35cf5823739912ac6e2))
+- **net:** expose request_to_restock_good in net module ([96a2f77](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/96a2f77236331966cba0f17598a88e7256b936c3))
+- **tools:** add dialog_restock_good tool for inventory management ([0f1b572](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/0f1b57258f3c3d71bcb9ac756c99742281e554bc))
 - **api:** add CityCode enum for supported regions ([f609fda](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/f609fda3b20c7d4096dcfc1f5f4d9c083b6ccb9d))
 - **inventory:** add search, filter, and sell functionality ([4cf592a](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/4cf592a1ff6da228ba5606ca1767c8fffa57b3b0))
 - **goods:** add request to sell a good ([5c60af4](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/5c60af492a3bbbcb3314a415bf2266ba2129a916))
@@ -180,6 +187,7 @@
 
 ### Docs
 
+- **changelog:** update changelog with recent entries ([ac24694](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/ac2469443d47c3755855c9668a46e49a4a317426))
 - **changelog:** add recent changes to changelog ([22c88e9](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/22c88e99876efdc8e323ce78a9b372c4e8137828))
 - **changelog:** add new entries to changelog sections ([8a5087e](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/8a5087e75826819b0326abad79fe3fa8771372a4))
 - **changelog:** add recent bug fix and docs entries ([d499403](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/d4994036f5b7117de5c9fbac80e211137c7b022f))
@@ -196,7 +204,6 @@
 - **server:** add uvicorn run hint to server main block ([09d1b3d](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/09d1b3d0fbbc40cef75d6e3502727a01f667f01e))
 - **changelog:** add performance improvements section and update reference ([37da8f8](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/37da8f85e636a307c7cf24433718ddee6bfe3e0e))
 - **changelog:** update changelog with recent feature entries ([afa3bdb](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/afa3bdb190c4ba7afab6c3bd1b0de65a858401bb))
-- **changelog:** update changelog with recent entries ([39a2d97](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/39a2d97828f229e72956eb483ca1aa271c08bb07))
 - **initialisation:** correct file name reference in header comment ([3b1f899](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/3b1f899297ea33577b0c412a7e9ad1fa9fcd1b3c))
 - **changelog:** update changelog with new entries ([00be4df](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/00be4dfefb7ff30d65808dfa906e024efe7c3ba4))
 - **changelog:** add new entries for recent commits ([3b21365](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/3b21365f27e811e8f06b1a6649c6f615029598fa))
