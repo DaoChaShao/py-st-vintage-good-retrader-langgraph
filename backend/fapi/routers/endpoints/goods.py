@@ -151,3 +151,26 @@ async def to_sell_good(
     await session.refresh(_good)
 
     return GoodResponse.model_validate(_good)
+
+
+@router.patch("/restock", response_model=GoodResponse)
+async def to_restock_good(
+        db_id: int,
+        session: Annotated[AsyncSession, Depends(yield_async_session)],
+) -> GoodResponse:
+    _status = ResponseStatus
+    _good = await session.get(Goods, db_id)
+
+    if _good is None:
+        raise HTTPException(status_code=_status.NOT_FOUND.code, detail=_status.NOT_FOUND.message)
+
+    if _good.sale_date is None:
+        raise HTTPException(status_code=_status.CONFLICT.code, detail="The good is already in stock.")
+
+    _good.sale_date = None
+    _good.sale_price = None
+
+    await session.commit()
+    await session.refresh(_good)
+
+    return GoodResponse.model_validate(_good)
