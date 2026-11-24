@@ -11,6 +11,7 @@ from fastapi import APIRouter
 from .endpoints import (
     database,
     goods,
+    test,
     user,
 )
 
@@ -20,4 +21,5 @@ router = APIRouter()
 
 router.include_router(database.router, prefix="/crud", tags=["crud"])
 router.include_router(goods.router, prefix="/goods", tags=["goods"])
+router.include_router(test.router, prefix="/test", tags=["test"])
 router.include_router(user.router, prefix="/user", tags=["user"])
