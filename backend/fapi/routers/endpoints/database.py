@@ -48,7 +48,7 @@ async def list_tables():
     return TablesResponse(
         code=_status.code,
         message=_status.message,
-        data=_tables,
+        tables=_tables,
     )
 
 
