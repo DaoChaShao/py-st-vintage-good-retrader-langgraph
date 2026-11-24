@@ -117,3 +117,16 @@ def request_to_sell_good(url: str | URL, *, db_id: int, sale_price: Decimal) -> 
             "sale_price": sale_price,
         },
     )
+
+
+def request_to_restock_good(url: str | URL, *, db_id: int) -> Response:
+    _url: URL = URL(url)
+    return request(
+        RequestMethod.PATCH.value,
+        _url.value,
+        headers=HEADERS,
+        timeout=30,
+        params={
+            "db_id": db_id,
+        },
+    )
