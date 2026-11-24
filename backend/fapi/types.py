@@ -19,6 +19,7 @@ class ProductTypes(StrEnum):
     CHINAWARE = "chinaware"
     CRYSTAL = "crystal"
     POTTERY = "pottery"
+    WOOD = "wood"
 
 
 @unique
