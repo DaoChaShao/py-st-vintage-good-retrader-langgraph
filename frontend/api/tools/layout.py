@@ -19,7 +19,7 @@ from streamlit import (
 LOGO_DIR: Path = Path(__file__).resolve().parents[3]
 PAGE_DIR: Path = Path(__file__).resolve().parents[1]
 
-for key in ["IS_IN"]:
+for key in ["IS_IN", "USER"]:
     if key not in session_state:
         session_state[key] = None
 
@@ -68,10 +68,14 @@ def async_navigate_pages() -> None:
     ]
 
     if session_state.IS_IN:
-        structure.extend([
-            Page(page=pages["page"][2], title=pages["title"][2], icon=pages["icon"][2]),
-            Page(page=pages["page"][3], title=pages["title"][3], icon=pages["icon"][3]),
-        ])
+        structure.append(
+            Page(page=pages["page"][2], title=pages["title"][2], icon=pages["icon"][2])
+        )
+
+        if session_state.USER["role"] == "admin":
+            structure.append(
+                Page(page=pages["page"][3], title=pages["title"][3], icon=pages["icon"][3])
+            )
 
     pg = navigation(structure, position="top", expanded=True)
     pg.run()
