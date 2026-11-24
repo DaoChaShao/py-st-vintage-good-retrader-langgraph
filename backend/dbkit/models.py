@@ -61,10 +61,11 @@ class Goods(BASE):
     piece: Mapped[GENERAL.INT]
 
     # Financial Information
-    price: Mapped[GENERAL.DEC]
+    purchase_price: Mapped[GENERAL.DEC]
     exchange_rate: Mapped[GENERAL.DEC]
     shipping_fee: Mapped[GENERAL.DEC]
     expected_profit: Mapped[GENERAL.DEC]
+    sale_price: Mapped[GENERAL.DEC]
 
     # Description
     description: Mapped[GENERAL.TXT]
@@ -78,20 +79,20 @@ class Goods(BASE):
             f"sale_date={self.sale_date}, "
             f"city={self.city}, "
             f"store={self.store}, "
-            f"brand={self.brand}, "
-            f"series={self.series}, "
-            f"generation={self.generation}, "
+            f"sku={self.sku}, "
             f"product={self.product}, "
             f"production_year_start={self.production_year_start}, "
             f"production_year_end={self.production_year_end}, "
+            f"brand={self.brand}, "
+            f"series={self.series}, "
+            f"generation={self.generation}, "
             f"category={self.category}, "
             f"set={self.set}, "
             f"piece={self.piece}, "
-            f"price={self.price}, "
-            f"quantity={self.quantity}, "
+            f"purchase_price={self.purchase_price}, "
             f"exchange_rate={self.exchange_rate}, "
-            f"description={self.description}, "
             f"shipping_fee={self.shipping_fee}, "
-            f"profit={self.profit}, "
-            f"total={self.total})>"
+            f"expected_profit={self.expected_profit}, "
+            f"description={self.description}, "
+            f"sale_price={self.sale_price})>"
         )
