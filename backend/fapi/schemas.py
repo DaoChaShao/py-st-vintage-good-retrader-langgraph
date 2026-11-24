@@ -122,56 +122,52 @@ class VerificationResponse(BaseModel):
     token: AccessTokenResponse
 
 
-class GoodResponse(BaseModel):
-    """ Response for a single good """
+class GoodCreation(BaseModel):
+    """ Schema for creating a good """
 
     model_config = ConfigDict(from_attributes=True)
 
-    # Main Key
-    id: int
-
-    # Attributes
-    purchase_date: date | None
-    sale_date: date | None
-
+    # Dates
+    purchase_date: date | None = None
+    sale_date: date | None = None
     # Product Information
-    city: str | None
-    store: str | None
-    brand: str | None
-    series: str | None
-    generation: int | None
-    product: str | None
-    production_year_start: int | None
-    production_year_end: int | None
-    category: ProductTypes | None
-
+    sku: str | None = None
+    city: str | None = None
+    store: str | None = None
+    product: str | None = None
+    production_year_start: int | None = None
+    production_year_end: int | None = None
+    brand: str | None = None
+    series: str | None = None
+    generation: int | None = None
+    category: ProductTypes | None = None
     # Quantity
-    set: int | None
-    piece: int | None
-    quantity: int | None
-
+    set: int | None = None
+    piece: int | None = None
     # Financial Information
-    price: Decimal | None
-    exchange_rate: Decimal | None
-    shipping_fee: Decimal | None
-    expected_profit: Decimal | None
-    total: Decimal | None
-
+    price: Decimal | None = None
+    exchange_rate: Decimal | None = None
+    shipping_fee: Decimal | None = None
+    expected_profit: Decimal | None = None
     # Description
-    description: str | None
+    description: str | None = None
 
-    # Timestamps
-    created_at: datetime | None
-    updated_at: datetime | None
+
+class GoodResponse(GoodCreation):
+    """ Response for a single good """
+
+    id: int
+    created_at: datetime
+    updated_at: datetime
 
 
 class GoodsResponse(CRUDResponse):
     """ Response for goods endpoint """
 
-    data: list[GoodResponse]
+    goods: list[GoodResponse]
 
 
 class TablesResponse(CRUDResponse):
     """ Response for table endpoint """
 
-    data: list[str]
+    tables: list[str]
