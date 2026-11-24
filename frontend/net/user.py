@@ -21,7 +21,7 @@ from backend.fapi import (
 )
 
 from .base import HEADERS
-from .types import URL, RequestMethods
+from .types import URL, RequestMethod
 
 
 def request_to_sign_in(url: str, *, username: str, password: str) -> Any:
@@ -36,7 +36,7 @@ def request_to_sign_in(url: str, *, username: str, password: str) -> Any:
     _user = UserSignIn(username=username, password=password)
     _url: URL = URL(url)
     return request(
-        RequestMethods.POST.value,
+        RequestMethod.POST.value,
         _url.value,
         headers=HEADERS,
         timeout=30,
@@ -56,7 +56,7 @@ def request_to_sign_up(url: str, *, username: str, password: str) -> Any:
     _user = UserSignIn(username=username, password=password)
     _url: URL = URL(url)
     return request(
-        RequestMethods.POST.value,
+        RequestMethod.POST.value,
         _url.value,
         headers=HEADERS,
         timeout=30,
@@ -99,7 +99,7 @@ def request_to_update(
     )
     _url: URL = URL(url)
     return request(
-        RequestMethods.POST.value,
+        RequestMethod.POST.value,
         _url.UPDATE.value,
         headers=HEADERS,
         timeout=30,
@@ -116,7 +116,7 @@ def request_to_get_users(url: str | URL) -> Any:
     """
     _url: URL = URL(url)
     _response = request(
-        RequestMethods.GET.value,
+        RequestMethod.GET.value,
         _url.value,
         headers=HEADERS,
         timeout=30
@@ -140,7 +140,7 @@ def request_to_manage_users(url: str, *, changed_users: list[dict]) -> Any:
     ]
     _data = UsersManagement(users=_users)
     return request(
-        RequestMethods.PATCH.value,
+        RequestMethod.PATCH.value,
         _url.value,
         headers=HEADERS,
         timeout=30,
@@ -157,7 +157,7 @@ def request_to_init_admin(url: str) -> Any:
     """
     _url: URL = URL(url)
     return request(
-        RequestMethods.POST.value,
+        RequestMethod.POST.value,
         _url.value,
         headers=HEADERS,
         timeout=30,
@@ -175,7 +175,7 @@ def request_to_delete_users(url: str, *, ids: list[int]) -> Any:
     _url: URL = URL(url)
     _user_ids: UsersDeletion = UsersDeletion(ids=ids)
     return request(
-        RequestMethods.DELETE.value,
+        RequestMethod.DELETE.value,
         _url.value,
         headers=HEADERS,
         timeout=30,
