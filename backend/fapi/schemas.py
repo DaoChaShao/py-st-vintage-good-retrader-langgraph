@@ -144,11 +144,16 @@ class GoodCreation(BaseModel):
     # Quantity
     set: int | None = None
     piece: int | None = None
-    # Financial Information
+    # Financial Information for store
     purchase_price: Decimal | None = None
+    extra_fee: Decimal | None = None
     exchange_rate: Decimal | None = None
-    shipping_fee: Decimal | None = None
     expected_profit: Decimal | None = None
+    # Financial Information for customer
+    customer: str | None = None
+    gender: str | None = None
+    location: str | None = None
+    shipping_fee: Decimal | None = None
     sale_price: Decimal | None = None
     # Description
     description: str | None = None
@@ -172,3 +177,12 @@ class TablesResponse(CRUDResponse):
     """ Response for table endpoint """
 
     tables: list[str]
+
+
+class Customer(BaseModel):
+    """ Customer schema """
+    customer: str
+    gender: str | None
+    location: str
+    shipping_fee: Decimal
+    sale_price: Decimal
