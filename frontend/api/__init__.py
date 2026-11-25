@@ -24,7 +24,12 @@ __author__ = "Shawn Yu"
 __version__ = "0.1.0"
 
 from .tools import async_configue_page, async_navigate_pages
-from .types import CityCode
+from .types import (
+    CHNCityCode,
+    CityCode,
+    Gender,
+    NZLCityCode,
+)
 
 __all__ = [
     # Layout Control
@@ -32,5 +37,8 @@ __all__ = [
     "async_navigate_pages",
 
     # Types
+    "CHNCityCode",
     "CityCode",
+    "Gender",
+    "NZLCityCode",
 ]
