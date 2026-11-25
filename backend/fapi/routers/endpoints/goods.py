@@ -7,7 +7,6 @@
 # @Desc     :
 
 from datetime import date
-from decimal import Decimal
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -18,6 +17,7 @@ from ....dbkit import Goods
 from ...dependencies import yield_async_session
 from ...schemas import (
     CRUDResponse,
+    Customer,
     GoodCreation,
     GoodResponse,
     GoodsResponse,
@@ -123,9 +123,17 @@ async def to_update_good(
 @router.patch("/sell", response_model=GoodResponse)
 async def to_sell_good(
         db_id: int,
-        sale_price: Decimal,
+        customer: Customer,
         session: Annotated[AsyncSession, Depends(yield_async_session)],
 ) -> GoodResponse:
+    """
+    Sell a good
+
+    :param db_id: The ID of the good to sell
+    :param customer: The customer information
+    :param session: The database session
+    :return: The updated good
+    """
     _status = ResponseStatus
     _good = await session.get(Goods, db_id)
 
@@ -141,11 +149,15 @@ async def to_sell_good(
             detail="Expected profit must be specified before selling."
         )
 
-    if sale_price <= 0:
+    if customer.sale_price <= 0:
         raise HTTPException(status_code=_status.VALIDATION_ERROR.code, detail="Sale price must be greater than zero.")
 
     _good.sale_date = date.today()
-    _good.sale_price = sale_price
+    _good.customer = customer.customer
+    _good.gender = customer.gender
+    _good.location = customer.location
+    _good.shipping_fee = customer.shipping_fee
+    _good.sale_price = customer.sale_price
 
     await session.commit()
     await session.refresh(_good)
@@ -158,6 +170,13 @@ async def to_restock_good(
         db_id: int,
         session: Annotated[AsyncSession, Depends(yield_async_session)],
 ) -> GoodResponse:
+    """
+    Restock a good
+
+    :param db_id: The ID of the good to restock
+    :param session: The database session
+    :return: The updated good
+    """
     _status = ResponseStatus
     _good = await session.get(Goods, db_id)
 
@@ -168,6 +187,10 @@ async def to_restock_good(
         raise HTTPException(status_code=_status.CONFLICT.code, detail="The good is already in stock.")
 
     _good.sale_date = None
+    _good.customer = None
+    _good.gender = None
+    _good.location = None
+    _good.shipping_fee = None
     _good.sale_price = None
 
     await session.commit()
