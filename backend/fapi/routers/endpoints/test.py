@@ -8,9 +8,17 @@
 
 from fastapi import APIRouter
 
+from ...schemas import CRUDResponse
+from ...types import ResponseStatus
+
 router = APIRouter()
 
 
-@router.get("")
-async def test_goods():
-    return {"message": "Goods endpoint works"}
+@router.get("", response_model=CRUDResponse)
+async def test_goods() -> CRUDResponse:
+    """ Test the goods endpoint """
+    _status = ResponseStatus
+    return CRUDResponse(
+        code=_status.SUCCESS.code,
+        message=_status.SUCCESS.message
+    )
