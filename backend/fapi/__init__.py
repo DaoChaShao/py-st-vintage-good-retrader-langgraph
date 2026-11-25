@@ -25,9 +25,11 @@ __version__ = "0.1.0"
 
 from .dependencies import yield_async_session
 from .schemas import (
+    Customer,
     GoodCreation,
     UserInit,
     UserManagement,
+    UserRoles,
     UsersDeletion,
     UserSignIn,
     UsersManagement,
@@ -44,6 +46,7 @@ from .types import (
 __all__ = [
     "yield_async_session",
 
+    "Customer",
     "GoodCreation",
     "UsersDeletion",
     "UserInit",
@@ -51,6 +54,7 @@ __all__ = [
     "UsersManagement",
     "UserSignIn",
     "UserManagement",
+    "UserRoles",
 
     "JWTAccessTokenEncoder",
 
