@@ -27,12 +27,6 @@ __author__ = "Shawn Yu"
 __version__ = "0.1.0"
 
 from .dbkit import (
-    BASE,
-    DBCONFIG,
-    DECLARATION,
-    GENERAL,
-    SQLITE,
-    Goods,
     InitEngine,
     InitSession,
     count_records,
@@ -43,14 +37,14 @@ from .dbkit import (
     read_records,
     table_ready,
 )
+from .schemas import PostgresSQL, SQLite
 
 __all__ = [
-    "BASE",
-    "DBCONFIG",
-    "DECLARATION",
-    "GENERAL",
-    "Goods",
-    "SQLITE",
+    # Database
+    "SQLite",
+    "PostgresSQL",
+
+    # Sync Database
     "InitEngine",
     "InitSession",
     "count_records",
