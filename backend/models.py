@@ -9,7 +9,7 @@
 from sqlalchemy.orm import Mapped, mapped_column
 
 from .base import BASE, GENERAL
-from .types import UserRole
+from .domains import UserRole
 
 
 class User(BASE):
