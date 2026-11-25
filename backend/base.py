@@ -10,6 +10,7 @@ from datetime import date, datetime, time
 from decimal import Decimal
 from typing import Annotated
 
+from pydantic import BaseModel, ConfigDict
 from sqlalchemy import (
     Boolean,
     Date,
@@ -61,3 +62,9 @@ class BASE(DECLARATION):
             f"created_at={self.created_at}, "
             f"updated_at={self.updated_at}, "
         )
+
+
+class ABSSchema(BaseModel):
+    """ Abstract base class for all schemas """
+
+    model_config = ConfigDict(from_attributes=True)
