@@ -11,7 +11,6 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException
 from pwdlib import PasswordHash
 from sqlalchemy import delete, select
-from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from ....dbkit import HashAlgorithms, User, UserRoles, hash_password
@@ -33,10 +32,7 @@ from ...types import AccessTokenTypes, ResponseStatus
 router = APIRouter()
 
 
-@router.post(
-    "/sign/in",
-    response_model=VerificationResponse
-)
+@router.post("/sign/in", response_model=VerificationResponse)
 async def to_sign_in(
         user: UserSignIn,
         session: Annotated[AsyncSession, Depends(yield_async_session)],
@@ -48,13 +44,13 @@ async def to_sign_in(
     :param session: The database session
     :return: The user info and access token
     """
+    _status = ResponseStatus
+
     _username: str = user.username
     _password: str = user.password
 
     _result = await session.execute(select(User).where(User.username == _username))
     _user = _result.scalar_one_or_none()
-
-    _status = ResponseStatus
 
     if _user is None:
         raise HTTPException(status_code=_status.UNAUTHORISED.code, detail="The user cannot be found.")
@@ -75,10 +71,7 @@ async def to_sign_in(
     )
 
 
-@router.post(
-    "/sign/up",
-    response_model=UserResponse,
-)
+@router.post("/sign/up", response_model=UserResponse)
 async def to_sign_up(
         user: UserSignIn,
         session: Annotated[AsyncSession, Depends(yield_async_session)],
@@ -90,9 +83,9 @@ async def to_sign_up(
     :param session: The database session
     :return: The user info
     """
+    _status = ResponseStatus
     _username: str = user.username
     _password: str = user.password
-    _status = ResponseStatus
 
     # Check whether the username already exists
     _result = await session.execute(select(User).where(User.username == _username))
@@ -116,10 +109,7 @@ async def to_sign_up(
     return UserResponse.model_validate(_user)
 
 
-@router.post(
-    "/update",
-    response_model=UserResponse,
-)
+@router.post("/update", response_model=UserResponse)
 async def to_update(
         user: UserUpdate,
         session: Annotated[AsyncSession, Depends(yield_async_session)],
@@ -131,9 +121,9 @@ async def to_update(
     :param session: The database session
     :return: The user info
     """
+    _status = ResponseStatus
     _result = await session.execute(select(User).where(User.id == user.id))
     _user = _result.scalar_one_or_none()
-    _status = ResponseStatus
 
     if _user is None:
         raise HTTPException(status_code=_status.NOT_FOUND.code, detail="The user cannot be found.")
@@ -141,6 +131,11 @@ async def to_update(
     _updates = user.model_dump(exclude_unset=True)
 
     if "username" in _updates:
+        _result = await session.execute(
+            select(User).where(User.username == _updates["username"], User.id != user.id)
+        )
+        if _result.scalar_one_or_none() is not None:
+            raise HTTPException(status_code=_status.CONFLICT.code, detail="The username already exists.")
         _user.username = _updates["username"]
     if "role" in _updates:
         _user.role = _updates["role"]
@@ -156,31 +151,22 @@ async def to_update(
 
         _user.password = PasswordHash.recommended().hash(_updates["new_password"])
 
-    try:
-        await session.commit()
-    except IntegrityError:
-        await session.rollback()
-        raise HTTPException(status_code=_status.CONFLICT.code, detail="The username already exists.") from None
-
+    await session.commit()
     await session.refresh(_user)
-
     return UserResponse.model_validate(_user)
 
 
-@router.get(
-    "/get/users",
-    response_model=UsersResponse,
-)
+@router.get("/get/users", response_model=UsersResponse)
 async def to_get_users(session: Annotated[AsyncSession, Depends(yield_async_session)]) -> UsersResponse:
     """
     Get all users
 
     :param session: The database session
-    :return: The user info¬
+    :return: The user info
     """
+    _status = ResponseStatus
     _result = await session.execute(select(User).where(User.id != 1))
     _users = _result.scalars().all()
-    _status = ResponseStatus
     return UsersResponse(
         code=_status.SUCCESS.code,
         message=_status.SUCCESS.message,
@@ -188,10 +174,7 @@ async def to_get_users(session: Annotated[AsyncSession, Depends(yield_async_sess
     )
 
 
-@router.post(
-    "/init/admin",
-    response_model=UserResponse,
-)
+@router.post("/init/admin", response_model=UserResponse)
 async def to_init_admin(session: Annotated[AsyncSession, Depends(yield_async_session)]) -> UserResponse:
     """
     Sign up a new user
@@ -199,9 +182,9 @@ async def to_init_admin(session: Annotated[AsyncSession, Depends(yield_async_ses
     :param session: The database session
     :return: The user info
     """
+    _status = ResponseStatus
     _username: str = "admin"
     _password: str = "12345"
-    _status = ResponseStatus
 
     # Check whether the username already exists
     _result = await session.execute(select(User).where(User.username == _username))
@@ -225,10 +208,7 @@ async def to_init_admin(session: Annotated[AsyncSession, Depends(yield_async_ses
     return UserResponse.model_validate(_user)
 
 
-@router.patch(
-    "/manage/users",
-    response_model=UsersResponse,
-)
+@router.patch("/manage/users", response_model=UsersResponse)
 async def to_manage_users(
         users: UsersManagement,
         session: Annotated[AsyncSession, Depends(yield_async_session)],
@@ -240,8 +220,8 @@ async def to_manage_users(
     :param session: The database session
     :return: The updated users
     """
-    _updated_users: list[User] = []
     _status = ResponseStatus
+    _updated_users: list[User] = []
 
     for user in users.users:
         _result = await session.execute(select(User).where(User.id == user.id))
@@ -266,10 +246,7 @@ async def to_manage_users(
     )
 
 
-@router.delete(
-    "/delete",
-    response_model=CRUDResponse,
-)
+@router.delete("/delete", response_model=CRUDResponse)
 async def to_delete_user(
         users: UsersDeletion,
         session: Annotated[AsyncSession, Depends(yield_async_session)]
