@@ -17,11 +17,11 @@ from streamlit import (
 )
 
 from backend import (
-    DBCONFIG,
     SQLITE,
     Goods,
     InitEngine,
     InitSession,
+    SQLiteConfig,
     count_records,
     read_records,
 )
@@ -38,7 +38,7 @@ from frontend.app.tools import (
 
 NOTIFICATION = empty()
 
-config = DBCONFIG(SQLITE, True)
+config = SQLiteConfig(SQLITE, True)
 sqlite = InitEngine(config)
 
 for key in []:
