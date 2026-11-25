@@ -3,7 +3,7 @@
 # @Time     :   2026/11/18 22:12
 # @Author   :   Shawn
 # @Version  :   Version 0.1.0
-# @File     :   types.py
+# @File     :   category.py
 # @Desc     :
 
 from enum import Enum, StrEnum, unique
@@ -56,11 +56,3 @@ class ResponseStatus(Enum):
     def __init__(self, code: int, message: str):
         self.code = code
         self.message = message
-
-
-@unique
-class UserRole(StrEnum):
-    """ Role """
-
-    ADMIN = "admin"
-    USER = "user"
