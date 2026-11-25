@@ -10,16 +10,22 @@ from collections.abc import AsyncIterator
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from ..dbkit import (
-    DBCONFIG,
-    SQLITE,
-    InitEngine,
-)
-from ..dbkit.types import ExecutionModes
+from ..config import SQLiteConfig
+from ..constants import SQLITE, YAML
+from ..engines import InitEngine
+from ..services import load_yaml
+from ..types import DBType, ExecutionMode
 from .session import InitAsyncSession
 
-config = DBCONFIG(SQLITE, True, ExecutionModes.ASYNC)
-sqlite = InitEngine(config)
+yaml = load_yaml(YAML, DBType.SQLITE)
+
+sqlite_config = SQLiteConfig(
+    path=SQLITE,
+    mode=ExecutionMode.ASYNC,
+    echo=True,
+    database=yaml.database,
+)
+sqlite = InitEngine(sqlite_config)
 factory = InitAsyncSession(sqlite.engine)
 
 
