@@ -13,9 +13,7 @@ from pwdlib import PasswordHash
 from sqlalchemy import delete, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from ....dbkit import HashAlgorithms, User, UserRoles, hash_password
-from ...dependencies import yield_async_session
-from ...schemas import (
+from backend.schemas import (
     AccessTokenResponse,
     CRUDResponse,
     UserResponse,
@@ -26,8 +24,12 @@ from ...schemas import (
     UserUpdate,
     VerificationResponse,
 )
-from ...services import JWTAccessTokenEncoder
-from ...types import AccessTokenTypes, ResponseStatus
+
+from ....dbkit import hash_password
+from ....models import User, UserRole
+from ....types import AccessTokenType, HashAlgorithm, ResponseStatus
+from ...dependencies import yield_async_session
+from ...repository import JWTAccessTokenEncoder
 
 router = APIRouter()
 
@@ -65,7 +67,7 @@ async def to_sign_in(
         user=UserResponse.model_validate(_user),
         token=AccessTokenResponse(
             token=_token,
-            type=AccessTokenTypes.BEARER,
+            type=AccessTokenType.BEARER,
             expires_at=_expiration
         )
     )
@@ -95,7 +97,7 @@ async def to_sign_up(
         raise HTTPException(status_code=_status.CONFLICT.code, detail="The username already exists.")
 
     # Hash the password
-    _hashed_password = hash_password(_password, algorithm=HashAlgorithms.ARGON2)
+    _hashed_password = hash_password(_password, algorithm=HashAlgorithm.ARGON2)
 
     # Create the user
     _user = User(username=_username, password=_hashed_password)
@@ -194,10 +196,10 @@ async def to_init_admin(session: Annotated[AsyncSession, Depends(yield_async_ses
         raise HTTPException(status_code=_status.CONFLICT.code, detail="The username already exists.")
 
     # Hash the password
-    _hashed_password = hash_password(_password, algorithm=HashAlgorithms.ARGON2)
+    _hashed_password = hash_password(_password, algorithm=HashAlgorithm.ARGON2)
 
     # Create the user
-    _user = User(username=_username, password=_hashed_password, role=UserRoles.ADMIN.value)
+    _user = User(username=_username, password=_hashed_password, role=UserRole.ADMIN.value)
 
     # Save to the database
     session.add(_user)
