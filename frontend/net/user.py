@@ -7,17 +7,9 @@
 # @Desc     :
 
 from datetime import datetime
+from typing import Any
 
 from requests import Response, request
-
-from backend.dbkit import UserRole
-from backend.fapi import (
-    UserManagement,
-    UsersDeletion,
-    UserSignIn,
-    UsersManagement,
-    UserUpdate,
-)
 
 from .base import HEADERS
 from .types import URL, RequestMethod
@@ -32,14 +24,17 @@ def request_to_sign_in(url: str, *, username: str, password: str) -> Response:
     :param password: The password of the user
     :return: The response from the server
     """
-    _user = UserSignIn(username=username, password=password)
     _url: URL = URL(url)
+    _user = {
+        "username": username,
+        "password": password,
+    }
     return request(
         RequestMethod.POST.value,
         _url.value,
         headers=HEADERS,
         timeout=30,
-        json=_user.model_dump(mode="json"),
+        json=_user,
     )
 
 
@@ -52,14 +47,17 @@ def request_to_sign_up(url: str, *, username: str, password: str) -> Response:
     :param password: The password of the user
     :return: The response from the server
     """
-    _user = UserSignIn(username=username, password=password)
     _url: URL = URL(url)
+    _user = {
+        "username": username,
+        "password": password,
+    }
     return request(
         RequestMethod.POST.value,
         _url.value,
         headers=HEADERS,
         timeout=30,
-        json=_user.model_dump(mode="json"),
+        json=_user,
     )
 
 
@@ -70,7 +68,7 @@ def request_to_update(
         username: str,
         old_password: str | None,
         new_password: str | None,
-        role: UserRole,
+        role: str,
         status: bool,
         updated_at: datetime,
 ) -> Response:
@@ -87,22 +85,22 @@ def request_to_update(
     :param updated_at: The last updated time of the user
     :return: The response from the server
     """
-    _user: UserUpdate = UserUpdate(
-        id=user_id,
-        username=username,
-        old_password=old_password,
-        new_password=new_password,
-        role=role,
-        is_active=status,
-        updated_at=updated_at,
-    )
     _url: URL = URL(url)
+    _user: dict[str, Any] = {
+        "id": user_id,
+        "username": username,
+        "old_password": old_password,
+        "new_password": new_password,
+        "role": role,
+        "is_active": status,
+        "updated_at": updated_at.isoformat()
+    }
     return request(
         RequestMethod.POST.value,
-        _url.UPDATE.value,
+        _url.value,
         headers=HEADERS,
         timeout=30,
-        json=_user.model_dump(mode="json"),
+        json=_user,
     )
 
 
@@ -133,17 +131,12 @@ def request_to_manage_users(url: str, *, changed_users: list[dict]) -> Response:
     :return: The response from the server
     """
     _url = URL(url)
-    _users = [
-        UserManagement.model_validate(user)
-        for user in changed_users
-    ]
-    _data = UsersManagement(users=_users)
     return request(
         RequestMethod.PATCH.value,
         _url.value,
         headers=HEADERS,
         timeout=30,
-        json=_data.model_dump(mode="json"),
+        json={"users": changed_users},
     )
 
 
@@ -172,11 +165,10 @@ def request_to_delete_users(url: str, *, ids: list[int]) -> Response:
     :return: The response from the server
     """
     _url: URL = URL(url)
-    _user_ids: UsersDeletion = UsersDeletion(ids=ids)
     return request(
         RequestMethod.DELETE.value,
         _url.value,
         headers=HEADERS,
         timeout=30,
-        json=_user_ids.model_dump(mode="json")
+        json={"ids": ids}
     )
