@@ -34,13 +34,12 @@ from streamlit import (
     text_input,
 )
 
-from backend.fapi import ProductTypes, UserRole
-
 from ...net import (
     URL,
     request_to_delete_good,
     request_to_delete_tables,
     request_to_delete_users,
+    request_to_get_category,
     request_to_get_goods,
     request_to_get_users,
     request_to_init_admin,
@@ -53,12 +52,8 @@ from ...net import (
     request_to_update,
     request_to_update_good,
 )
-from ..types import (
-    CHNCityCode,
-    CityCode,
-    Gender,
-    ProductBrand,
-)
+
+CATEGORY = request_to_get_category(URL.GET_CATEGORY)
 
 
 @dialog("Delete Tables", position="center", width="small", icon=":material/delete:")
@@ -231,7 +226,7 @@ def dialog_update_user(user: Any) -> None:
 
         info_left, info_right = columns(2)
         _role = info_left.segmented_control(
-            "Account Role", list(UserRole), required=True,
+            "Account Role", options=CATEGORY["user_roles"], required=True,
             selection_mode="single", width="stretch", disabled=True,
             help="Your account role",
             default=user["role"],
@@ -302,7 +297,7 @@ def dialog_create_good() -> None:
     with code_left:
         _city: str = selectbox(
             "City", placeholder="The city where the good is from", required=True,
-            options=list(CityCode), format_func=lambda city: city.name.replace("_", " ").title(),
+            options=CATEGORY["all_cities"],
             icon=":material/source_environment:", width="stretch",
             help="The city where the good is from",
             disabled=False, index=0,
@@ -333,7 +328,7 @@ def dialog_create_good() -> None:
             )
             _brand: str = selectbox(
                 "Brand", placeholder="The brand of the good", required=True,
-                options=list(ProductBrand),
+                options=CATEGORY["product_brands"],
                 icon=":material/copyright:", width="stretch",
                 help="The brand of the good",
                 disabled=False, index=0,
@@ -370,10 +365,10 @@ def dialog_create_good() -> None:
 
         _category: str = segmented_control(
             "Category", required=True,
-            options=[item.value for item in ProductTypes],
+            options=CATEGORY["product_types"],
             selection_mode="single", width="stretch",
             help="The category of the good",
-            disabled=False, default=next(iter(ProductTypes)).value,
+            disabled=False, default=CATEGORY["product_types"][0],
         )
 
         qty, fin_left, fin_right = columns(3)
@@ -551,10 +546,10 @@ def dialog_update_good(*, db_id: int, good: dict[str, Any]) -> None:
     with code_left:
         _city: str = selectbox(
             "City", placeholder="The city where the good is from", required=True,
-            options=list(CityCode), format_func=lambda city: city.name.replace("_", " ").title(),
+            options=CATEGORY["all_cities"],
             icon=":material/source_environment:", width="stretch",
             help="The city where the good is from",
-            disabled=True, index=list(CityCode).index(CityCode(good["city"])),
+            disabled=True, index=CATEGORY["all_cities"].index(good["city"]),
         )
     with code_mid:
         _store: str = text_input(
@@ -582,10 +577,10 @@ def dialog_update_good(*, db_id: int, good: dict[str, Any]) -> None:
             )
             _brand: str = selectbox(
                 "Brand", placeholder="The brand of the good", required=True,
-                options=list(ProductBrand),
+                options=CATEGORY["product_brands"],
                 icon=":material/copyright:", width="stretch",
                 help="The brand of the good",
-                disabled=False, index=list(ProductBrand).index(ProductBrand(good["brand"])),
+                disabled=False, index=CATEGORY["product_brands"].index(good["brand"]),
             )
         with good_mid:
             _production_year_start: int = number_input(
@@ -619,7 +614,7 @@ def dialog_update_good(*, db_id: int, good: dict[str, Any]) -> None:
 
         _category: str = segmented_control(
             "Category", required=True,
-            options=[item.value for item in ProductTypes],
+            options=CATEGORY["product_types"],
             selection_mode="single", width="stretch",
             help="The category of the good",
             disabled=True, default=good["category"],
@@ -746,7 +741,6 @@ def dialog_sell_good(db_id: int) -> None:
         upper_left, upper_right = columns(2)
         lower_left, lower_right = columns(2)
         with upper_left:
-            # left.space("stretch")
             _customer: str = text_input(
                 "Customer Name", placeholder="The name of a customer", required=True,
                 type="default", icon=":material/badge:", max_chars=15, width="stretch",
@@ -756,7 +750,7 @@ def dialog_sell_good(db_id: int) -> None:
         with upper_right:
             _gender: str = segmented_control(
                 "Gender", required=False,
-                options=[gender.value.capitalize() for gender in Gender],
+                options=CATEGORY["gender"], format_func=lambda gender: gender.capitalize(),
                 selection_mode="single", width="stretch",
                 help="The category of the good",
                 disabled=False, default=None,
@@ -764,7 +758,7 @@ def dialog_sell_good(db_id: int) -> None:
         with lower_left:
             _location: str = selectbox(
                 "Location", placeholder="The buyer location where the good is from", required=False,
-                options=list(CHNCityCode), format_func=lambda city: city.name.replace("_", " ").title(),
+                options=CATEGORY["chn_cities"],
                 icon=":material/source_environment:", width="stretch",
                 help="The buyer location where the good is from",
                 disabled=False, index=None,
