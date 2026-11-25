@@ -194,6 +194,8 @@
 
 ### Docs
 
+- **home:** add project introduction to home page ([1d3756d](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/1d3756d2a54db7208a180181ed3e893a227bc5f6))
+- **changelog:** add feature and refactor entries ([969bf26](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/969bf2649a51dd804465f867db142061b83097ac))
 - **changelog:** add restock and dashboard refactor entries ([65d721f](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/65d721face7fb80d4aa90c635155c34e024b2b95))
 - **changelog:** update changelog with restock feature entries ([51e4961](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/51e496159465f5a5940acbf4f9e88efbf90ed5df))
 - **changelog:** update changelog with recent entries ([ac24694](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/ac2469443d47c3755855c9668a46e49a4a317426))
