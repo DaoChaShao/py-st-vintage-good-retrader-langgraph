@@ -778,7 +778,6 @@ def dialog_sell_good(db_id: int) -> None:
             help="The price of the good",
             disabled=False, value=None,
         )
-        _sale_price: Decimal = Decimal(_price)
 
         if form_submit_button("Sell", type="primary", width="stretch", icon=":material/check:"):
             if _price == 0.0 or _price is None:
