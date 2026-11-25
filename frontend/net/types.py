@@ -3,7 +3,7 @@
 # @Time     :   2026/11/19 21:02
 # @Author   :   Shawn
 # @Version  :   Version 0.1.0
-# @File     :   types.py
+# @File     :   category.py
 # @Desc     :
 
 from enum import StrEnum, unique
@@ -14,6 +14,12 @@ class AcceptType(StrEnum):
     """ HTTP Header """
     CONTENT_TYPE = "Content-Type"
     APPLICATION_JSON = "application/json"
+
+
+@unique
+class DBReadyStatus(StrEnum):
+    INIT = "init"
+    STOP = "stop"
 
 
 @unique
@@ -55,3 +61,5 @@ class URL(StrEnum):
     UPDATE_GOOD = BASE + "/goods/update"
     SELL_GOOD = BASE + "/goods/sell"
     RESTOCK_GOOD = BASE + "/goods/restock"
+
+    GET_CATEGORY = BASE + "/category"
