@@ -1,10 +1,17 @@
 <!-- insertion marker -->
 <a name="0.1.0"></a>
 
-## [0.1.0](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/compare/ac1d2409aef149089b2a89c9480844fcefaf52a3...0.1.0) (2026-11-24)
+## [0.1.0](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/compare/ac1d2409aef149089b2a89c9480844fcefaf52a3...0.1.0) (2026-11-25)
 
 ### Features
 
+- add database ([a0d82e4](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/a0d82e47f06f094ad160fd5ddf8072e0ac6b2615))
+- **schemas:** add Customer schema and split financial fields ([8eb01b1](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/8eb01b1687943cf6e0d493e86110845ad0e4249d))
+- **models:** reorganize financial fields and add customer info ([f45d1e1](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/f45d1e12652c7fee5b31349d18aca4346c1a0c28))
+- **goods:** add customer info to good sale ([de7a3e8](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/de7a3e8955afede1b3a66aa542e94aba57f648b4))
+- **dialogs:** enhance sell good dialog with customer info fields ([7b18847](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/7b18847fceacd7f9aa83777106a66dd343b8d5bf))
+- **api:** add CHNCityCode, Gender and NZLCityCode exports ([72ffcf0](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/72ffcf073ccc6aba1e7861b3c3983c841d781009))
+- **fapi:** expose Customer and UserRoles schemas ([79a996a](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/79a996a41e4ed0788ad1a264d1b52a7338b7bcb4))
 - **net:** add RESTOCK_GOOD endpoint constant ([e362612](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/e362612e3cf5111dfb3d6750b38e56d28078cd78))
 - **inventory:** add restock option for sold vintage items ([d27d7b8](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/d27d7b86391462184d39eec1b93c3a1222a0d1ce))
 - **goods:** add restock good request function ([d3a9fce](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/d3a9fceed11ba6063ececbc8994f34f0d67b805d))
@@ -187,6 +194,7 @@
 
 ### Docs
 
+- **changelog:** add restock and dashboard refactor entries ([65d721f](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/65d721face7fb80d4aa90c635155c34e024b2b95))
 - **changelog:** update changelog with restock feature entries ([51e4961](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/51e496159465f5a5940acbf4f9e88efbf90ed5df))
 - **changelog:** update changelog with recent entries ([ac24694](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/ac2469443d47c3755855c9668a46e49a4a317426))
 - **changelog:** add recent changes to changelog ([22c88e9](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/22c88e99876efdc8e323ce78a9b372c4e8137828))
@@ -225,6 +233,12 @@
 
 ### Code Refactoring
 
+- **user:** replace Any with Response return type ([809381b](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/809381b65837daf831e8bd993b4b56f7bcd9e7fd))
+- **user:** replace IntegrityError with explicit uniqueness check ([50d260f](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/50d260f93ed17a68d700fa7d218112090bc75d6d))
+- **types:** restructure city code enums and add new types ([86322a5](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/86322a57745386dd8dd449131c2a5b7c84d336ce))
+- **test:** update test endpoint to use standard CRUDResponse schema ([4711420](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/4711420c2d845d3872a30a64906dd3396014d7ef))
+- **goods:** replace sale_price param with customer object in sell request ([2d33848](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/2d33848166b68ab2f15b4031c43ab316a557286d))
+- **database:** simplify endpoint definitions and add return type annotations ([80fada4](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/80fada44f6a5dc72017a17e52cc75a647ade814d))
 - **dashboard:** rework loading and UI layout ([1988eea](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/1988eea90cc2f2c75e2b59a92695ae97839fbeb4))
 - **net:** rename RequestMethods to RequestMethod ([5b6bb1c](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/5b6bb1cc38ebf7768ac3ff122e81e8e59b9684f2))
 - **net:** rename enum classes to singular form ([bd852ca](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/bd852cae143205557bd90de46918731dd9a31525))
