@@ -16,7 +16,7 @@ from streamlit import (
     set_page_config,
 )
 
-from backend.dbkit import UserRoles
+from backend.dbkit import UserRole
 
 LOGO_DIR: Path = Path(__file__).resolve().parents[3]
 PAGE_DIR: Path = Path(__file__).resolve().parents[1]
@@ -78,7 +78,7 @@ def async_navigate_pages() -> None:
             Page(page=pages["page"][2], title=pages["title"][2], icon=pages["icon"][2])
         )
 
-        if session_state.USER["role"] == UserRoles.ADMIN:
+        if session_state.USER["role"] == UserRole.ADMIN:
             structure.append(
                 Page(page=pages["page"][3], title=pages["title"][3], icon=pages["icon"][3])
             )
