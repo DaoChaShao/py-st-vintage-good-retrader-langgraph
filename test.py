@@ -7,11 +7,11 @@
 # @Desc     :
 
 from backend import (
-    DBCONFIG,
     SQLITE,
     Goods,
     InitEngine,
     InitSession,
+    SQLiteConfig,
     count_records,
     create_db,
     drop_tables,
@@ -23,7 +23,7 @@ def main() -> None:
     """ Main Function """
     print(SQLITE)
 
-    config = DBCONFIG(SQLITE, True)
+    config = SQLiteConfig(SQLITE, True)
     print(config)
 
     sqlite = InitEngine(config)
