@@ -7,7 +7,6 @@
 # @Desc     :
 
 from datetime import datetime
-from typing import Any
 
 from requests import Response, request
 
@@ -24,7 +23,7 @@ from .base import HEADERS
 from .types import URL, RequestMethod
 
 
-def request_to_sign_in(url: str, *, username: str, password: str) -> Any:
+def request_to_sign_in(url: str, *, username: str, password: str) -> Response:
     """
     Post username and password to sign in via the given URL
 
@@ -44,7 +43,7 @@ def request_to_sign_in(url: str, *, username: str, password: str) -> Any:
     )
 
 
-def request_to_sign_up(url: str, *, username: str, password: str) -> Any:
+def request_to_sign_up(url: str, *, username: str, password: str) -> Response:
     """
     Post username and password to register a new user via the given URL
 
@@ -107,7 +106,7 @@ def request_to_update(
     )
 
 
-def request_to_get_users(url: str | URL) -> Any:
+def request_to_get_users(url: str | URL) -> Response:
     """
     Get all user information
 
@@ -125,7 +124,7 @@ def request_to_get_users(url: str | URL) -> Any:
     return _response.json()["users"]
 
 
-def request_to_manage_users(url: str, *, changed_users: list[dict]) -> Any:
+def request_to_manage_users(url: str, *, changed_users: list[dict]) -> Response:
     """
     Update multiple users
 
@@ -148,7 +147,7 @@ def request_to_manage_users(url: str, *, changed_users: list[dict]) -> Any:
     )
 
 
-def request_to_init_admin(url: str) -> Any:
+def request_to_init_admin(url: str) -> Response:
     """
     Post username and password to register a new user via the given URL
 
@@ -164,7 +163,7 @@ def request_to_init_admin(url: str) -> Any:
     )
 
 
-def request_to_delete_users(url: str, *, ids: list[int]) -> Any:
+def request_to_delete_users(url: str, *, ids: list[int]) -> Response:
     """
     Delete a user
 
