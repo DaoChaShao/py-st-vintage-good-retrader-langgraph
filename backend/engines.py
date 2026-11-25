@@ -11,8 +11,8 @@ from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine
 
 from utils.helper import Access
 
-from .configs import DBCONFIG
-from .types import ExecutionModes
+from .config import SQLiteConfig
+from .types import ExecutionMode
 
 
 class InitEngine(Access):
@@ -23,11 +23,11 @@ class InitEngine(Access):
     - Async: Asynchronous database connection (uv add sqlalchemy, greenlet)
     """
 
-    def __init__(self, config: DBCONFIG) -> None:
+    def __init__(self, config: SQLiteConfig) -> None:
         """ Configure SQLite3 settings """
         super().__init__()
         match config.mode:
-            case ExecutionModes.SYNC:
+            case ExecutionMode.SYNC:
                 self._engine = create_engine(
                     config.url,
                     echo=config.echo,
@@ -35,7 +35,7 @@ class InitEngine(Access):
                         "timeout": config.timeout,
                     },
                 )
-            case ExecutionModes.ASYNC:
+            case ExecutionMode.ASYNC:
                 self._engine = create_async_engine(
                     config.url,
                     echo=config.echo,
