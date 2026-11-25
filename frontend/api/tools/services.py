@@ -17,9 +17,7 @@ from streamlit import (
     spinner,
 )
 
-from frontend.net.goods import URL, request_to_get_goods
-
-from ...app.tools import DBReadyStatus
+from frontend.net import URL, DBReadyStatus, request_to_get_goods
 
 
 def async_db_ready(
