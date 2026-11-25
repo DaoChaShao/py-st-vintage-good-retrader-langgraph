@@ -18,6 +18,7 @@ with the FastAPI backend and retrieval of API response data.
 __author__ = "Shawn Yu"
 __version__ = "0.1.0"
 
+from .category import request_to_get_category
 from .database import (
     request_to_delete_tables,
     request_to_initialise_tables,
@@ -34,6 +35,7 @@ from .goods import (
 from .types import (
     URL,
     AcceptType,
+    DBReadyStatus,
     RequestMethod,
 )
 from .user import (
@@ -47,6 +49,9 @@ from .user import (
 )
 
 __all__ = [
+    # Category
+    "request_to_get_category",
+
     # Database
     "request_to_delete_tables",
     "request_to_list_tables",
@@ -73,4 +78,7 @@ __all__ = [
     "request_to_update",
     "request_to_get_users",
     "request_to_manage_users",
+
+    # Types
+    "DBReadyStatus",
 ]
