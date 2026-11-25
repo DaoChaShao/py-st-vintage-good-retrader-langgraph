@@ -13,16 +13,17 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from ....dbkit import Goods
-from ...dependencies import yield_async_session
-from ...schemas import (
+from backend.schemas import (
     CRUDResponse,
     Customer,
     GoodCreation,
     GoodResponse,
     GoodsResponse,
 )
-from ...types import ResponseStatus
+
+from ....models import Goods
+from ....types import ResponseStatus
+from ...dependencies import yield_async_session
 
 router = APIRouter()
 
