@@ -776,12 +776,12 @@ def dialog_sell_good(db_id: int) -> None:
             min_value=0.0, max_value=9_999.99, step=0.01, format="%.2f",
             icon=":material/paid:", width="stretch",
             help="The price of the good",
-            disabled=False, value=0.0,
+            disabled=False, value=None,
         )
         _sale_price: Decimal = Decimal(_price)
 
         if form_submit_button("Sell", type="primary", width="stretch", icon=":material/check:"):
-            if _price == 0.0:
+            if _price == 0.0 or _price is None:
                 notification.warning("Sale price cannot be zero", icon=":material/warning:")
                 return
 
