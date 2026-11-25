@@ -34,7 +34,7 @@ from streamlit import (
     text_input,
 )
 
-from backend.fapi import ProductTypes
+from backend.fapi import ProductTypes, UserRoles
 
 from ...net import (
     URL,
@@ -53,11 +53,16 @@ from ...net import (
     request_to_update,
     request_to_update_good,
 )
-from ..types import CityCode
+from ..types import (
+    CHNCityCode,
+    CityCode,
+    Gender,
+    ProductBrand,
+)
 
 
 @dialog("Delete Tables", position="center", width="small", icon=":material/delete:")
-def dialog_delete_tables():
+def dialog_delete_tables() -> None:
     """ Delete all tables """
     left, right = columns(2)
     if left.button("Yes", type="secondary", width="stretch"):
@@ -69,7 +74,7 @@ def dialog_delete_tables():
 
 
 @dialog("Delete Users", position="center", width="medium", icon=":material/delete:")
-def dialog_delete_users(curr_id: int):
+def dialog_delete_users(curr_id: int) -> None:
     """ Delete all users """
     notification = empty()
 
@@ -102,7 +107,7 @@ def dialog_delete_users(curr_id: int):
 
 
 @dialog("Initialise Tables", position="center", width="small", icon=":material/add:")
-def dialog_init_tables():
+def dialog_init_tables() -> None:
     """ Initialise all tables and an administrator """
     left, right = columns(2)
     if left.button("Yes", type="secondary", width="stretch"):
@@ -116,7 +121,7 @@ def dialog_init_tables():
 
 
 @dialog("Register", position="center", width="small", icon=":material/account_circle:")
-def dialog_sign_up():
+def dialog_sign_up() -> None:
     """ Dialog for user registration """
     notification = empty()
 
@@ -149,7 +154,7 @@ def dialog_sign_up():
 
 
 @dialog("Manage User", position="center", width="medium", icon=":material/person:")
-def dialog_manage_users(curr_id: int):
+def dialog_manage_users(curr_id: int) -> None:
     """ Dialog for managing users """
     notification = empty()
 
@@ -191,7 +196,7 @@ def dialog_manage_users(curr_id: int):
 
 
 @dialog("Update User Information", position="center", width="small", icon=":material/person:")
-def dialog_update_user(user: Any):
+def dialog_update_user(user: Any) -> None:
     """ Dialog for updating user information """
     notification = empty()
 
@@ -225,12 +230,11 @@ def dialog_update_user(user: Any):
         )
 
         info_left, info_right = columns(2)
-        default_role = user["role"]
         _role = info_left.segmented_control(
-            "Account Role", ["User", "Admin"], required=True,
+            "Account Role", list(UserRoles), required=True,
             selection_mode="single", width="stretch", disabled=True,
             help="Your account role",
-            default="User" if default_role == "user" else "Admin",
+            default=user["role"],
         )
         _status: bool = info_right.toggle(
             "Active Status",
@@ -274,7 +278,7 @@ def dialog_update_user(user: Any):
 
 
 @dialog("New Vintage Good Creation", position="center", width="medium", icon=":material/add:")
-def dialog_create_good():
+def dialog_create_good() -> None:
     """ Dialog for creating a new good """
     notification = empty()
 
@@ -327,11 +331,12 @@ def dialog_create_good():
                 help="The product name",
                 disabled=False, value=None,
             )
-            _brand: str = text_input(
+            _brand: str = selectbox(
                 "Brand", placeholder="The brand of the good", required=True,
-                type="default", icon=":material/copyright:", width="stretch",
+                options=list(ProductBrand),
+                icon=":material/copyright:", width="stretch",
                 help="The brand of the good",
-                disabled=False, value=None,
+                disabled=False, index=0,
             )
         with good_mid:
             _production_year_start: int = number_input(
@@ -398,22 +403,22 @@ def dialog_create_good():
                 disabled=False, value=None,
             )
             _exchange_rate: float = number_input(
-                "Exchange Rate (CNY)", placeholder="The exchange rate", required=True,
+                "Exchange Rate (NZD)", placeholder="The exchange rate", required=True,
                 min_value=0.0, max_value=9_999.99, step=0.01, format="%.2f",
                 icon=":material/currency_exchange:", width="stretch",
                 help="The exchange rate",
                 disabled=False, value=None,
             )
         with fin_right:
-            _shipping_fee: float = number_input(
-                "Shipping Fee", placeholder="The shipping fee", required=False,
+            _extra_fee: float = number_input(
+                "Extra Fee (NZD)", placeholder="The extra fee", required=False,
                 min_value=0.0, max_value=9_999.99, step=0.01, format="%.2f",
                 icon=":material/delivery_truck_speed:", width="stretch",
-                help="The shipping fee",
+                help="The extra fee",
                 disabled=False, value=None,
             )
             _expected_profit: float = number_input(
-                "Expected Profit", placeholder="The expected profit", required=False,
+                "Expected Profit (NZD)", placeholder="The expected profit", required=False,
                 min_value=0.0, max_value=9_999.99, step=0.01, format="%.2f",
                 icon=":material/money_bag:", width="stretch",
                 help="The expected profit",
@@ -462,11 +467,11 @@ def dialog_create_good():
                 "piece": _piece,
                 # Financial Info
                 "purchase_price": Decimal(_price),
+                "extra_fee": Decimal(_extra_fee) if _extra_fee is not None else None,
                 "exchange_rate": Decimal(_exchange_rate),
-                "shipping_fee": Decimal(_shipping_fee) if _shipping_fee is not None else None,
                 "expected_profit": Decimal(_expected_profit) if _expected_profit is not None else None,
                 # Description
-                "description": _description,
+                "description": _description.strip() if _description is not None else None,
 
             }
             _response = request_to_post_good(URL.CREATE_GOOD, _good)
@@ -516,7 +521,7 @@ def dialog_delete_good(db_id: int) -> None:
 
 
 @dialog("Update Good Information", position="center", width="medium", icon=":material/refresh:")
-def dialog_update_good(*, db_id: int, good: dict[str, Any]):
+def dialog_update_good(*, db_id: int, good: dict[str, Any]) -> None:
     """
     Dialog for updating a good
 
@@ -544,11 +549,12 @@ def dialog_update_good(*, db_id: int, good: dict[str, Any]):
 
     code_left, code_mid, code_right = columns(3)
     with code_left:
-        _city: str = text_input(
-            "City", placeholder="The city where the good is from", required=False,
-            type="default", icon=":material/source_environment:", width="stretch",
+        _city: str = selectbox(
+            "City", placeholder="The city where the good is from", required=True,
+            options=list(CityCode), format_func=lambda city: city.name.replace("_", " ").title(),
+            icon=":material/source_environment:", width="stretch",
             help="The city where the good is from",
-            disabled=False, value=good["city"],
+            disabled=True, index=list(CityCode).index(CityCode(good["city"])),
         )
     with code_mid:
         _store: str = text_input(
@@ -574,11 +580,12 @@ def dialog_update_good(*, db_id: int, good: dict[str, Any]):
                 help="The product name",
                 disabled=False, value=good["product"],
             )
-            _brand: str = text_input(
+            _brand: str = selectbox(
                 "Brand", placeholder="The brand of the good", required=True,
-                type="default", icon=":material/copyright:", width="stretch",
+                options=list(ProductBrand),
+                icon=":material/copyright:", width="stretch",
                 help="The brand of the good",
-                disabled=False, value=good["brand"],
+                disabled=False, index=list(ProductBrand).index(ProductBrand(good["brand"])),
             )
         with good_mid:
             _production_year_start: int = number_input(
@@ -645,22 +652,22 @@ def dialog_update_good(*, db_id: int, good: dict[str, Any]):
                 disabled=False, value=float(good["purchase_price"]) if good["purchase_price"] is not None else None,
             )
             _exchange_rate: float = number_input(
-                "Exchange Rate (CNY)", placeholder="The exchange rate", required=True,
+                "Exchange Rate (NZD)", placeholder="The exchange rate", required=True,
                 min_value=0.0, max_value=9_999.99, step=0.01, format="%.2f",
                 icon=":material/currency_exchange:", width="stretch",
                 help="The exchange rate",
                 disabled=False, value=float(good["exchange_rate"]) if good["exchange_rate"] is not None else None,
             )
         with fin_right:
-            _shipping_fee: float = number_input(
-                "Shipping Fee", placeholder="The shipping fee", required=False,
+            _extra_fee: float = number_input(
+                "Extra Fee (NZD)", placeholder="The extra fee", required=False,
                 min_value=0.0, max_value=9_999.99, step=0.01, format="%.2f",
                 icon=":material/delivery_truck_speed:", width="stretch",
-                help="The shipping fee",
-                disabled=False, value=float(good["shipping_fee"]) if good["shipping_fee"] is not None else None,
+                help="The extra fee",
+                disabled=False, value=float(good["extra_fee"]) if good["extra_fee"] is not None else None,
             )
             _expected_profit: float = number_input(
-                "Expected Profit", placeholder="The expected profit", required=False,
+                "Expected Profit (NZD)", placeholder="The expected profit", required=False,
                 min_value=0.0, max_value=9_999.99, step=0.01, format="%.2f",
                 icon=":material/money_bag:", width="stretch",
                 help="The expected profit",
@@ -703,11 +710,11 @@ def dialog_update_good(*, db_id: int, good: dict[str, Any]):
                 "piece": _piece,
                 # Financial Info
                 "purchase_price": Decimal(_price),
+                "extra_fee": Decimal(_extra_fee) if _extra_fee is not None else None,
                 "exchange_rate": Decimal(_exchange_rate),
-                "shipping_fee": Decimal(str(_shipping_fee)) if _shipping_fee is not None else None,
                 "expected_profit": Decimal(_expected_profit) if _expected_profit is not None else None,
                 # Description
-                "description": _description.strip(),
+                "description": _description.strip() if _description is not None else None,
             }
             _response = request_to_update_good(URL.UPDATE_GOOD, db_id=db_id, good=_good)
 
@@ -725,7 +732,7 @@ def dialog_update_good(*, db_id: int, good: dict[str, Any]):
 
 
 @dialog("Sell Good", position="center", width="small", icon=":material/sell:")
-def dialog_sell_good(db_id: int):
+def dialog_sell_good(db_id: int) -> None:
     """
     Sell a good
 
@@ -735,19 +742,64 @@ def dialog_sell_good(db_id: int):
     notification = empty()
     caption("**Are you sure you want to sell this good right now?**")
 
-    _price: float = number_input(
-        "Sale Price (NZD)", placeholder="The price of the good", required=True,
-        min_value=0.0, max_value=9_999.99, step=0.01, format="%.2f",
-        icon=":material/paid:", width="stretch",
-        help="The price of the good",
-        disabled=False, value=0.0,
-    )
-    _sale_price: Decimal = Decimal(_price)
-    if _price != 0.0:
-        notification.info("You can sell this good right now!", icon=":material/info:")
-        left, right = columns(2)
-        if left.button("Yes", type="secondary", width="stretch", icon=":material/check:"):
-            _response = request_to_sell_good(URL.SELL_GOOD, db_id=db_id, sale_price=_sale_price)
+    with form("sale_form", border=True, clear_on_submit=True, width="stretch", height="stretch"):
+        upper_left, upper_right = columns(2)
+        lower_left, lower_right = columns(2)
+        with upper_left:
+            # left.space("stretch")
+            _customer: str = text_input(
+                "Customer Name", placeholder="The name of a customer", required=True,
+                type="default", icon=":material/badge:", max_chars=15, width="stretch",
+                help="The name of a customer",
+                disabled=False, value=None,
+            )
+        with upper_right:
+            _gender: str = segmented_control(
+                "Gender", required=False,
+                options=[gender.value.capitalize() for gender in Gender],
+                selection_mode="single", width="stretch",
+                help="The category of the good",
+                disabled=False, default=None,
+            )
+        with lower_left:
+            _location: str = selectbox(
+                "Location", placeholder="The buyer location where the good is from", required=False,
+                options=list(CHNCityCode), format_func=lambda city: city.name.replace("_", " ").title(),
+                icon=":material/source_environment:", width="stretch",
+                help="The buyer location where the good is from",
+                disabled=False, index=None,
+            )
+        with lower_right:
+            _shipping_fee: float = number_input(
+                "Shipping Fee (CNY)", placeholder="The shipping fee", required=True,
+                min_value=0.0, max_value=9_999.99, step=0.01, format="%.2f",
+                icon=":material/delivery_truck_speed:", width="stretch",
+                help="The shipping fee",
+                disabled=False, value=None,
+            )
+        _price: float = number_input(
+            "Sale Price (CNY)", placeholder="The price of the good", required=True,
+            min_value=0.0, max_value=9_999.99, step=0.01, format="%.2f",
+            icon=":material/paid:", width="stretch",
+            help="The price of the good",
+            disabled=False, value=0.0,
+        )
+        _sale_price: Decimal = Decimal(_price)
+
+        if form_submit_button("Sell", type="primary", width="stretch", icon=":material/check:"):
+            if _price == 0.0:
+                notification.warning("Sale price cannot be zero", icon=":material/warning:")
+                return
+
+            _info: dict[str, Any] = {
+                "customer": _customer.strip(),
+                "gender": _gender.strip() if _gender else None,
+                "location": _location.strip() if _location else None,
+                "shipping_fee": Decimal(str(_shipping_fee)),
+                "sale_price": Decimal(str(_price)),
+            }
+
+            _response = request_to_sell_good(URL.SELL_GOOD, db_id=db_id, customer=_info)
             if _response.ok:
                 request_to_get_goods.clear()
                 session_state.GOODS = None
@@ -759,16 +811,16 @@ def dialog_sell_good(db_id: int):
                     f"Sale failed ({_response.status_code}): {_response.text}",
                     icon=":material/error:",
                 )
-        if right.button("No", type="primary", width="stretch", icon=":material/close:"):
-            notification.info("Sale cancelled", icon=":material/info:")
-            sleep(1)
-            rerun()
-    else:
-        notification.warning("Sale price cannot be zero", icon=":material/warning:")
 
 
 @dialog("Restock Good", position="center", width="small", icon=":material/sell:")
-def dialog_restock_good(db_id: int):
+def dialog_restock_good(db_id: int) -> None:
+    """
+    Restock a good
+
+    :param db_id: The database ID of the good to restock
+    :return: None
+    """
     notification = empty()
     caption("**Are you sure you want to restock this good?**")
 
