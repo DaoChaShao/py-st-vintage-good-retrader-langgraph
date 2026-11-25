@@ -8,8 +8,9 @@
 
 from fastapi import APIRouter
 
-from ...schemas import CRUDResponse
-from ...types import ResponseStatus
+from backend.schemas import CRUDResponse
+
+from ....types import ResponseStatus
 
 router = APIRouter()
 
