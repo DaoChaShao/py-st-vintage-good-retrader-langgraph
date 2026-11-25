@@ -10,7 +10,7 @@ from datetime import datetime
 
 from requests import Response, request
 
-from backend.dbkit import UserRoles
+from backend.dbkit import UserRole
 from backend.fapi import (
     UserManagement,
     UsersDeletion,
@@ -70,7 +70,7 @@ def request_to_update(
         username: str,
         old_password: str | None,
         new_password: str | None,
-        role: UserRoles,
+        role: UserRole,
         status: bool,
         updated_at: datetime,
 ) -> Response:
