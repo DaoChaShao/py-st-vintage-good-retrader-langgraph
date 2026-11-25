@@ -34,7 +34,7 @@ from streamlit import (
     text_input,
 )
 
-from backend.fapi import ProductTypes, UserRoles
+from backend.fapi import ProductTypes, UserRole
 
 from ...net import (
     URL,
@@ -231,7 +231,7 @@ def dialog_update_user(user: Any) -> None:
 
         info_left, info_right = columns(2)
         _role = info_left.segmented_control(
-            "Account Role", list(UserRoles), required=True,
+            "Account Role", list(UserRole), required=True,
             selection_mode="single", width="stretch", disabled=True,
             help="Your account role",
             default=user["role"],
