@@ -10,8 +10,7 @@ from enum import StrEnum, unique
 
 
 @unique
-class CityCode(StrEnum):
-    # New Zealand
+class NZLCityCode(StrEnum):
     AUCKLAND = "AKL"
     WELLINGTON = "WLG"
     CHRISTCHURCH = "CHC"
@@ -19,6 +18,9 @@ class CityCode(StrEnum):
     DUNEDIN = "DUD"
     TAURANGA = "TRG"
 
+
+@unique
+class CHNCityCode(StrEnum):
     # China - Municipalities
     BEIJING = "BJS"
     TIANJIN = "TJS"
@@ -60,3 +62,29 @@ class CityCode(StrEnum):
     # China - Special Administrative Regions
     HONG_KONG = "HKG"
     MACAU = "MAC"
+
+
+CityCode = unique(
+    StrEnum(
+        "CityCode",
+        {
+            **{item.name: item.value for item in NZLCityCode},
+            **{item.name: item.value for item in CHNCityCode},
+        },
+    )
+)
+
+
+@unique
+class ProductBrand(StrEnum):
+    AYNSLEY = "AYNSLEY"
+    ROYAL_ALBERT = "ROYAL ALBERT"
+    SHELLEY = "SHELLEY"
+    WOODLAND = "WOODLAND"
+    PARAGON = "PARAGON"
+
+
+@unique
+class Gender(StrEnum):
+    FEMALE = "female"
+    Male = "male"
