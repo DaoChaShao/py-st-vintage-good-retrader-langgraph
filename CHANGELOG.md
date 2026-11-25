@@ -5,7 +5,7 @@
 
 ### Features
 
-- update database ([0406aaf](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/0406aaf7897100739b40d4f360a3651e468adc09))
+- update database ([0950c5d](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/0950c5dcbf3720626b6fdb950a0bd6a61ea32fa6))
 - **net:** add DBReadyStatus enum and category endpoint ([5297f8b](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/5297f8b1b8fe55371b87f52268ed18fb79754c13))
 - **category:** add category router endpoint ([66adb63](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/66adb631739d2d98e9a1fd4be721e99b85156f00))
 - **domains:** add domain enums for roles, cities, brands, gender ([b97a982](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/b97a9828a86c99bb43b2d10d492c93327fb94578))
@@ -207,6 +207,7 @@
 
 ### Docs
 
+- **changelog:** add recent changes to changelog ([0c93fcf](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/0c93fcf12f635c2708885f7a928c32f46c8c1a4d))
 - **utils:** fix file name annotation in types.py header comment ([5ba1dca](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/5ba1dca4e1d4798e664723a46d9fade106877cac))
 - **changelog:** add recent refactoring and feature entries ([e8b344b](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/e8b344b9fae4c3e95c1f66441e4145aa65c2460c))
 - **tools:** correct file name reference in services module comment ([608699a](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/608699a92e7a60433268d5a0124f04a78323bc7f))
@@ -216,7 +217,6 @@
 - **changelog:** add restock and dashboard refactor entries ([65d721f](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/65d721face7fb80d4aa90c635155c34e024b2b95))
 - **changelog:** update changelog with restock feature entries ([51e4961](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/51e496159465f5a5940acbf4f9e88efbf90ed5df))
 - **changelog:** update changelog with recent entries ([ac24694](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/ac2469443d47c3755855c9668a46e49a4a317426))
-- **changelog:** add recent changes to changelog ([22c88e9](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/22c88e99876efdc8e323ce78a9b372c4e8137828))
 - **changelog:** add new entries to changelog sections ([8a5087e](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/8a5087e75826819b0326abad79fe3fa8771372a4))
 - **changelog:** add recent bug fix and docs entries ([d499403](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/d4994036f5b7117de5c9fbac80e211137c7b022f))
 - **changelog:** add recent refactoring and chore entries ([1a35905](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/1a35905dc337f725894261833c33c964a93f4440))
@@ -252,6 +252,7 @@
 
 ### Code Refactoring
 
+- **dialogs:** remove unused sale price variable ([e1175f1](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/e1175f190ae4f7d07f2531885533ba2c0c1c5905))
 - **net:** decouple user module from backend models ([5042249](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/504224958632760befddc6d6ec830c32e263006a))
 - **types:** remove unused UserRole enum from types module ([6ef77f6](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/6ef77f69636047da28bf0c13166e0a186638ec37))
 - **tools:** consolidate imports in services module ([b67caa6](https://github.com/DaoChaShao/py-st-vintage-good-retrader-langgraph/commit/b67caa64007b55f610a73ef1daaf08d6b5f5304b))
