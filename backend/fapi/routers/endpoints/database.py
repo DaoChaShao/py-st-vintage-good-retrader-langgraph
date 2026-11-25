@@ -17,34 +17,26 @@ from ...types import ResponseStatus
 router = APIRouter()
 
 
-@router.delete(
-    "/delete/tables",
-    response_model=CRUDResponse,
-)
-async def delete_tables():
+@router.delete("/delete/tables", response_model=CRUDResponse)
+async def delete_tables() -> CRUDResponse:
     """ Delete the tables in the database """
     async with sqlite.engine.begin() as connection:
         await connection.run_sync(BASE.metadata.drop_all)
 
     _status = ResponseStatus.SUCCESS
-
     return CRUDResponse(
         code=_status.code,
         message=_status.message
     )
 
 
-@router.get(
-    "/list/tables",
-    response_model=TablesResponse,
-)
-async def list_tables():
+@router.get("/list/tables", response_model=TablesResponse)
+async def list_tables() -> TablesResponse:
     """ List the tables in the database """
     async with sqlite.engine.connect() as connection:
         _tables = await connection.run_sync(lambda conn: inspect(conn).get_table_names())
 
     _status = ResponseStatus.SUCCESS
-
     return TablesResponse(
         code=_status.code,
         message=_status.message,
@@ -52,17 +44,13 @@ async def list_tables():
     )
 
 
-@router.post(
-    "/initialise/tables",
-    response_model=CRUDResponse,
-)
-async def initialise_tables():
+@router.post("/initialise/tables", response_model=CRUDResponse)
+async def initialise_tables() -> CRUDResponse:
     """ Initialise the tables in the database """
     async with sqlite.engine.begin() as connection:
         await connection.run_sync(BASE.metadata.create_all)
 
     _status = ResponseStatus.SUCCESS
-
     return CRUDResponse(
         code=_status.code,
         message=_status.message
