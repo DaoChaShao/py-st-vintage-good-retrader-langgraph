@@ -12,8 +12,8 @@ from decimal import Decimal
 from pydantic import Field
 
 from .base import ABSSchema
-from .domains import ProductTypes
-from .types import AccessTokenType, ResponseStatus, UserRole
+from .domains import ProductType, UserRole
+from .types import AccessTokenType, ResponseStatus
 
 
 class DBGeneral(ABSSchema):
@@ -155,7 +155,7 @@ class GoodCreation(ABSSchema):
     brand: str | None = None
     series: str | None = None
     generation: int | None = None
-    category: ProductTypes | None = None
+    category: ProductType | None = None
     # Quantity
     set: int | None = None
     piece: int | None = None
