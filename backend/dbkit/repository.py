@@ -3,7 +3,7 @@
 # @Time     :   2026/11/7 16:00
 # @Author   :   Shawn
 # @Version  :   Version 0.1.0
-# @File     :   services.py
+# @File     :   repository.py
 # @Desc     :
 
 from base64 import b64encode
@@ -21,8 +21,8 @@ from sqlalchemy.engine import Engine
 from sqlalchemy.orm import Session
 from sqlalchemy.sql import func
 
-from .base import DECLARATION
-from .types import HashAlgorithms
+from ..base import DECLARATION
+from ..types import HashAlgorithm
 
 
 def count_records(session: Session, table: Any) -> int:
@@ -88,11 +88,11 @@ def eliminate_db(engine: Engine, db_path: Path, *, display: bool = False) -> Non
 def hash_password(
         password: str,
         *,
-        algorithm: str | HashAlgorithms | Literal["bcrypt", "pbkdf2", "scrypt", "argon2"] = "argon2",
+        algorithm: str | HashAlgorithm | Literal["bcrypt", "pbkdf2", "scrypt", "argon2"] = "argon2",
         display: bool = False
 ) -> str:
     """Hash a password using the selected algorithm."""
-    _algorithm: HashAlgorithms = HashAlgorithms(algorithm)
+    _algorithm: HashAlgorithm = HashAlgorithm(algorithm)
     match _algorithm:
         case _algorithm.BCRYPT:
             _hashed = hashpw(password.encode("utf-8"), gensalt()).decode("utf-8")
