@@ -8,13 +8,9 @@
 
 from typing import Any
 
+from pydantic_core import to_jsonable_python
 from requests import Response, request
 from streamlit import cache_data
-
-from backend.fapi import (
-    Customer,
-    GoodCreation,
-)
 
 from .base import HEADERS
 from .types import URL, RequestMethod
@@ -48,13 +44,12 @@ def request_to_post_good(url: str | URL, good: dict[str, Any]) -> Response:
     :return: The response
     """
     _url: URL = URL(url)
-    _good: GoodCreation = GoodCreation(**good)
     return request(
         RequestMethod.POST.value,
         _url.value,
         headers=HEADERS,
         timeout=30,
-        json=_good.model_dump(mode="json"),
+        json=to_jsonable_python(good),
     )
 
 
@@ -86,14 +81,13 @@ def request_to_update_good(url: str | URL, *, db_id: int, good: dict[str, Any]) 
     :return: The response
     """
     _url: URL = URL(url)
-    _good: GoodCreation = GoodCreation(**good)
     return request(
         RequestMethod.PATCH.value,
         _url.value,
         headers=HEADERS,
         timeout=30,
         params={"db_id": db_id},
-        json=_good.model_dump(mode="json"),
+        json=to_jsonable_python(good),
     )
 
 
@@ -107,14 +101,13 @@ def request_to_sell_good(url: str | URL, *, db_id: int, customer: dict[str, Any]
     :return: The response
     """
     _url: URL = URL(url)
-    _customer: Customer = Customer(**customer)
     return request(
         RequestMethod.PATCH.value,
         _url.value,
         headers=HEADERS,
         timeout=30,
         params={"db_id": db_id},
-        json=_customer.model_dump(mode="json"),
+        json=to_jsonable_python(customer),
     )
 
 
