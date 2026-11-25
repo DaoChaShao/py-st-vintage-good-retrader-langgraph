@@ -9,27 +9,48 @@
 from datetime import date, datetime
 from decimal import Decimal
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import Field
 
-from ..dbkit import UserRoles
-from .types import (
-    AccessTokenTypes,
-    ProductTypes,
-    ResponseStatus,
-)
+from .base import ABSSchema
+from .domains import ProductTypes
+from .types import AccessTokenType, ResponseStatus, UserRole
 
 
-class CRUDResponse(BaseModel):
+class DBGeneral(ABSSchema):
+    """ General database configuration schema """
+
+    echo: bool = False
+    timeout: int = Field(default=30, gt=0)
+    pool_size: int = Field(default=5, ge=0)
+    max_overflow: int = Field(default=10, ge=0)
+
+
+class SQLite(DBGeneral):
+    """ SQLite database configuration schema """
+
+    database: str
+
+
+class PostgresSQL(DBGeneral):
+    """ PostgresSQL database configuration schema """
+
+    user: str
+    password: str
+    host: str
+    port: int
+    database: str
+    ssl: str = "require"
+
+
+class CRUDResponse(ABSSchema):
     """ Response for CRUD operations """
 
     code: int | ResponseStatus
     message: str | ResponseStatus
 
 
-class UserBase(BaseModel):
+class UserBase(ABSSchema):
     """ User base schema """
-
-    model_config = ConfigDict(from_attributes=True)
 
     username: str
 
@@ -47,10 +68,10 @@ class UserManagement(UserBase):
     id: int
     # Attributes
     is_active: bool
-    role: UserRoles
+    role: UserRole
 
 
-class UsersManagement(BaseModel):
+class UsersManagement(ABSSchema):
     """ Users management schema """
 
     users: list[UserManagement]
@@ -65,7 +86,7 @@ class UserUpdate(UserBase):
     old_password: str | None
     new_password: str | None
     is_active: bool
-    role: UserRoles
+    role: UserRole
     # Timestamps
     updated_at: datetime
 
@@ -73,10 +94,10 @@ class UserUpdate(UserBase):
 class UserInit(UserSignIn):
     """ User init schema """
 
-    role: UserRoles = UserRoles.ADMIN.value
+    role: UserRole = UserRole.ADMIN.value
 
 
-class UsersDeletion(BaseModel):
+class UsersDeletion(ABSSchema):
     """ User deletion schema """
 
     ids: list[int]
@@ -89,7 +110,7 @@ class UserResponse(UserBase):
     id: int
     # Attributes
     is_active: bool
-    role: UserRoles
+    role: UserRole
     # Timestamps
     created_at: datetime | None
     updated_at: datetime | None
@@ -101,20 +122,16 @@ class UsersResponse(CRUDResponse):
     users: list[UserResponse]
 
 
-class AccessTokenResponse(BaseModel):
+class AccessTokenResponse(ABSSchema):
     """ Response for user authentication """
 
-    model_config = ConfigDict(from_attributes=True)
-
     token: str
-    type: str | AccessTokenTypes = AccessTokenTypes.BEARER
+    type: str | AccessTokenType = AccessTokenType.BEARER
     expires_at: int
 
 
-class VerificationResponse(BaseModel):
+class VerificationResponse(ABSSchema):
     """ Response for successful login """
-
-    model_config = ConfigDict(from_attributes=True)
 
     code: int | ResponseStatus
     message: str | ResponseStatus
@@ -122,10 +139,8 @@ class VerificationResponse(BaseModel):
     token: AccessTokenResponse
 
 
-class GoodCreation(BaseModel):
+class GoodCreation(ABSSchema):
     """ Schema for creating a good """
-
-    model_config = ConfigDict(from_attributes=True)
 
     # Dates
     purchase_date: date | None = None
@@ -179,8 +194,9 @@ class TablesResponse(CRUDResponse):
     tables: list[str]
 
 
-class Customer(BaseModel):
+class Customer(ABSSchema):
     """ Customer schema """
+
     customer: str
     gender: str | None
     location: str
