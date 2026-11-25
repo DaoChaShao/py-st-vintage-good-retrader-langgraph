@@ -6,13 +6,13 @@
 # @File     :   goods.py
 # @Desc     :
 
-from decimal import Decimal
 from typing import Any
 
 from requests import Response, request
 from streamlit import cache_data
 
 from backend.fapi import (
+    Customer,
     GoodCreation,
 )
 
@@ -97,13 +97,33 @@ def request_to_update_good(url: str | URL, *, db_id: int, good: dict[str, Any]) 
     )
 
 
-def request_to_sell_good(url: str | URL, *, db_id: int, sale_price: Decimal) -> Response:
+def request_to_sell_good(url: str | URL, *, db_id: int, customer: dict[str, Any]) -> Response:
     """
     Sell a good from the given URL
 
     :param url: The URL to sell the good from
     :param db_id: The db_id of the good to sell
-    :param sale_price: The sale price of the good to sell
+    :param customer: The customer to sell the good to
+    :return: The response
+    """
+    _url: URL = URL(url)
+    _customer: Customer = Customer(**customer)
+    return request(
+        RequestMethod.PATCH.value,
+        _url.value,
+        headers=HEADERS,
+        timeout=30,
+        params={"db_id": db_id},
+        json=_customer.model_dump(mode="json"),
+    )
+
+
+def request_to_restock_good(url: str | URL, *, db_id: int) -> Response:
+    """
+    Restock a good from the given URL
+
+    :param url: The URL to restock the good from
+    :param db_id: The db_id of the good to restock
     :return: The response
     """
     _url: URL = URL(url)
@@ -112,21 +132,5 @@ def request_to_sell_good(url: str | URL, *, db_id: int, sale_price: Decimal) -> 
         _url.value,
         headers=HEADERS,
         timeout=30,
-        params={
-            "db_id": db_id,
-            "sale_price": sale_price,
-        },
-    )
-
-
-def request_to_restock_good(url: str | URL, *, db_id: int) -> Response:
-    _url: URL = URL(url)
-    return request(
-        RequestMethod.PATCH.value,
-        _url.value,
-        headers=HEADERS,
-        timeout=30,
-        params={
-            "db_id": db_id,
-        },
+        params={"db_id": db_id},
     )
