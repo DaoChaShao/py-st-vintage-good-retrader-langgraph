@@ -60,11 +60,16 @@ class Goods(BASE):
     set: Mapped[GENERAL.INT]
     piece: Mapped[GENERAL.INT]
 
-    # Financial Information
+    # Financial Information for store
     purchase_price: Mapped[GENERAL.DEC]
+    extra_fee: Mapped[GENERAL.DEC]
     exchange_rate: Mapped[GENERAL.DEC]
-    shipping_fee: Mapped[GENERAL.DEC]
     expected_profit: Mapped[GENERAL.DEC]
+    # Financial Information for customer
+    customer: Mapped[GENERAL.STR]
+    gender: Mapped[GENERAL.STR]
+    location: Mapped[GENERAL.STR]
+    shipping_fee: Mapped[GENERAL.DEC]
     sale_price: Mapped[GENERAL.DEC]
 
     # Description
@@ -89,10 +94,16 @@ class Goods(BASE):
             f"category={self.category}, "
             f"set={self.set}, "
             f"piece={self.piece}, "
+            # Financial Information for store
             f"purchase_price={self.purchase_price}, "
+            f"extra_fee={self.extra_fee}, "
             f"exchange_rate={self.exchange_rate}, "
-            f"shipping_fee={self.shipping_fee}, "
             f"expected_profit={self.expected_profit}, "
-            f"description={self.description}, "
-            f"sale_price={self.sale_price})>"
+            # Financial Information for customer
+            f"customer={self.customer}, "
+            f"gender={self.gender}, "
+            f"location={self.location}, "
+            f"shipping_fee={self.shipping_fee}, "
+            f"sale_price={self.sale_price}), "
+            f"description={self.description}>"
         )
