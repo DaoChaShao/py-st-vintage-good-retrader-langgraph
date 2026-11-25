@@ -3,7 +3,7 @@
 # @Time     :   2026/10/21 19:45
 # @Author   :   Shawn
 # @Version  :   Version 0.1.0
-# @File     :   types.py
+# @File     :   category.py
 # @Desc     :
 
 from enum import StrEnum, unique
