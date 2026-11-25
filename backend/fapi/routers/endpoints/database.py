@@ -9,10 +9,10 @@
 from fastapi import APIRouter
 from sqlalchemy import inspect
 
-from ....dbkit import BASE
+from ....base import BASE
+from ....schemas import CRUDResponse, TablesResponse
+from ....types import ResponseStatus
 from ...dependencies import sqlite
-from ...schemas import CRUDResponse, TablesResponse
-from ...types import ResponseStatus
 
 router = APIRouter()
 
