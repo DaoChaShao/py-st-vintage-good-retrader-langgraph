@@ -90,7 +90,7 @@ else:
 
     selection = dataframe(
         display_goods,
-        hide_index=True, width="stretch", height=600,
+        hide_index=True, width="stretch", height="stretch",
         on_select="rerun", selection_mode="single-row",
     )
     selected_row = selection.get("selection", {}).get("rows", [])
