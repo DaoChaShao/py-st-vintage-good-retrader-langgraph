@@ -10,7 +10,7 @@ from frontend import async_configue_page, async_navigate_pages
 
 
 def main() -> None:
-    """ streamlit run client.py """
+    """ python -m streamlit run main/client.py """
     async_configue_page()
     async_navigate_pages()
 
