@@ -6,10 +6,16 @@
 # @File     :   __init__.py.py
 # @Desc     :
 
-def main() -> None:
-    """ Main Function """
-    pass
+"""
+****************************************************************
+Application Entry Points and Services
+----------------------------------------------------------------
+A collection of entry points for the backend and frontend,
+along with services for database initialisation and data migration.
+****************************************************************
+"""
 
+__author__ = "Shawn Yu"
+__version__ = "0.1.0"
 
-if __name__ == "__main__":
-    main()
+__all__ = []
