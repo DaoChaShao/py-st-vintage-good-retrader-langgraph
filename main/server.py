@@ -43,9 +43,9 @@ async def root():
 @app.get("/favicon.ico", include_in_schema=False)
 async def favicon():
     """Return the favicon icon for the API (https://favicon.io/)"""
-    return FileResponse("static/favicon.ico")
+    return FileResponse("../static/favicon.ico")
 
 
 if __name__ == "__main__":
-    """ uv run uvicorn server:app --reload """
-    run("server:app", host="127.0.0.1", port=8000, reload=True, log_level="info")
+    """ uv run uvicorn main.server:app --reload """
+    run("main.server:app", host="127.0.0.1", port=8000, reload=True, log_level="info")
