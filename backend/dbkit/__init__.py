@@ -22,8 +22,6 @@ for database operations across different database systems.
 __author__ = "Shawn Yu"
 __version__ = "0.1.0"
 
-from backend.engines import InitEngine
-
 from .repository import (
     count_records,
     create_db,
@@ -37,8 +35,6 @@ from .repository import (
 from .session import InitSession
 
 __all__ = [
-    "InitEngine",
-
     "count_records",
     "create_db",
     "delete_table_records",
